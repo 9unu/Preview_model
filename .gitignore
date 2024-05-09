@@ -8,6 +8,11 @@ ckpt/model/pytorch_model.bin
 .idea/dataSources/
 .idea/dataSources.local.xml
 .idea
+venv/
+Lib/
+Include/
+
 
 *.pyc
 *.jar
+*.cfg
