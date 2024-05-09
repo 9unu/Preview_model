@@ -1,0 +1,98 @@
+2024-05-07 16:20:13;[INFO];[실행 명령어]: sh ./scripts/model/do_train.sh
+2024-05-07 16:20:13;[INFO];[Config]
+2024-05-07 16:20:13;[INFO];{'epochs': 10, 'train_batch_size': 4, 'valid_batch_size': 4, 'init_model_path': 'klue/bert-base', 'max_length': 512, 'need_birnn': 0, 'sentiment_drop_ratio': 0.3, 'aspect_drop_ratio': 0.3, 'sentiment_in_feature': 768, 'aspect_in_feature': 768, 'sentiment_score_in_feature': 768, 'aspect_score_in_feature': 768, 'stop_patience': 3, 'train_fp': './resources/data/train/', 'valid_fp': './resources/data/valid/', 'base_path': './ckpt/model/', 'label_info_file': 'meta.bin', 'out_model_path': 'pytorch_model.bin', 'cmd': 'sh ./scripts/model/do_train.sh'}
+2024-05-07 16:20:13;[INFO];>>>>>>> Device Setting
+2024-05-07 16:20:13;[INFO];Now using CPU
+2024-05-07 16:20:13;[INFO];>>>>>>> Now setting Sentiment&Aspect Category Encoder
+2024-05-07 16:20:13;[INFO];>>>>>>> Now setting train/valid DataLoaders
+2024-05-07 16:20:13;[DEBUG];Starting new HTTPS connection (1): huggingface.co:443
+2024-05-07 16:20:13;[DEBUG];https://huggingface.co:443 "HEAD /klue/bert-base/resolve/main/vocab.txt HTTP/1.1" 200 0
+2024-05-07 16:20:14;[DEBUG];https://huggingface.co:443 "HEAD /klue/bert-base/resolve/main/vocab.txt HTTP/1.1" 200 0
+2024-05-07 16:20:14;[INFO];>>>>>>> Now setting Model Architecture
+2024-05-07 16:20:14;[DEBUG];https://huggingface.co:443 "HEAD /klue/bert-base/resolve/main/config.json HTTP/1.1" 200 0
+2024-05-07 16:20:15;[INFO];>>>>>>> Training Start!
+2024-05-07 16:20:15;[INFO];[Now Epoch: 0]
+2024-05-07 16:32:10;[INFO];*****eval metrics*****
+2024-05-07 16:32:10;[INFO];eval_loss: 99.58842813968658
+2024-05-07 16:32:10;[INFO];eval_runtime: 0:04:02.113930
+2024-05-07 16:32:10;[INFO];eval_samples: 32
+2024-05-07 16:32:10;[INFO];eval_samples_per_second: 0:00:07.566060
+2024-05-07 16:32:10;[INFO];Sentiment Accuracy: 0.68
+2024-05-07 16:32:10;[INFO];Sentiment f1score micro : 0.68
+2024-05-07 16:32:10;[INFO];Sentiment Score Accuracy: 0.67
+2024-05-07 16:32:10;[INFO];Sentiment Score f1score micro : 0.67
+2024-05-07 16:32:10;[INFO];Aspect Accuracy: 0.67
+2024-05-07 16:32:10;[INFO];Aspect f1score micro : 0.67
+2024-05-07 16:32:10;[INFO];Aspect Score Accuracy: 0.67
+2024-05-07 16:32:10;[INFO];Aspect Score f1score micro : 0.67
+2024-05-07 16:32:10;[INFO];Sentiment Accuracy Report:
+2024-05-07 16:32:10;[INFO];              precision    recall  f1-score   support
+
+        B-긍정     0.0000    0.0000    0.0000        36
+        B-부정     0.0000    0.0000    0.0000        55
+        I-긍정     0.0000    0.0000    0.0000        80
+        I-부정     0.7105    0.0557    0.1033       485
+           O     0.6429    0.9930    0.7805      1135
+
+    accuracy                         0.6443      1791
+   macro avg     0.2707    0.2097    0.1767      1791
+weighted avg     0.5998    0.6443    0.5226      1791
+
+2024-05-07 16:32:10;[INFO];Sentiment Score Accuracy Report:
+2024-05-07 16:32:10;[INFO];              precision    recall  f1-score   support
+
+         B-1     0.0000    0.0000    0.0000        67
+         B-2     0.0000    0.0000    0.0000        12
+         B-3     0.0000    0.0000    0.0000        12
+         I-1     0.0000    0.0000    0.0000       329
+         I-2     0.0000    0.0000    0.0000       128
+         I-3     0.0000    0.0000    0.0000       108
+           O     0.6344    1.0000    0.7763      1135
+         PAD     0.0000    0.0000    0.0000         0
+
+    accuracy                         0.6337      1791
+   macro avg     0.0793    0.1250    0.0970      1791
+weighted avg     0.4021    0.6337    0.4920      1791
+
+2024-05-07 16:32:10;[INFO];Aspect Accuracy Report:
+2024-05-07 16:32:10;[INFO];               precision    recall  f1-score   support
+
+         B-기타     0.0000    0.0000    0.0000        18
+        B-디자인     0.0000    0.0000    0.0000        12
+B-배터리를충전하는호환성     0.0000    0.0000    0.0000         3
+      B-배터리용량     0.0000    0.0000    0.0000         2
+        B-서비스     0.0000    0.0000    0.0000        24
+         B-충전     0.0000    0.0000    0.0000        12
+        B-휴대성     0.0000    0.0000    0.0000        20
+         I-기타     0.0000    0.0000    0.0000       118
+        I-디자인     0.0000    0.0000    0.0000        23
+I-배터리를충전하는호환성     0.0000    0.0000    0.0000        11
+      I-배터리용량     0.0000    0.0000    0.0000        26
+        I-서비스     0.0000    0.0000    0.0000       219
+         I-충전     0.0000    0.0000    0.0000        73
+        I-휴대성     0.0000    0.0000    0.0000        95
+            O     0.6337    1.0000    0.7758      1135
+
+     accuracy                         0.6337      1791
+    macro avg     0.0422    0.0667    0.0517      1791
+ weighted avg     0.4016    0.6337    0.4916      1791
+
+2024-05-07 16:32:10;[INFO];Aspect Score Accuracy Report:
+2024-05-07 16:32:10;[INFO];              precision    recall  f1-score   support
+
+         B-1     0.0000    0.0000    0.0000        47
+         B-2     0.0000    0.0000    0.0000        23
+         B-3     0.0000    0.0000    0.0000        13
+         B-4     0.0000    0.0000    0.0000         8
+         I-1     0.0000    0.0000    0.0000       143
+         I-2     0.0000    0.0000    0.0000       152
+         I-3     0.0000    0.0000    0.0000       185
+         I-4     0.0000    0.0000    0.0000        85
+           O     0.6337    1.0000    0.7758      1135
+
+    accuracy                         0.6337      1791
+   macro avg     0.0704    0.1111    0.0862      1791
+weighted avg     0.4016    0.6337    0.4916      1791
+
+2024-05-07 16:32:10;[INFO];Train Loss = 142.8383148908615 Valid Loss = 99.58842813968658
+2024-05-07 16:32:11;[INFO];[Now Epoch: 1]
