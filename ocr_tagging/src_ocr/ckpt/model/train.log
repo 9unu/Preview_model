@@ -1,0 +1,6 @@
+2024-05-09 16:18:28;[INFO];[실행 명령어]: sh ./scripts/model/do_train.sh
+2024-05-09 16:18:28;[INFO];[Config]
+2024-05-09 16:18:28;[INFO];{'epochs': 10, 'train_batch_size': 4, 'valid_batch_size': 4, 'init_model_path': 'klue/bert-base', 'max_length': 512, 'need_birnn': 0, 'aspect_drop_ratio': 0.3, 'aspect_in_feature': 768, 'stop_patience': 3, 'train_fp': None, 'valid_fp': None, 'base_path': './ckpt/model/', 'label_info_file': 'meta.bin', 'out_model_path': 'pytorch_model.bin', 'cmd': 'sh ./scripts/model/do_train.sh'}
+2024-05-09 16:18:28;[INFO];>>>>>>> Device Setting
+2024-05-09 16:18:28;[INFO];Now using CPU
+2024-05-09 16:18:28;[INFO];>>>>>>> Now setting Aspect Category Encoder

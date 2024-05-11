@@ -1,0 +1,17 @@
+/review_tagging/ckpt_review/model/pytorch_model.bin
+/review_tagging/ckpt_review/model/meta.bin
+/ocr_tagging/ckpt_ocr/model/pytorch_model.bin
+/ocr_tagging/ckpt_ocr/model/meta.bin
+
+# Default ignored files
+.idea/shelf/
+.idea/workspace.xml
+# Editor-based HTTP Client requests
+.idea/httpRequests/
+# Datasource local storage ignored files
+.idea/dataSources/
+.idea/dataSources.local.xml
+.idea
+
+*.pyc
+*.jar
