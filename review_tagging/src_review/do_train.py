@@ -111,7 +111,7 @@ def train(config):
             valid_data_loader,
             model,
             enc_sentiment,
-            enc_aspect2,
+            enc_aspect,
             enc_sentiment_score,
             enc_aspect_score,
             device,

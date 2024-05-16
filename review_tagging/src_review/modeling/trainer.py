@@ -57,7 +57,7 @@ def eval_fn(data_loader, model, enc_sentiment, enc_aspect, enc_sentiment_score, 
         data = parsing_batch(data, device)
         loss, predict_sentiment, _, predict_aspect, predict_sentiment_score, predict_aspect_score = model(**data)
         sentiment_label = data['target_sentiment'].cpu().numpy().reshape(-1)
-        aspect_label = data['target_aspect2'].cpu().numpy().reshape(-1)
+        aspect_label = data['target_aspect'].cpu().numpy().reshape(-1)
         sentiment_score_label = data['target_sentiment_score'].cpu().numpy().reshape(-1)
         aspect_score_label = data['target_aspect_score'].cpu().numpy().reshape(-1)
 
