@@ -1,0 +1,2348 @@
+﻿[
+    {
+        "id": "4332289559-dmacshop-8010745255",
+        "content": "일단 배터리는 잔량없이 와서 충전하고 있어서 뭐라 후기쓸게 없구요 배송해준 롯데택배는 정말 직업의식이 없네요\n마구 찌그러진 박스를 보는순간 배터리에 충격이 많이 갔을것 같아 걱정이 되네요 내용물 포장도 뽁뽁이를 한 번 감아 줬으면 좋았을텐데 그냥 배터리포장박스 그대로 들어있어서 충격 흡수 제대로 됐겠습니다 판매자님도 포장 신경써주시고 배달하시는 분도 조심좀 해주시면 좋겠어요",
+        "aidaModifyTime": "2023-09-15 04:08:23",
+        "mallId": "dmacshop",
+        "mallSeq": "243297",
+        "matchNvMid": "37823873619",
+        "nvMid": "85555245578",
+        "qualityScore": 0.71656,
+        "starScore": 3,
+        "topicCount": 1,
+        "topicYn": "Y",
+        "topics": [
+            {
+                "topicCode": "total",
+                "topicName": "만족도",
+                "startPosition": 438,
+                "endPosition": 478,
+                "positiveYn": "Y",
+                "reputationScore": 555
+            }
+        ],
+        "userId": "heeh****",
+        "mallName": "삼성공식파트너 dmac",
+        "our_topics": [
+            {
+                "text": "배송해준 롯데택배는 정말 직업의식이 없네요",
+                "topic": "배송",
+                "topic_score": 4,
+                "start_pos": 37,
+                "end_pos": 61,
+                "positive_yn": "N",
+                "sentiment_scale": 3
+            },
+            {
+                "text": "마구 찌그러진 박스를 보는순간 배터리에 충격이 많이 갔을것 같아 걱정이 되네요",
+                "topic": "배송",
+                "start_pos": 61,
+                "end_pos": 105,
+                "positive_yn": "N",
+                "sentiment_scale": 3,
+                "topic_score": 4
+            },
+            {
+                "text": "내용물 포장도 뽁뽁이를 한 번 감아 줬으면 좋았을텐데 그냥 배터리포장박스 그대로 들어있어서 충격 흡수 제대로 됐겠습니다",
+                "topic": "배송",
+                "start_pos": 105,
+                "end_pos": 172,
+                "positive_yn": "N",
+                "sentiment_scale": 3,
+                "topic_score": 4
+            },
+            {
+                "text": "판매자님도 포장 신경써주시고 배달하시는 분도 조심좀 해주시면 좋겠어요",
+                "topic": "배송",
+                "start_pos": 172,
+                "end_pos": 211,
+                "positive_yn": "N",
+                "sentiment_scale": 3,
+                "topic_score": 4
+            }
+        ]
+    },
+    {
+        "id": "153869851-goodsdaq-2771086867",
+        "content": "상품 상세설명에는 10000mAh라고 적혀있는데 상품 박스에는 5000mAh라고 적혀있어서 판매처에 문의하니 일반충전시에는 10000이고 고속충전시에는 5000이라네요 전공하는 사람에게 물어보니 처음 듣는 이야기라고 하는데충전후 사용해보니 이상은 없는것 같아 그냥 사용하기는 하지만 찜찜한 마음은 사라지지 않아요",
+        "aidaModifyTime": "2023-07-05 03:04:46",
+        "mallId": "goodsdaq",
+        "mallSeq": "24",
+        "matchNvMid": "37823873619",
+        "nvMid": "37580304788",
+        "qualityScore": 0.656004,
+        "starScore": 3,
+        "topicCount": 0,
+        "topicYn": "N",
+        "topics": [],
+        "userId": "k*l*****",
+        "mallName": "G마켓",
+        "our_topics": [
+            {
+                "text": "상품 상세설명에는 10000mAh라고 적혀있는데 상품 박스에는 5000mAh라고 적혀있어서 판매처에 문의하니 일반충전시에는 10000이고 고속충전시에는 5000이라네요",
+                "topic": "문의",
+                "topic_score": 3,
+                "start_pos": 0,
+                "end_pos": 94,
+                "positive_yn": "N",
+                "sentiment_scale": 1
+            },
+            {
+                "text": "전공하는 사람에게 물어보니 처음 듣는 이야기라고 하는데충전후 사용해보니 이상은 없는것 같아 그냥 사용하기는 하지만 찜찜한 마음은 사라지지 않아요",
+                "topic": "충전",
+                "start_pos": 94,
+                "end_pos": 175,
+                "positive_yn": "N",
+                "sentiment_scale": 2,
+                "topic_score": 1
+            }
+        ]
+    },
+    {
+        "id": "4261356811-allinfok-8116010045",
+        "content": "1 아주 무겁습니다 처음에는 괜찮았는데 2시간 넘어가니들고 다녔더니 허리가 부러질 것 같습니다\n(주말에 친구들이랑 놀다가 결국 가벼운거 새거삼)\n2 그 외 용량이 커서 여러번 충전되는 점과 디자인, 색상 등은 마음에 듭니다\n3 휴대용 여행용으로는 가벼운 저용량 제품이맞고 이제품은 이동수단을 타고 이동할때 충전용으로 알맞은것같습니다",
+        "aidaModifyTime": "2023-09-11 16:29:45",
+        "mallId": "allinfok",
+        "mallSeq": "259852",
+        "matchNvMid": "37823873619",
+        "nvMid": "85660510368",
+        "qualityScore": 0.715126,
+        "starScore": 3,
+        "topicCount": 2,
+        "topicYn": "Y",
+        "topics": [
+            {
+                "topicCode": "charging",
+                "topicName": "충전",
+                "startPosition": 236,
+                "endPosition": 309,
+                "positiveYn": "Y",
+                "reputationScore": 820
+            },
+            {
+                "topicCode": "total",
+                "topicName": "만족도",
+                "startPosition": 259,
+                "endPosition": 309,
+                "positiveYn": "Y",
+                "reputationScore": 705
+            }
+        ],
+        "userId": "lyck****",
+        "mallName": "삼성공식파트너 올인포케이",
+        "our_topics": [
+            {
+                "text": "1 아주 무겁습니다",
+                "topic": "무게",
+                "topic_score": 3,
+                "start_pos": 0,
+                "end_pos": 11,
+                "positive_yn": "N",
+                "sentiment_scale": 2
+            },
+            {
+                "text": "2 그 외 용량이 커서 여러번 충전되는 점과",
+                "topic": "배터리용량",
+                "start_pos": 81,
+                "end_pos": 106,
+                "positive_yn": "Y",
+                "sentiment_scale": 1,
+                "topic_score": 2
+            },
+            {
+                "text": "디자인, 색상 등은 마음에 듭니다",
+                "topic": "디자인",
+                "start_pos": 106,
+                "end_pos": 125,
+                "positive_yn": "Y",
+                "sentiment_scale": 1,
+                "topic_score": 1
+            },
+            {
+                "text": "3 휴대용 여행용으로는 가벼운 저용량 제품이맞고 이제품은 이동수단을 타고 이동할때 충전용으로 알맞은것같습니다",
+                "topic": "휴대성",
+                "start_pos": 125,
+                "end_pos": 186,
+                "positive_yn": "N",
+                "sentiment_scale": 1,
+                "topic_score": 3
+            },
+            {
+                "text": "처음에는 괜찮았는데 2시간 넘어가니들고 다녔더니 허리가 부러질 것 같습니다\n(주말에 친구들이랑 놀다가 결국 가벼운거 새거삼)",
+                "topic": "무게",
+                "start_pos": 11,
+                "end_pos": 81,
+                "positive_yn": "N",
+                "sentiment_scale": 2,
+                "topic_score": 3
+            }
+        ]
+    },
+    {
+        "id": "4295227835-allinfok-8116010045",
+        "content": "잠깐 사용해봤는데 충전 빠릅니다 별점 뺀 이유는 완충제 없이 보내주셔서 오면서 상품에 충격이 많았을것 같습니다 또, 배터리 외관에도 완전히 새거같지않은 느낌이 있습니다(미세한 긁힘 등) 급히 필요하기도 하고 본연의 기능에는 문제가 없어 그냥 쓰려고하지만 아쉽습니다 참고하세요~",
+        "aidaModifyTime": "2023-09-11 16:29:25",
+        "mallId": "allinfok",
+        "mallSeq": "259852",
+        "matchNvMid": "37823873619",
+        "nvMid": "85660510368",
+        "qualityScore": 0.719173,
+        "starScore": 3,
+        "topicCount": 4,
+        "topicYn": "Y",
+        "topics": [
+            {
+                "topicCode": "charging",
+                "topicName": "충전",
+                "startPosition": 26,
+                "endPosition": 44,
+                "positiveYn": "Y",
+                "reputationScore": 491
+            },
+            {
+                "topicCode": "total",
+                "topicName": "만족도",
+                "startPosition": 47,
+                "endPosition": 99,
+                "positiveYn": "N",
+                "reputationScore": 665
+            },
+            {
+                "topicCode": "function",
+                "topicName": "기능",
+                "startPosition": 291,
+                "endPosition": 329,
+                "positiveYn": "Y",
+                "reputationScore": 545
+            },
+            {
+                "topicCode": "total",
+                "topicName": "만족도",
+                "startPosition": 291,
+                "endPosition": 371,
+                "positiveYn": "N",
+                "reputationScore": 705
+            }
+        ],
+        "userId": "grea****",
+        "mallName": "삼성공식파트너 올인포케이",
+        "our_topics": [
+            {
+                "text": "별점 뺀 이유는 완충제 없이 보내주셔서 오면서 상품에 충격이 많았을것 같습니다",
+                "topic": "배송",
+                "topic_score": 2,
+                "start_pos": 18,
+                "end_pos": 62,
+                "positive_yn": "N",
+                "sentiment_scale": 1
+            },
+            {
+                "text": "또, 배터리 외관에도 완전히 새거같지않은 느낌이 있습니다(미세한 긁힘 등)",
+                "topic": "기타",
+                "start_pos": 62,
+                "end_pos": 104,
+                "positive_yn": "N",
+                "sentiment_scale": 1,
+                "topic_score": 1
+            }
+        ]
+    },
+    {
+        "id": "234762609-11st-5455396734",
+        "content": "가격 다른 곳에 비해 저렴한 편인것 같아요 배송도 빠르고 안전하게 왔어요 충전은 확실하게 안정적으로 잘 됩니다 무게도 가볍습니다겉표면에 더럽고 끈적거리는 테이프스티커 같은게 왜 붙어있는지 새제품 맞는지 의심스럽네",
+        "aidaModifyTime": "2024-01-04 03:02:03",
+        "mallId": "11st",
+        "mallSeq": "17703",
+        "matchNvMid": "37823873619",
+        "nvMid": "41305829677",
+        "qualityScore": 0.705347,
+        "starScore": 3,
+        "topicCount": 2,
+        "topicYn": "Y",
+        "topics": [
+            {
+                "topicCode": "price",
+                "topicName": "가격",
+                "startPosition": 0,
+                "endPosition": 56,
+                "positiveYn": "Y",
+                "reputationScore": 693
+            },
+            {
+                "topicCode": "weight",
+                "topicName": "무게",
+                "startPosition": 157,
+                "endPosition": 181,
+                "positiveYn": "Y",
+                "reputationScore": 502
+            }
+        ],
+        "userId": "in******",
+        "mallName": "11번가",
+        "our_topics": [
+            {
+                "text": "배송도 빠르고 안전하게 왔어요",
+                "topic": "배송",
+                "topic_score": 1,
+                "start_pos": 24,
+                "end_pos": 41,
+                "positive_yn": "Y",
+                "sentiment_scale": 1
+            },
+            {
+                "text": "충전은 확실하게 안정적으로 잘 됩니다",
+                "topic": "충전",
+                "start_pos": 41,
+                "end_pos": 62,
+                "positive_yn": "Y",
+                "sentiment_scale": 1,
+                "topic_score": 1
+            },
+            {
+                "text": "무게도 가볍습니다",
+                "topic": "무게",
+                "start_pos": 62,
+                "end_pos": 72,
+                "positive_yn": "Y",
+                "sentiment_scale": 1,
+                "topic_score": 1
+            },
+            {
+                "text": "겉표면에 더럽고 끈적거리는 테이프스티커 같은게 왜 붙어있는지 새제품 맞는지 의심스럽네",
+                "topic": "기타",
+                "start_pos": 71,
+                "end_pos": 119,
+                "positive_yn": "N",
+                "sentiment_scale": 3,
+                "topic_score": 3
+            }
+        ]
+    },
+    {
+        "id": "191193-samsungkorea123-EBP3400XUKGKR",
+        "content": "으레 보배가 그렇듯이() 선이 자꾸 빠져여\n그리고 보통 폰이랑 보배랑 가만히 안두고\n손으로 들기만하눈데 됏다가안됏다가\n성능 자체는 조아욤 풀충 두번정도 할수잇고\n고속충전이라 충전두빠르구여\n다만 케이블선이좀아쉽네여",
+        "aidaModifyTime": "2023-03-25 03:00:15",
+        "mallId": "samsungkorea123",
+        "mallSeq": "1186513",
+        "matchNvMid": "37823873619",
+        "nvMid": "37619209039",
+        "qualityScore": 0.697759,
+        "starScore": 3,
+        "topicCount": 2,
+        "topicYn": "Y",
+        "topics": [
+            {
+                "topicCode": "total",
+                "topicName": "만족도",
+                "startPosition": 183,
+                "endPosition": 241,
+                "positiveYn": "Y",
+                "reputationScore": 645
+            },
+            {
+                "topicCode": "total",
+                "topicName": "만족도",
+                "startPosition": 301,
+                "endPosition": 330,
+                "positiveYn": "N",
+                "reputationScore": 587
+            }
+        ],
+        "userId": "정*온*****",
+        "mallName": "삼성닷컴",
+        "our_topics": [
+            {
+                "text": "성능 자체는 조아욤 풀충 두번정도 할수잇고",
+                "topic": "배터리용량",
+                "topic_score": 2,
+                "start_pos": 66,
+                "end_pos": 90,
+                "positive_yn": "Y",
+                "sentiment_scale": 1
+            },
+            {
+                "text": "고속충전이라 충전두빠르구여",
+                "topic": "고속충전",
+                "start_pos": 90,
+                "end_pos": 105,
+                "positive_yn": "Y",
+                "sentiment_scale": 1,
+                "topic_score": 1
+            },
+            {
+                "text": "다만 케이블선이좀아쉽네여",
+                "topic": "케이블",
+                "start_pos": 105,
+                "end_pos": 119,
+                "positive_yn": "N",
+                "sentiment_scale": 1,
+                "topic_score": 1
+            }
+        ]
+    },
+    {
+        "id": "4292093848-allinfok-8116010045",
+        "content": "이거 좀 이상합니다 제가 불량이 걸린건지 모르겠는데 분명 어제까지만해도 불3개가 들어와있었는데 오늘 사용하려고 핸드폰을 꽂았는데 배터리가 없답니다 그리고 배터리 자체도 충전이 엄청 느려요 왜그러는지 모르겠어요 고객센터 가기도 귀찮은데 ,,,, 아오",
+        "aidaModifyTime": "2023-09-11 16:29:28",
+        "mallId": "allinfok",
+        "mallSeq": "259852",
+        "matchNvMid": "37823873619",
+        "nvMid": "85660510368",
+        "qualityScore": 0.706736,
+        "starScore": 3,
+        "topicCount": 1,
+        "topicYn": "Y",
+        "topics": [
+            {
+                "topicCode": "total",
+                "topicName": "만족도",
+                "startPosition": 137,
+                "endPosition": 158,
+                "positiveYn": "Y",
+                "reputationScore": 510
+            }
+        ],
+        "userId": "koji****",
+        "mallName": "삼성공식파트너 올인포케이",
+        "our_topics": [
+            {
+                "text": "이거 좀 이상합니다 제가 불량이 걸린건지 모르겠는데 분명 어제까지만해도 불3개가 들어와있었는데 오늘 사용하려고 핸드폰을 꽂았는데 배터리가 없답니다",
+                "topic": "잔량표시",
+                "topic_score": 2,
+                "start_pos": 0,
+                "end_pos": 82,
+                "positive_yn": "N",
+                "sentiment_scale": 2
+            },
+            {
+                "text": "그리고 배터리 자체도 충전이 엄청 느려요 왜그러는지 모르겠어요",
+                "topic": "충전",
+                "start_pos": 82,
+                "end_pos": 117,
+                "positive_yn": "N",
+                "sentiment_scale": 2,
+                "topic_score": 2
+            }
+        ]
+    },
+    {
+        "id": "4255968865-costplus-7757677847",
+        "content": "제품 자체는 마음에 드는데, 제조일자가 2019년이라서 2점 뺐습니다",
+        "aidaModifyTime": "2023-08-25 14:27:35",
+        "mallId": "costplus",
+        "mallSeq": "452737",
+        "matchNvMid": "37823873619",
+        "nvMid": "85302178169",
+        "qualityScore": 0.065965,
+        "starScore": 3,
+        "topicCount": 1,
+        "topicYn": "Y",
+        "topics": [
+            {
+                "topicCode": "total",
+                "topicName": "만족도",
+                "startPosition": 0,
+                "endPosition": 35,
+                "positiveYn": "Y",
+                "reputationScore": 319
+            }
+        ],
+        "userId": "jomo****",
+        "mallName": "코스트플러스",
+        "our_topics": [
+            {
+                "text": "제품 자체는 마음에 드는데, 제조일자가 2019년이라서 2점 뺐습니다",
+                "topic": "기타",
+                "topic_score": 2,
+                "start_pos": 0,
+                "end_pos": 39,
+                "positive_yn": "N",
+                "sentiment_scale": 2
+            }
+        ]
+    },
+    {
+        "id": "4263955571-ncp_1nushe_01-8118130886",
+        "content": "좋은데 미끄러워서 사용하기 불편해요 ㅠㅠ",
+        "aidaModifyTime": "2023-06-02 03:53:26",
+        "mallId": "ncp_1nushe_01",
+        "mallSeq": "1100928",
+        "matchNvMid": "37823873619",
+        "nvMid": "85662631209",
+        "qualityScore": 0.065228,
+        "starScore": 3,
+        "topicCount": 1,
+        "topicYn": "Y",
+        "topics": [
+            {
+                "topicCode": "usability",
+                "topicName": "사용감",
+                "startPosition": 28,
+                "endPosition": 52,
+                "positiveYn": "N",
+                "reputationScore": 536
+            }
+        ],
+        "userId": "jyd5****",
+        "mallName": "주식회사 리플레이",
+        "our_topics": [
+            {
+                "text": "좋은데 미끄러워서 사용하기 불편해요 ㅠㅠ",
+                "topic": "그립감",
+                "topic_score": 2,
+                "start_pos": 0,
+                "end_pos": 23,
+                "positive_yn": "N",
+                "sentiment_scale": 1
+            }
+        ]
+    },
+    {
+        "id": "166339775-goodsdaq-3056279386",
+        "content": "제조연월일이 좀 오래 되어서 아쉬워요",
+        "aidaModifyTime": "2024-03-10 03:04:35",
+        "mallId": "goodsdaq",
+        "mallSeq": "24",
+        "matchNvMid": "37823873619",
+        "nvMid": "45147587686",
+        "qualityScore": 0.06502,
+        "starScore": 3,
+        "topicCount": 1,
+        "topicYn": "Y",
+        "topics": [
+            {
+                "topicCode": "total",
+                "topicName": "만족도",
+                "startPosition": 0,
+                "endPosition": 51,
+                "positiveYn": "N",
+                "reputationScore": 713
+            }
+        ],
+        "userId": "f*x*****",
+        "mallName": "G마켓",
+        "our_topics": [
+            {
+                "text": "제조연월일이 좀 오래 되어서 아쉬워요",
+                "topic": "기타",
+                "topic_score": 1,
+                "start_pos": 0,
+                "end_pos": 21,
+                "positive_yn": "N",
+                "sentiment_scale": 1
+            }
+        ]
+    },
+    {
+        "id": "166409033-goodsdaq-2769246195",
+        "content": "무게감은 딱좋고 제폰에 충전하면 어쩌다한번 충전안되서 한두번 다시 꽂아줘야돼요상품은 그냥 그래요",
+        "aidaModifyTime": "2024-03-13 03:09:28",
+        "mallId": "goodsdaq",
+        "mallSeq": "24",
+        "matchNvMid": "37823873619",
+        "nvMid": "38889335038",
+        "qualityScore": 0.066319,
+        "starScore": 3,
+        "topicCount": 3,
+        "topicYn": "Y",
+        "topics": [
+            {
+                "topicCode": "weight",
+                "topicName": "무게",
+                "startPosition": 0,
+                "endPosition": 21,
+                "positiveYn": "Y",
+                "reputationScore": 510
+            },
+            {
+                "topicCode": "charging",
+                "topicName": "충전",
+                "startPosition": 55,
+                "endPosition": 76,
+                "positiveYn": "N",
+                "reputationScore": 510
+            },
+            {
+                "topicCode": "total",
+                "topicName": "만족도",
+                "startPosition": 114,
+                "endPosition": 139,
+                "positiveYn": "N",
+                "reputationScore": 557
+            }
+        ],
+        "userId": "o*j*****",
+        "mallName": "G마켓",
+        "our_topics": [
+            {
+                "text": "무게감은 딱좋고",
+                "topic": "무게",
+                "topic_score": 1,
+                "start_pos": 0,
+                "end_pos": 9,
+                "positive_yn": "Y",
+                "sentiment_scale": 1
+            },
+            {
+                "text": "제폰에 충전하면 어쩌다한번 충전안되서 한두번 다시 꽂아줘야돼요",
+                "topic": "충전",
+                "start_pos": 9,
+                "end_pos": 44,
+                "positive_yn": "N",
+                "sentiment_scale": 1,
+                "topic_score": 2
+            }
+        ]
+    },
+    {
+        "id": "2429001093-auction-D495975189",
+        "content": "배송도 빠르고 작동도 잘되서 좋은데\n가격이 저렴할때 예상했지만 제조일이 좀 지나서\n배터리가 완전 방전나있던게 아쉽네요",
+        "aidaModifyTime": "2024-01-07 03:11:47",
+        "mallId": "auction",
+        "mallSeq": "114",
+        "matchNvMid": "37823873619",
+        "nvMid": "44493693667",
+        "qualityScore": 0.068105,
+        "starScore": 3,
+        "topicCount": 2,
+        "topicYn": "Y",
+        "topics": [
+            {
+                "topicCode": "total",
+                "topicName": "만족도",
+                "startPosition": 0,
+                "endPosition": 38,
+                "positiveYn": "Y",
+                "reputationScore": 524
+            },
+            {
+                "topicCode": "price",
+                "topicName": "가격",
+                "startPosition": 53,
+                "endPosition": 90,
+                "positiveYn": "Y",
+                "reputationScore": 340
+            }
+        ],
+        "userId": "t*u*****",
+        "mallName": "옥션",
+        "our_topics": [
+            {
+                "text": "배송도 빠르고 작동도 잘되서 좋은데",
+                "topic": "배송",
+                "topic_score": 1,
+                "start_pos": 0,
+                "end_pos": 20,
+                "positive_yn": "Y",
+                "sentiment_scale": 1
+            },
+            {
+                "text": "가격이 저렴할때 예상했지만 제조일이 좀 지나서\n배터리가 완전 방전나있던게 아쉽네요",
+                "topic": "기타",
+                "start_pos": 20,
+                "end_pos": 66,
+                "positive_yn": "N",
+                "sentiment_scale": 1,
+                "topic_score": 3
+            }
+        ]
+    },
+    {
+        "id": "4338987854-allinfok-8116010045",
+        "content": "휴대성좋고 깔끔해요 연결을 안해도 배터리가 원래 빨리 줄어드나요 생각보다 빨리 없어져서 당황 센터가봐야하나 고민중입니다",
+        "aidaModifyTime": "2023-09-27 03:39:59",
+        "mallId": "allinfok",
+        "mallSeq": "259852",
+        "matchNvMid": "37823873619",
+        "nvMid": "85660510368",
+        "qualityScore": 0.067495,
+        "starScore": 3,
+        "topicCount": 2,
+        "topicYn": "Y",
+        "topics": [
+            {
+                "topicCode": "portability",
+                "topicName": "휴대성",
+                "startPosition": 0,
+                "endPosition": 14,
+                "positiveYn": "Y",
+                "reputationScore": 354
+            },
+            {
+                "topicCode": "total",
+                "topicName": "만족도",
+                "startPosition": 94,
+                "endPosition": 125,
+                "positiveYn": "Y",
+                "reputationScore": 543
+            }
+        ],
+        "userId": "alsl****",
+        "mallName": "삼성공식파트너 올인포케이",
+        "our_topics": [
+            {
+                "text": "휴대성좋고",
+                "topic": "휴대성",
+                "topic_score": 1,
+                "start_pos": 0,
+                "end_pos": 6,
+                "positive_yn": "Y",
+                "sentiment_scale": 1
+            },
+            {
+                "text": "깔끔해요",
+                "topic": "디자인",
+                "start_pos": 6,
+                "end_pos": 11,
+                "positive_yn": "Y",
+                "sentiment_scale": 1,
+                "topic_score": 1
+            },
+            {
+                "text": "연결을 안해도 배터리가 원래 빨리 줄어드나요 생각보다 빨리 없어져서 당황 센터가봐야하나 고민중입니다",
+                "topic": "충전",
+                "start_pos": 11,
+                "end_pos": 67,
+                "positive_yn": "N",
+                "sentiment_scale": 2,
+                "topic_score": 2
+            }
+        ]
+    },
+    {
+        "id": "4338748378-ncp_1occpm_01-8977082019",
+        "content": "디자인은 별로충전은 빠릅니다",
+        "aidaModifyTime": "2023-09-25 03:37:25",
+        "mallId": "ncp_1occpm_01",
+        "mallSeq": "5317375",
+        "matchNvMid": "37823873619",
+        "nvMid": "86521582342",
+        "qualityScore": 0.064788,
+        "starScore": 3,
+        "topicCount": 2,
+        "topicYn": "Y",
+        "topics": [
+            {
+                "topicCode": "design",
+                "topicName": "디자인",
+                "startPosition": 0,
+                "endPosition": 18,
+                "positiveYn": "N",
+                "reputationScore": 339
+            },
+            {
+                "topicCode": "charging",
+                "topicName": "충전",
+                "startPosition": 21,
+                "endPosition": 42,
+                "positiveYn": "Y",
+                "reputationScore": 504
+            }
+        ],
+        "userId": "jinr****",
+        "mallName": "고 마켓",
+        "our_topics": [
+            {
+                "text": "디자인은 별로",
+                "topic": "디자인",
+                "topic_score": 1,
+                "start_pos": 0,
+                "end_pos": 8,
+                "positive_yn": "N",
+                "sentiment_scale": 1
+            },
+            {
+                "text": "충전은 빠릅니다",
+                "topic": "충전",
+                "start_pos": 7,
+                "end_pos": 16,
+                "positive_yn": "Y",
+                "sentiment_scale": 1,
+                "topic_score": 1
+            }
+        ]
+    },
+    {
+        "id": "4385509404-dmacshop-8010745255",
+        "content": "휴대성이조아요\n굿굿",
+        "aidaModifyTime": "2023-12-11 03:45:37",
+        "mallId": "dmacshop",
+        "mallSeq": "243297",
+        "matchNvMid": "37823873619",
+        "nvMid": "85555245578",
+        "qualityScore": 0.064377,
+        "starScore": 3,
+        "topicCount": 2,
+        "topicYn": "Y",
+        "topics": [
+            {
+                "topicCode": "total",
+                "topicName": "만족도",
+                "startPosition": 0,
+                "endPosition": 20,
+                "positiveYn": "Y",
+                "reputationScore": 477
+            },
+            {
+                "topicCode": "total",
+                "topicName": "만족도",
+                "startPosition": 26,
+                "endPosition": 31,
+                "positiveYn": "Y",
+                "reputationScore": 40
+            }
+        ],
+        "userId": "yes1****",
+        "mallName": "삼성공식파트너 dmac",
+        "our_topics": [
+            {
+                "text": "휴대성이조아요",
+                "topic": "휴대성",
+                "topic_score": 1,
+                "start_pos": 0,
+                "end_pos": 8,
+                "positive_yn": "Y",
+                "sentiment_scale": 1
+            }
+        ]
+    },
+    {
+        "id": "4276606523-ncp_1nushe_01-8118130886",
+        "content": "깔끔한 상품감사합니다 택배박스안에 배터리팩만 있어서 아쉬워요",
+        "aidaModifyTime": "2023-06-21 04:46:48",
+        "mallId": "ncp_1nushe_01",
+        "mallSeq": "1100928",
+        "matchNvMid": "37823873619",
+        "nvMid": "85662631209",
+        "qualityScore": 0.062698,
+        "starScore": 3,
+        "topicCount": 2,
+        "topicYn": "Y",
+        "topics": [
+            {
+                "topicCode": "total",
+                "topicName": "만족도",
+                "startPosition": 0,
+                "endPosition": 30,
+                "positiveYn": "Y",
+                "reputationScore": 536
+            },
+            {
+                "topicCode": "total",
+                "topicName": "만족도",
+                "startPosition": 77,
+                "endPosition": 88,
+                "positiveYn": "N",
+                "reputationScore": 318
+            }
+        ],
+        "userId": "zero****",
+        "mallName": "주식회사 리플레이",
+        "our_topics": [
+            {
+                "text": "택배박스안에 배터리팩만 있어서 아쉬워요",
+                "topic": "배송",
+                "topic_score": 2,
+                "start_pos": 12,
+                "end_pos": 34,
+                "positive_yn": "N",
+                "sentiment_scale": 1
+            }
+        ]
+    },
+    {
+        "id": "154513250-goodsdaq-2772025108",
+        "content": "제품은 맘에 드나 포장이 뾱뾱이같은거 한장도 없이 그냥 담겨옴 충격에 예민한 배터린데 너무하네요 충전줄도 짧아서 좀 아쉬워요",
+        "aidaModifyTime": "2023-07-16 03:07:51",
+        "mallId": "goodsdaq",
+        "mallSeq": "24",
+        "matchNvMid": "37823873619",
+        "nvMid": "37617777379",
+        "qualityScore": 0.068298,
+        "starScore": 3,
+        "topicCount": 1,
+        "topicYn": "Y",
+        "topics": [
+            {
+                "topicCode": "total",
+                "topicName": "만족도",
+                "startPosition": 159,
+                "endPosition": 174,
+                "positiveYn": "N",
+                "reputationScore": 370
+            }
+        ],
+        "userId": "h*h*****",
+        "mallName": "G마켓",
+        "our_topics": [
+            {
+                "text": "제품은 맘에 드나 포장이 뾱뾱이같은거 한장도 없이 그냥 담겨옴 충격에 예민한 배터린데 너무하네요",
+                "topic": "배송",
+                "topic_score": 3,
+                "start_pos": 0,
+                "end_pos": 54,
+                "positive_yn": "N",
+                "sentiment_scale": 2
+            },
+            {
+                "text": "충전줄도 짧아서 좀 아쉬워요",
+                "topic": "케이블",
+                "start_pos": 54,
+                "end_pos": 70,
+                "positive_yn": "N",
+                "sentiment_scale": 1,
+                "topic_score": 2
+            }
+        ]
+    },
+    {
+        "id": "4328519493-allinfok-8116010045",
+        "content": "포장이 아쉬웠어요\n완충제하나없이 달랑 배터리만 있어서 받을때 별로였네요, 다행이 아직까진 기능에 문제는 없지만요",
+        "aidaModifyTime": "2023-09-11 16:29:23",
+        "mallId": "allinfok",
+        "mallSeq": "259852",
+        "matchNvMid": "37823873619",
+        "nvMid": "85660510368",
+        "qualityScore": 0.067884,
+        "starScore": 3,
+        "topicCount": 1,
+        "topicYn": "Y",
+        "topics": [
+            {
+                "topicCode": "total",
+                "topicName": "만족도",
+                "startPosition": 0,
+                "endPosition": 25,
+                "positiveYn": "N",
+                "reputationScore": 506
+            }
+        ],
+        "userId": "thdr****",
+        "mallName": "삼성공식파트너 올인포케이",
+        "our_topics": [
+            {
+                "text": "포장이 아쉬웠어요\n완충제하나없이 달랑 배터리만 있어서 받을때 별로였네요, 다행이 아직까진 기능에 문제는 없지만요",
+                "topic": "배송",
+                "topic_score": 3,
+                "start_pos": 0,
+                "end_pos": 63,
+                "positive_yn": "N",
+                "sentiment_scale": 2
+            }
+        ]
+    },
+    {
+        "id": "157714113-goodsdaq-2769246195",
+        "content": "배낭 여행을 위해 새 것 선택하였는데 생각했던 것 보다 좀 무겁네요",
+        "aidaModifyTime": "2023-09-20 03:07:01",
+        "mallId": "goodsdaq",
+        "mallSeq": "24",
+        "matchNvMid": "37823873619",
+        "nvMid": "38889335038",
+        "qualityScore": 0.066045,
+        "starScore": 3,
+        "topicCount": 1,
+        "topicYn": "Y",
+        "topics": [
+            {
+                "topicCode": "total",
+                "topicName": "만족도",
+                "startPosition": 51,
+                "endPosition": 90,
+                "positiveYn": "N",
+                "reputationScore": 692
+            }
+        ],
+        "userId": "j*c*****",
+        "mallName": "G마켓",
+        "our_topics": [
+            {
+                "text": "배낭 여행을 위해 새 것 선택하였는데 생각했던 것 보다 좀 무겁네요",
+                "topic": "무게",
+                "topic_score": 2,
+                "start_pos": 0,
+                "end_pos": 38,
+                "positive_yn": "N",
+                "sentiment_scale": 1
+            }
+        ]
+    },
+    {
+        "id": "166539252-goodsdaq-3042348099",
+        "content": "잘 쓰고 있습니다 고속 충전보조배터리 좋은 가격에 잘 구매했어요",
+        "aidaModifyTime": "2024-03-15 03:12:44",
+        "mallId": "goodsdaq",
+        "mallSeq": "24",
+        "matchNvMid": "37823873619",
+        "nvMid": "41001928866",
+        "qualityScore": 0.065965,
+        "starScore": 3,
+        "topicCount": 1,
+        "topicYn": "Y",
+        "topics": [
+            {
+                "topicCode": "price",
+                "topicName": "가격",
+                "startPosition": 53,
+                "endPosition": 88,
+                "positiveYn": "Y",
+                "reputationScore": 646
+            }
+        ],
+        "userId": "j*n*****",
+        "mallName": "G마켓",
+        "our_topics": []
+    },
+    {
+        "id": "4318473733-dmacshop-8010745255",
+        "content": "새기계는 충전이 원래 안 되있나요\n고장난 건 줄ㅎ 괜찮아요",
+        "aidaModifyTime": "2023-09-11 16:29:23",
+        "mallId": "dmacshop",
+        "mallSeq": "243297",
+        "matchNvMid": "37823873619",
+        "nvMid": "85555245578",
+        "qualityScore": 0.065701,
+        "starScore": 3,
+        "topicCount": 1,
+        "topicYn": "Y",
+        "topics": [
+            {
+                "topicCode": "total",
+                "topicName": "만족도",
+                "startPosition": 71,
+                "endPosition": 82,
+                "positiveYn": "Y",
+                "reputationScore": 273
+            }
+        ],
+        "userId": "hana****",
+        "mallName": "삼성공식파트너 dmac",
+        "our_topics": [
+            {
+                "text": "새기계는 충전이 원래 안 되있나요\n고장난 건 줄ㅎ",
+                "topic": "기타",
+                "topic_score": 2,
+                "start_pos": 0,
+                "end_pos": 28,
+                "positive_yn": "N",
+                "sentiment_scale": 1
+            }
+        ]
+    },
+    {
+        "id": "4297350210-costplus-8044481149",
+        "content": "배송은 빠르나 제품 충전이 안되서 받자마자 As갔다왔네요",
+        "aidaModifyTime": "2023-07-23 03:46:40",
+        "mallId": "costplus",
+        "mallSeq": "452737",
+        "matchNvMid": "37823873619",
+        "nvMid": "85588981472",
+        "qualityScore": 0.065674,
+        "starScore": 3,
+        "topicCount": 1,
+        "topicYn": "Y",
+        "topics": [
+            {
+                "topicCode": "charging",
+                "topicName": "충전",
+                "startPosition": 20,
+                "endPosition": 45,
+                "positiveYn": "N",
+                "reputationScore": 508
+            }
+        ],
+        "userId": "way1****",
+        "mallName": "코스트플러스",
+        "our_topics": [
+            {
+                "text": "배송은 빠르나",
+                "topic": "배송",
+                "topic_score": 1,
+                "start_pos": 0,
+                "end_pos": 8,
+                "positive_yn": "Y",
+                "sentiment_scale": 1
+            },
+            {
+                "text": "제품 충전이 안되서 받자마자 As갔다왔네요",
+                "topic": "AS",
+                "start_pos": 8,
+                "end_pos": 32,
+                "positive_yn": "N",
+                "sentiment_scale": 1,
+                "topic_score": 2
+            }
+        ]
+    },
+    {
+        "id": "4224742280-allinfok-8116010045",
+        "content": "배송 빠르고 디자인도 무난한 것 같습니다",
+        "aidaModifyTime": "2023-09-11 16:29:24",
+        "mallId": "allinfok",
+        "mallSeq": "259852",
+        "matchNvMid": "37823873619",
+        "nvMid": "85660510368",
+        "qualityScore": 0.065124,
+        "starScore": 3,
+        "topicCount": 1,
+        "topicYn": "Y",
+        "topics": [
+            {
+                "topicCode": "design",
+                "topicName": "디자인",
+                "startPosition": 17,
+                "endPosition": 55,
+                "positiveYn": "Y",
+                "reputationScore": 602
+            }
+        ],
+        "userId": "tlcy****",
+        "mallName": "삼성공식파트너 올인포케이",
+        "our_topics": [
+            {
+                "text": "배송 빠르고",
+                "topic": "배송",
+                "topic_score": 1,
+                "start_pos": 0,
+                "end_pos": 7,
+                "positive_yn": "Y",
+                "sentiment_scale": 1
+            },
+            {
+                "text": "디자인도 무난한 것 같습니다",
+                "topic": "디자인",
+                "start_pos": 7,
+                "end_pos": 23,
+                "positive_yn": "Y",
+                "sentiment_scale": 1,
+                "topic_score": 1
+            }
+        ]
+    },
+    {
+        "id": "4325907875-allinfok-8116010045",
+        "content": "그럭저럭 괜찮은 듯 한데 가격이 비싼 듯",
+        "aidaModifyTime": "2023-09-11 16:29:26",
+        "mallId": "allinfok",
+        "mallSeq": "259852",
+        "matchNvMid": "37823873619",
+        "nvMid": "85660510368",
+        "qualityScore": 0.065046,
+        "starScore": 3,
+        "topicCount": 1,
+        "topicYn": "Y",
+        "topics": [
+            {
+                "topicCode": "price",
+                "topicName": "가격",
+                "startPosition": 0,
+                "endPosition": 53,
+                "positiveYn": "Y",
+                "reputationScore": 661
+            }
+        ],
+        "userId": "msle****",
+        "mallName": "삼성공식파트너 올인포케이",
+        "our_topics": [
+            {
+                "text": "그럭저럭 괜찮은 듯 한데 가격이 비싼 듯",
+                "topic": "기타",
+                "topic_score": 1,
+                "start_pos": 0,
+                "end_pos": 23,
+                "positive_yn": "N",
+                "sentiment_scale": 1
+            }
+        ]
+    },
+    {
+        "id": "4388807538-dmacshop-8010745255",
+        "content": "충전 문제없이 잘되서 만족해요",
+        "aidaModifyTime": "2023-12-15 05:14:40",
+        "mallId": "dmacshop",
+        "mallSeq": "243297",
+        "matchNvMid": "37823873619",
+        "nvMid": "85555245578",
+        "qualityScore": 0.064736,
+        "starScore": 3,
+        "topicCount": 1,
+        "topicYn": "Y",
+        "topics": [
+            {
+                "topicCode": "total",
+                "topicName": "만족도",
+                "startPosition": 30,
+                "endPosition": 41,
+                "positiveYn": "Y",
+                "reputationScore": 452
+            }
+        ],
+        "userId": "nori****",
+        "mallName": "삼성공식파트너 dmac",
+        "our_topics": []
+    },
+    {
+        "id": "4353774578-allinfok-8116010045",
+        "content": "생각보다 많이 괜찮아요",
+        "aidaModifyTime": "2023-10-21 03:58:45",
+        "mallId": "allinfok",
+        "mallSeq": "259852",
+        "matchNvMid": "37823873619",
+        "nvMid": "85660510368",
+        "qualityScore": 0.06448,
+        "starScore": 3,
+        "topicCount": 1,
+        "topicYn": "Y",
+        "topics": [
+            {
+                "topicCode": "total",
+                "topicName": "만족도",
+                "startPosition": 0,
+                "endPosition": 31,
+                "positiveYn": "Y",
+                "reputationScore": 592
+            }
+        ],
+        "userId": "wmko****",
+        "mallName": "삼성공식파트너 올인포케이",
+        "our_topics": []
+    },
+    {
+        "id": "4287751106-allinfok-8116010045",
+        "content": "삼성 휴대폰에서 최적화된 거 같습니다 그런데 생각보다 충전하는데 시간이 좀 걸리는 거 같습니다;;;",
+        "aidaModifyTime": "2023-09-11 16:29:40",
+        "mallId": "allinfok",
+        "mallSeq": "259852",
+        "matchNvMid": "37823873619",
+        "nvMid": "85660510368",
+        "qualityScore": 0.063629,
+        "starScore": 3,
+        "topicCount": 1,
+        "topicYn": "Y",
+        "topics": [
+            {
+                "topicCode": "total",
+                "topicName": "만족도",
+                "startPosition": 54,
+                "endPosition": 91,
+                "positiveYn": "Y",
+                "reputationScore": 373
+            }
+        ],
+        "userId": "upit****",
+        "mallName": "삼성공식파트너 올인포케이",
+        "our_topics": [
+            {
+                "text": "삼성 휴대폰에서 최적화된 거 같습니다 그런데 생각보다 충전하는데 시간이 좀 걸리는 거 같습니다;;;",
+                "topic": "충전",
+                "topic_score": 3,
+                "start_pos": 0,
+                "end_pos": 56,
+                "positive_yn": "N",
+                "sentiment_scale": 2
+            }
+        ]
+    },
+    {
+        "id": "4243889336-allinfok-8116010045",
+        "content": "무조건 5점 주는데 뾱뾱이도없고 에어쿠션도 없어서 3점드려요 이렇게 파시면 몇백원 아끼려다 몇십만원 손해봅니다 사장님",
+        "aidaModifyTime": "2023-09-11 16:29:15",
+        "mallId": "allinfok",
+        "mallSeq": "259852",
+        "matchNvMid": "37823873619",
+        "nvMid": "85660510368",
+        "qualityScore": 0.06805,
+        "starScore": 3,
+        "topicCount": 0,
+        "topicYn": "N",
+        "topics": [],
+        "userId": "gswj****",
+        "mallName": "삼성공식파트너 올인포케이",
+        "our_topics": [
+            {
+                "text": "무조건 5점 주는데 뾱뾱이도없고 에어쿠션도 없어서 3점드려요",
+                "topic": "배송",
+                "topic_score": 3,
+                "start_pos": 0,
+                "end_pos": 34,
+                "positive_yn": "N",
+                "sentiment_scale": 2
+            }
+        ]
+    },
+    {
+        "id": "4253502260-allinfok-8116010045",
+        "content": "뽁뽁이 같은거 없이 박스에 상품만 왔어요 전자제품인데 택배기사님은 문앞에 물건 던져버리구요",
+        "aidaModifyTime": "2023-09-11 16:29:19",
+        "mallId": "allinfok",
+        "mallSeq": "259852",
+        "matchNvMid": "37823873619",
+        "nvMid": "85660510368",
+        "qualityScore": 0.067092,
+        "starScore": 3,
+        "topicCount": 0,
+        "topicYn": "N",
+        "topics": [],
+        "userId": "mykj****",
+        "mallName": "삼성공식파트너 올인포케이",
+        "our_topics": [
+            {
+                "text": "뽁뽁이 같은거 없이 박스에 상품만 왔어요 전자제품인데 택배기사님은 문앞에 물건 던져버리구요",
+                "topic": "배송",
+                "topic_score": 3,
+                "start_pos": 0,
+                "end_pos": 51,
+                "positive_yn": "N",
+                "sentiment_scale": 2
+            }
+        ]
+    },
+    {
+        "id": "4273129238-allinfok-8116010045",
+        "content": "상자에 배터리본품만 달랑 들어와있어요 충진재도없이",
+        "aidaModifyTime": "2023-09-11 16:29:22",
+        "mallId": "allinfok",
+        "mallSeq": "259852",
+        "matchNvMid": "37823873619",
+        "nvMid": "85660510368",
+        "qualityScore": 0.065543,
+        "starScore": 3,
+        "topicCount": 0,
+        "topicYn": "N",
+        "topics": [],
+        "userId": "gkfh****",
+        "mallName": "삼성공식파트너 올인포케이",
+        "our_topics": [
+            {
+                "text": "상자에 배터리본품만 달랑 들어와있어요 충진재도없이",
+                "topic": "배송",
+                "topic_score": 3,
+                "start_pos": 0,
+                "end_pos": 28,
+                "positive_yn": "N",
+                "sentiment_scale": 2
+            }
+        ]
+    },
+    {
+        "id": "4286569044-allinfok-8116010045",
+        "content": "아이폰용으로 구입했는데 usb용이 없네요ㅜㅜ",
+        "aidaModifyTime": "2023-09-11 16:29:24",
+        "mallId": "allinfok",
+        "mallSeq": "259852",
+        "matchNvMid": "37823873619",
+        "nvMid": "85660510368",
+        "qualityScore": 0.065202,
+        "starScore": 3,
+        "topicCount": 0,
+        "topicYn": "N",
+        "topics": [],
+        "userId": "ggag****",
+        "mallName": "삼성공식파트너 올인포케이",
+        "our_topics": [
+            {
+                "text": "아이폰용으로 구입했는데 usb용이 없네요ㅜㅜ",
+                "topic": "호환성",
+                "topic_score": 2,
+                "start_pos": 0,
+                "end_pos": 25,
+                "positive_yn": "N",
+                "sentiment_scale": 2
+            }
+        ]
+    },
+    {
+        "id": "4311001911-costplus-7757677847",
+        "content": "제품은 브랜드라 좋으나 포장이 꽝입니다 제품포장도 정말 얇은데 뽁뽁이 한장 없이 덜렁 들어있더군요",
+        "aidaModifyTime": "2023-08-25 14:27:36",
+        "mallId": "costplus",
+        "mallSeq": "452737",
+        "matchNvMid": "37823873619",
+        "nvMid": "85302178169",
+        "qualityScore": 0.065076,
+        "starScore": 3,
+        "topicCount": 0,
+        "topicYn": "N",
+        "topics": [],
+        "userId": "eunh****",
+        "mallName": "코스트플러스",
+        "our_topics": [
+            {
+                "text": "제품은 브랜드라 좋으나 포장이 꽝입니다 제품포장도 정말 얇은데 뽁뽁이 한장 없이 덜렁 들어있더군요",
+                "topic": "배송",
+                "topic_score": 2,
+                "start_pos": 0,
+                "end_pos": 55,
+                "positive_yn": "N",
+                "sentiment_scale": 1
+            }
+        ]
+    },
+    {
+        "id": "4294162215-allinfok-8116010045",
+        "content": "걍 심플해요 케이블도주고 많이 파세요^^",
+        "aidaModifyTime": "2023-09-11 16:29:13",
+        "mallId": "allinfok",
+        "mallSeq": "259852",
+        "matchNvMid": "37823873619",
+        "nvMid": "85660510368",
+        "qualityScore": 0.065046,
+        "starScore": 3,
+        "topicCount": 0,
+        "topicYn": "N",
+        "topics": [],
+        "userId": "sm32****",
+        "mallName": "삼성공식파트너 올인포케이",
+        "our_topics": []
+    },
+    {
+        "id": "4349264947-dmacshop-8010745255",
+        "content": "배송 잘오고 제품 괜찮은거같아요",
+        "aidaModifyTime": "2023-10-16 03:41:24",
+        "mallId": "dmacshop",
+        "mallSeq": "243297",
+        "matchNvMid": "37823873619",
+        "nvMid": "85555245578",
+        "qualityScore": 0.064813,
+        "starScore": 3,
+        "topicCount": 0,
+        "topicYn": "N",
+        "topics": [],
+        "userId": "nori****",
+        "mallName": "삼성공식파트너 dmac",
+        "our_topics": []
+    },
+    {
+        "id": "150224536-goodsdaq-2770787613",
+        "content": "상품은 좋은데 배송이 너무느려요",
+        "aidaModifyTime": "2024-01-03 14:58:14",
+        "mallId": "goodsdaq",
+        "mallSeq": "24",
+        "matchNvMid": "37823873619",
+        "nvMid": "37576784760",
+        "qualityScore": 0.064813,
+        "starScore": 3,
+        "topicCount": 0,
+        "topicYn": "N",
+        "topics": [],
+        "userId": "h*d*****",
+        "mallName": "G마켓",
+        "our_topics": []
+    },
+    {
+        "id": "4205891207-allinfok-8116010045",
+        "content": "좋은데 너무삐싼 삼성 보조배터리",
+        "aidaModifyTime": "2023-09-11 16:29:14",
+        "mallId": "allinfok",
+        "mallSeq": "259852",
+        "matchNvMid": "37823873619",
+        "nvMid": "85660510368",
+        "qualityScore": 0.064813,
+        "starScore": 3,
+        "topicCount": 0,
+        "topicYn": "N",
+        "topics": [],
+        "userId": "jeff****",
+        "mallName": "삼성공식파트너 올인포케이",
+        "our_topics": []
+    },
+    {
+        "id": "4251780182-costplus-7757677847",
+        "content": "제조일자 보고 깜놀했네요",
+        "aidaModifyTime": "2023-08-25 14:27:35",
+        "mallId": "costplus",
+        "mallSeq": "452737",
+        "matchNvMid": "37823873619",
+        "nvMid": "85302178169",
+        "qualityScore": 0.064582,
+        "starScore": 3,
+        "topicCount": 0,
+        "topicYn": "N",
+        "topics": [],
+        "userId": "octo****",
+        "mallName": "코스트플러스",
+        "our_topics": []
+    },
+    {
+        "id": "154939338-goodsdaq-2769246195",
+        "content": "나름 좋게 구입건승하시길",
+        "aidaModifyTime": "2023-07-27 03:03:51",
+        "mallId": "goodsdaq",
+        "mallSeq": "24",
+        "matchNvMid": "37823873619",
+        "nvMid": "38889335038",
+        "qualityScore": 0.064556,
+        "starScore": 3,
+        "topicCount": 0,
+        "topicYn": "N",
+        "topics": [],
+        "userId": "h*e*****",
+        "mallName": "G마켓",
+        "our_topics": []
+    },
+    {
+        "id": "4250914957-allinfok-8116010045",
+        "content": "삼성정품 배터리 비싸요",
+        "aidaModifyTime": "2023-09-11 16:29:12",
+        "mallId": "allinfok",
+        "mallSeq": "259852",
+        "matchNvMid": "37823873619",
+        "nvMid": "85660510368",
+        "qualityScore": 0.06448,
+        "starScore": 3,
+        "topicCount": 0,
+        "topicYn": "N",
+        "topics": [],
+        "userId": "jeff****",
+        "mallName": "삼성공식파트너 올인포케이",
+        "our_topics": []
+    },
+    {
+        "id": "4282243377-costplus-7757677847",
+        "content": "2019년 3월 제조품입니다",
+        "aidaModifyTime": "2023-08-25 14:27:35",
+        "mallId": "costplus",
+        "mallSeq": "452737",
+        "matchNvMid": "37823873619",
+        "nvMid": "85302178169",
+        "qualityScore": 0.064454,
+        "starScore": 3,
+        "topicCount": 0,
+        "topicYn": "N",
+        "topics": [],
+        "userId": "mins****",
+        "mallName": "코스트플러스",
+        "our_topics": []
+    },
+    {
+        "id": "4266026250-allinfok-8116010045",
+        "content": "생각보자는보통입니다",
+        "aidaModifyTime": "2023-09-11 16:29:24",
+        "mallId": "allinfok",
+        "mallSeq": "259852",
+        "matchNvMid": "37823873619",
+        "nvMid": "85660510368",
+        "qualityScore": 0.064454,
+        "starScore": 3,
+        "topicCount": 0,
+        "topicYn": "N",
+        "topics": [],
+        "userId": "namu****",
+        "mallName": "삼성공식파트너 올인포케이",
+        "our_topics": []
+    },
+    {
+        "id": "4296868355-allinfok-8116010045",
+        "content": "조아요조아요조아요ㅋ",
+        "aidaModifyTime": "2023-09-12 08:34:04",
+        "mallId": "allinfok",
+        "mallSeq": "259852",
+        "matchNvMid": "37823873619",
+        "nvMid": "85660510368",
+        "qualityScore": 0.046434,
+        "starScore": 3,
+        "topicCount": 3,
+        "topicYn": "Y",
+        "topics": [
+            {
+                "topicCode": "total",
+                "topicName": "만족도",
+                "startPosition": 0,
+                "endPosition": 8,
+                "positiveYn": "Y",
+                "reputationScore": 254
+            },
+            {
+                "topicCode": "total",
+                "topicName": "만족도",
+                "startPosition": 9,
+                "endPosition": 17,
+                "positiveYn": "Y",
+                "reputationScore": 254
+            },
+            {
+                "topicCode": "total",
+                "topicName": "만족도",
+                "startPosition": 18,
+                "endPosition": 26,
+                "positiveYn": "Y",
+                "reputationScore": 257
+            }
+        ],
+        "userId": "kygg****",
+        "mallName": "삼성공식파트너 올인포케이",
+        "our_topics": []
+    },
+    {
+        "id": "229607876-11st-5443492761",
+        "content": "휴대용 보조바데리가 필요해서 인터넷 쇼핑하다가 디자인이 심플해서 구매했는데 받아보니 맘에듭니다, 다만 충전연결 선을 함께 세트로 판매하면 더좋겠네요, 별도구매라 아쉽네요",
+        "aidaModifyTime": "2023-09-07 03:06:12",
+        "mallId": "11st",
+        "mallSeq": "17703",
+        "matchNvMid": "37823873619",
+        "nvMid": "37553937644",
+        "qualityScore": 0.068467,
+        "starScore": 3,
+        "topicCount": 2,
+        "topicYn": "Y",
+        "topics": [
+            {
+                "topicCode": "total",
+                "topicName": "만족도",
+                "startPosition": 110,
+                "endPosition": 138,
+                "positiveYn": "Y",
+                "reputationScore": 595
+            },
+            {
+                "topicCode": "total",
+                "topicName": "만족도",
+                "startPosition": 214,
+                "endPosition": 241,
+                "positiveYn": "N",
+                "reputationScore": 520
+            }
+        ],
+        "userId": "kj******",
+        "mallName": "11번가",
+        "our_topics": []
+    },
+    {
+        "id": "4305475489-dmacshop-8010745255",
+        "content": "가볍고 디자인괜찮은데\n생각보다 충전이 느려요",
+        "aidaModifyTime": "2023-09-11 16:29:29",
+        "mallId": "dmacshop",
+        "mallSeq": "243297",
+        "matchNvMid": "37823873619",
+        "nvMid": "85555245578",
+        "qualityScore": 0.065281,
+        "starScore": 3,
+        "topicCount": 2,
+        "topicYn": "Y",
+        "topics": [
+            {
+                "topicCode": "design",
+                "topicName": "디자인",
+                "startPosition": 0,
+                "endPosition": 30,
+                "positiveYn": "Y",
+                "reputationScore": 272
+            },
+            {
+                "topicCode": "total",
+                "topicName": "만족도",
+                "startPosition": 35,
+                "endPosition": 66,
+                "positiveYn": "N",
+                "reputationScore": 577
+            }
+        ],
+        "userId": "frai****",
+        "mallName": "삼성공식파트너 dmac",
+        "our_topics": []
+    },
+    {
+        "id": "4321629987-allinfok-8116010045",
+        "content": "크고 무게감이 있네요\n충전은 잘되네요",
+        "aidaModifyTime": "2023-09-11 16:30:15",
+        "mallId": "allinfok",
+        "mallSeq": "259852",
+        "matchNvMid": "37823873619",
+        "nvMid": "85660510368",
+        "qualityScore": 0.062269,
+        "starScore": 3,
+        "topicCount": 2,
+        "topicYn": "Y",
+        "topics": [
+            {
+                "topicCode": "weight",
+                "topicName": "무게",
+                "startPosition": 7,
+                "endPosition": 28,
+                "positiveYn": "N",
+                "reputationScore": 489
+            },
+            {
+                "topicCode": "charging",
+                "topicName": "충전",
+                "startPosition": 33,
+                "endPosition": 54,
+                "positiveYn": "Y",
+                "reputationScore": 536
+            }
+        ],
+        "userId": "juha****",
+        "mallName": "삼성공식파트너 올인포케이",
+        "our_topics": []
+    },
+    {
+        "id": "4323795515-allinfok-8116010045",
+        "content": "충전케이블에 따라 충전이 될때도 있고 안될때도 있고 귀찮아서 그냥 쓰고 있어요 충전시간도 어쩔때는 하루 종일 걸리고\n두께도 얇고 모양도 좋은데 아무래도 뽑기를 잘못한듯ㅠㅠ",
+        "aidaModifyTime": "2023-09-11 16:29:23",
+        "mallId": "allinfok",
+        "mallSeq": "259852",
+        "matchNvMid": "37823873619",
+        "nvMid": "85660510368",
+        "qualityScore": 0.067039,
+        "starScore": 3,
+        "topicCount": 1,
+        "topicYn": "Y",
+        "topics": [
+            {
+                "topicCode": "design",
+                "topicName": "디자인",
+                "startPosition": 169,
+                "endPosition": 184,
+                "positiveYn": "Y",
+                "reputationScore": 430
+            }
+        ],
+        "userId": "yuni****",
+        "mallName": "삼성공식파트너 올인포케이",
+        "our_topics": []
+    },
+    {
+        "id": "4366607128-allinfok-8116010045",
+        "content": "그립감이 좋고 충전기는 다른것과 차이점은 모르겠어요",
+        "aidaModifyTime": "2023-11-12 03:54:15",
+        "mallId": "allinfok",
+        "mallSeq": "259852",
+        "matchNvMid": "37823873619",
+        "nvMid": "85660510368",
+        "qualityScore": 0.065595,
+        "starScore": 3,
+        "topicCount": 1,
+        "topicYn": "Y",
+        "topics": [
+            {
+                "topicCode": "practicability",
+                "topicName": "실용성",
+                "startPosition": 0,
+                "endPosition": 18,
+                "positiveYn": "Y",
+                "reputationScore": 420
+            }
+        ],
+        "userId": "yun9****",
+        "mallName": "삼성공식파트너 올인포케이",
+        "our_topics": []
+    },
+    {
+        "id": "203751666-11st-2793185180",
+        "content": "잘때 충전안해두고자서 아침이면항상 앵꼬라 충전시키느라 폰볼일포는데 좋아요",
+        "aidaModifyTime": "2024-03-26 14:25:00",
+        "mallId": "11st",
+        "mallSeq": "17703",
+        "matchNvMid": "37823873619",
+        "nvMid": "46104496819",
+        "qualityScore": 0.065272,
+        "starScore": 3,
+        "topicCount": 1,
+        "topicYn": "Y",
+        "topics": [
+            {
+                "topicCode": "total",
+                "topicName": "만족도",
+                "startPosition": 61,
+                "endPosition": 107,
+                "positiveYn": "Y",
+                "reputationScore": 685
+            }
+        ],
+        "userId": "qk******",
+        "mallName": "11번가",
+        "our_topics": []
+    },
+    {
+        "id": "4278656631-allinfok-8116010045",
+        "content": "배송 빠르고 좋아요 삼성이니 별세개",
+        "aidaModifyTime": "2023-09-11 16:29:36",
+        "mallId": "allinfok",
+        "mallSeq": "259852",
+        "matchNvMid": "37823873619",
+        "nvMid": "85660510368",
+        "qualityScore": 0.064917,
+        "starScore": 3,
+        "topicCount": 1,
+        "topicYn": "Y",
+        "topics": [
+            {
+                "topicCode": "total",
+                "topicName": "만족도",
+                "startPosition": 0,
+                "endPosition": 25,
+                "positiveYn": "Y",
+                "reputationScore": 506
+            }
+        ],
+        "userId": "azte****",
+        "mallName": "삼성공식파트너 올인포케이",
+        "our_topics": []
+    },
+    {
+        "id": "166379-samsungkorea123-EBP3400XUKGKR",
+        "content": "재질이 좋네요 더써봐야 알것같아요",
+        "aidaModifyTime": "2023-02-21 03:00:20",
+        "mallId": "samsungkorea123",
+        "mallSeq": "1186513",
+        "matchNvMid": "37823873619",
+        "nvMid": "37619209039",
+        "qualityScore": 0.064917,
+        "starScore": 3,
+        "topicCount": 1,
+        "topicYn": "Y",
+        "topics": [
+            {
+                "topicCode": "total",
+                "topicName": "만족도",
+                "startPosition": 0,
+                "endPosition": 18,
+                "positiveYn": "Y",
+                "reputationScore": 464
+            }
+        ],
+        "userId": "김*재*****",
+        "mallName": "삼성닷컴",
+        "our_topics": []
+    },
+    {
+        "id": "4260231854-allinfok-8116010045",
+        "content": "다음에 또 주문하겠습니다",
+        "aidaModifyTime": "2023-09-11 16:29:23",
+        "mallId": "allinfok",
+        "mallSeq": "259852",
+        "matchNvMid": "37823873619",
+        "nvMid": "85660510368",
+        "qualityScore": 0.064582,
+        "starScore": 3,
+        "topicCount": 1,
+        "topicYn": "Y",
+        "topics": [
+            {
+                "topicCode": "total",
+                "topicName": "만족도",
+                "startPosition": 0,
+                "endPosition": 34,
+                "positiveYn": "Y",
+                "reputationScore": 611
+            }
+        ],
+        "userId": "jjib****",
+        "mallName": "삼성공식파트너 올인포케이",
+        "our_topics": []
+    },
+    {
+        "id": "4330138655-dmacshop-8010745255",
+        "content": "처음에는 속도잘나오다 생각보다 충전속도가 빠르진않네요",
+        "aidaModifyTime": "2023-09-13 03:58:17",
+        "mallId": "dmacshop",
+        "mallSeq": "243297",
+        "matchNvMid": "37823873619",
+        "nvMid": "85555245578",
+        "qualityScore": 0.064134,
+        "starScore": 3,
+        "topicCount": 1,
+        "topicYn": "Y",
+        "topics": [
+            {
+                "topicCode": "total",
+                "topicName": "만족도",
+                "startPosition": 0,
+                "endPosition": 78,
+                "positiveYn": "N",
+                "reputationScore": 838
+            }
+        ],
+        "userId": "frai****",
+        "mallName": "삼성공식파트너 dmac",
+        "our_topics": []
+    },
+    {
+        "id": "4252393987-dmacshop-8010745255",
+        "content": "조금 무거운 느낌이 주머니가 부담스러워하네 디자인은 예뿐데 유에스비 없는것도 조금 부담스럽고",
+        "aidaModifyTime": "2023-09-11 16:29:39",
+        "mallId": "dmacshop",
+        "mallSeq": "243297",
+        "matchNvMid": "37823873619",
+        "nvMid": "85555245578",
+        "qualityScore": 0.064016,
+        "starScore": 3,
+        "topicCount": 1,
+        "topicYn": "Y",
+        "topics": [
+            {
+                "topicCode": "design",
+                "topicName": "디자인",
+                "startPosition": 63,
+                "endPosition": 133,
+                "positiveYn": "N",
+                "reputationScore": 830
+            }
+        ],
+        "userId": "youl****",
+        "mallName": "삼성공식파트너 dmac",
+        "our_topics": []
+    },
+    {
+        "id": "4275328458-allinfok-8116010045",
+        "content": "충전속도도 빠는데 핸드폰외의 다른기기에 충전이 안돼요",
+        "aidaModifyTime": "2023-09-11 16:29:26",
+        "mallId": "allinfok",
+        "mallSeq": "259852",
+        "matchNvMid": "37823873619",
+        "nvMid": "85660510368",
+        "qualityScore": 0.063875,
+        "starScore": 3,
+        "topicCount": 1,
+        "topicYn": "Y",
+        "topics": [
+            {
+                "topicCode": "charging",
+                "topicName": "충전",
+                "startPosition": 58,
+                "endPosition": 76,
+                "positiveYn": "N",
+                "reputationScore": 573
+            }
+        ],
+        "userId": "myo2****",
+        "mallName": "삼성공식파트너 올인포케이",
+        "our_topics": []
+    },
+    {
+        "id": "4272433856-dmacshop-8010745255",
+        "content": "상품은 만족합니다만 배송지연이 있어서 좀 아쉽습니다^^",
+        "aidaModifyTime": "2023-09-11 16:29:27",
+        "mallId": "dmacshop",
+        "mallSeq": "243297",
+        "matchNvMid": "37823873619",
+        "nvMid": "85555245578",
+        "qualityScore": 0.063716,
+        "starScore": 3,
+        "topicCount": 1,
+        "topicYn": "Y",
+        "topics": [
+            {
+                "topicCode": "total",
+                "topicName": "만족도",
+                "startPosition": 0,
+                "endPosition": 53,
+                "positiveYn": "Y",
+                "reputationScore": 396
+            }
+        ],
+        "userId": "kims****",
+        "mallName": "삼성공식파트너 dmac",
+        "our_topics": []
+    },
+    {
+        "id": "4316197224-allinfok-8116010045",
+        "content": "좀만 더 가벼우면 좋겠습니다 디자인이 예쁩니다",
+        "aidaModifyTime": "2023-09-11 16:29:24",
+        "mallId": "allinfok",
+        "mallSeq": "259852",
+        "matchNvMid": "37823873619",
+        "nvMid": "85660510368",
+        "qualityScore": 0.063072,
+        "starScore": 3,
+        "topicCount": 1,
+        "topicYn": "Y",
+        "topics": [
+            {
+                "topicCode": "design",
+                "topicName": "디자인",
+                "startPosition": 41,
+                "endPosition": 65,
+                "positiveYn": "Y",
+                "reputationScore": 502
+            }
+        ],
+        "userId": "99co****",
+        "mallName": "삼성공식파트너 올인포케이",
+        "our_topics": []
+    },
+    {
+        "id": "222654764-11st-5085320299",
+        "content": "빠른배송 감사합니다",
+        "aidaModifyTime": "2023-06-04 03:53:07",
+        "mallId": "11st",
+        "mallSeq": "17703",
+        "matchNvMid": "37823873619",
+        "nvMid": "35500399867",
+        "qualityScore": 0.061136,
+        "starScore": 3,
+        "topicCount": 1,
+        "topicYn": "Y",
+        "topics": [
+            {
+                "topicCode": "total",
+                "topicName": "만족도",
+                "startPosition": 0,
+                "endPosition": 27,
+                "positiveYn": "Y",
+                "reputationScore": 519
+            }
+        ],
+        "userId": "la******",
+        "mallName": "11번가",
+        "our_topics": []
+    },
+    {
+        "id": "184423345-lgeshop-1026839235",
+        "content": "초고속이라더니 아닌것같네요 충전속도가 느린것같네요",
+        "aidaModifyTime": "2023-07-16 03:08:08",
+        "mallId": "lgeshop",
+        "mallSeq": "1",
+        "matchNvMid": "37823873619",
+        "nvMid": "37650829569",
+        "qualityScore": 0.060737,
+        "starScore": 3,
+        "topicCount": 1,
+        "topicYn": "Y",
+        "topics": [
+            {
+                "topicCode": "charging",
+                "topicName": "충전",
+                "startPosition": 41,
+                "endPosition": 74,
+                "positiveYn": "N",
+                "reputationScore": 555
+            }
+        ],
+        "userId": "ku******",
+        "mallName": "GSSHOP",
+        "our_topics": []
+    },
+    {
+        "id": "2329470525-auction-C682821530",
+        "content": "너무 만족합니다\n삼성정품만 저는 사용합니다",
+        "aidaModifyTime": "2024-01-04 12:28:40",
+        "mallId": "auction",
+        "mallSeq": "114",
+        "matchNvMid": "37823873619",
+        "nvMid": "45022535623",
+        "qualityScore": 0.060601,
+        "starScore": 3,
+        "topicCount": 1,
+        "topicYn": "Y",
+        "topics": [
+            {
+                "topicCode": "total",
+                "topicName": "만족도",
+                "startPosition": 0,
+                "endPosition": 21,
+                "positiveYn": "Y",
+                "reputationScore": 533
+            }
+        ],
+        "userId": "m*n*****",
+        "mallName": "옥션",
+        "our_topics": []
+    },
+    {
+        "id": "231286425-11st-5443492761",
+        "content": "친구꺼빌려써봤다좋아서 구매해봤는데국내판매제품이아닌가스티커가많이붙여져있네요",
+        "aidaModifyTime": "2023-10-19 03:01:19",
+        "mallId": "11st",
+        "mallSeq": "17703",
+        "matchNvMid": "37823873619",
+        "nvMid": "37553937644",
+        "qualityScore": 0.066957,
+        "starScore": 3,
+        "topicCount": 0,
+        "topicYn": "N",
+        "topics": [],
+        "userId": "vk******",
+        "mallName": "11번가",
+        "our_topics": []
+    },
+    {
+        "id": "4301713644-costplus-8044481149",
+        "content": "배송빨라서 좋지만 제품 표면에 찐득이 같은게 좀 묻어있어서 새제품이 아닌건지 좀 찜찜합니다",
+        "aidaModifyTime": "2023-07-31 03:42:09",
+        "mallId": "costplus",
+        "mallSeq": "452737",
+        "matchNvMid": "37823873619",
+        "nvMid": "85588981472",
+        "qualityScore": 0.065838,
+        "starScore": 3,
+        "topicCount": 0,
+        "topicYn": "N",
+        "topics": [],
+        "userId": "hue9****",
+        "mallName": "코스트플러스",
+        "our_topics": []
+    },
+    {
+        "id": "4306266376-allinfok-8116010045",
+        "content": "완충이 안돼요\n하루종일 충전해도 세칸에서 넘어가질 않네요",
+        "aidaModifyTime": "2023-09-11 16:29:17",
+        "mallId": "allinfok",
+        "mallSeq": "259852",
+        "matchNvMid": "37823873619",
+        "nvMid": "85660510368",
+        "qualityScore": 0.065727,
+        "starScore": 3,
+        "topicCount": 0,
+        "topicYn": "N",
+        "topics": [],
+        "userId": "kwm1****",
+        "mallName": "삼성공식파트너 올인포케이",
+        "our_topics": []
+    },
+    {
+        "id": "4382027563-dmacshop-8010745255",
+        "content": "2개를 구매하였는데, 하나는 갑자기 방전이 되는 듯 해요",
+        "aidaModifyTime": "2023-12-05 03:45:36",
+        "mallId": "dmacshop",
+        "mallSeq": "243297",
+        "matchNvMid": "37823873619",
+        "nvMid": "85555245578",
+        "qualityScore": 0.065621,
+        "starScore": 3,
+        "topicCount": 0,
+        "topicYn": "N",
+        "topics": [],
+        "userId": "pc22****",
+        "mallName": "삼성공식파트너 dmac",
+        "our_topics": []
+    },
+    {
+        "id": "237557897-11st-5617905167",
+        "content": "보조배터리는 정품으로 사용하시는걸 권해드려요~",
+        "aidaModifyTime": "2024-03-24 03:04:01",
+        "mallId": "11st",
+        "mallSeq": "17703",
+        "matchNvMid": "37823873619",
+        "nvMid": "45146302443",
+        "qualityScore": 0.065385,
+        "starScore": 3,
+        "topicCount": 0,
+        "topicYn": "N",
+        "topics": [],
+        "userId": "le******",
+        "mallName": "11번가",
+        "our_topics": []
+    },
+    {
+        "id": "235997418-11st-5443492761",
+        "content": "무식하고 투박하게 큽니다 태블릿 충전용으로 삼",
+        "aidaModifyTime": "2024-02-06 03:00:41",
+        "mallId": "11st",
+        "mallSeq": "17703",
+        "matchNvMid": "37823873619",
+        "nvMid": "37553937644",
+        "qualityScore": 0.065359,
+        "starScore": 3,
+        "topicCount": 0,
+        "topicYn": "N",
+        "topics": [],
+        "userId": "mo******",
+        "mallName": "11번가",
+        "our_topics": []
+    },
+    {
+        "id": "2412353264-auction-C938403777",
+        "content": "배송은 빠른데 초고속충전은 아니네요",
+        "aidaModifyTime": "2023-10-24 03:03:03",
+        "mallId": "auction",
+        "mallSeq": "114",
+        "matchNvMid": "37823873619",
+        "nvMid": "37577785068",
+        "qualityScore": 0.065046,
+        "starScore": 3,
+        "topicCount": 0,
+        "topicYn": "N",
+        "topics": [],
+        "userId": "t*w*****",
+        "mallName": "옥션",
+        "our_topics": []
+    },
+    {
+        "id": "199694317-11st-4205608147",
+        "content": "삼성꺼라 믿고 샀어요배송이 빨라요",
+        "aidaModifyTime": "2024-02-27 11:51:45",
+        "mallId": "11st",
+        "mallSeq": "17703",
+        "matchNvMid": "37823873619",
+        "nvMid": "45127870209",
+        "qualityScore": 0.064891,
+        "starScore": 3,
+        "topicCount": 0,
+        "topicYn": "N",
+        "topics": [],
+        "userId": "co******",
+        "mallName": "11번가",
+        "our_topics": []
+    },
+    {
+        "id": "4291188434-allinfok-8116010045",
+        "content": "충전 연결 케이블이 너무 짧으무 ㅜ",
+        "aidaModifyTime": "2023-09-11 16:29:20",
+        "mallId": "allinfok",
+        "mallSeq": "259852",
+        "matchNvMid": "37823873619",
+        "nvMid": "85660510368",
+        "qualityScore": 0.064865,
+        "starScore": 3,
+        "topicCount": 0,
+        "topicYn": "N",
+        "topics": [],
+        "userId": "jhj2****",
+        "mallName": "삼성공식파트너 올인포케이",
+        "our_topics": []
+    },
+    {
+        "id": "4263474499-costplus-7757677847",
+        "content": "포장 잘되어 빠르게 왔어요",
+        "aidaModifyTime": "2023-08-25 14:27:37",
+        "mallId": "costplus",
+        "mallSeq": "452737",
+        "matchNvMid": "37823873619",
+        "nvMid": "85302178169",
+        "qualityScore": 0.064582,
+        "starScore": 3,
+        "topicCount": 0,
+        "topicYn": "N",
+        "topics": [],
+        "userId": "hyan****",
+        "mallName": "코스트플러스",
+        "our_topics": []
+    },
+    {
+        "id": "299039-samsungkorea123-EBP3400XUKGKR",
+        "content": "잘 맞아요 깔끔합니다",
+        "aidaModifyTime": "2024-02-08 03:01:23",
+        "mallId": "samsungkorea123",
+        "mallSeq": "1186513",
+        "matchNvMid": "37823873619",
+        "nvMid": "37619209039",
+        "qualityScore": 0.064454,
+        "starScore": 3,
+        "topicCount": 0,
+        "topicYn": "N",
+        "topics": [],
+        "userId": "곽*진*****",
+        "mallName": "삼성닷컴",
+        "our_topics": []
+    },
+    {
+        "id": "4294096694-allinfok-8116010045",
+        "content": "그럭저럭쓸만합니다",
+        "aidaModifyTime": "2023-09-11 16:29:25",
+        "mallId": "allinfok",
+        "mallSeq": "259852",
+        "matchNvMid": "37823873619",
+        "nvMid": "85660510368",
+        "qualityScore": 0.064428,
+        "starScore": 3,
+        "topicCount": 0,
+        "topicYn": "N",
+        "topics": [],
+        "userId": "orij****",
+        "mallName": "삼성공식파트너 올인포케이",
+        "our_topics": []
+    },
+    {
+        "id": "230101-samsungkorea123-EBP3400XUKGKR",
+        "content": "it' s okay",
+        "aidaModifyTime": "2023-07-16 03:00:27",
+        "mallId": "samsungkorea123",
+        "mallSeq": "1186513",
+        "matchNvMid": "37823873619",
+        "nvMid": "37619209039",
+        "qualityScore": 0.064048,
+        "starScore": 3,
+        "topicCount": 0,
+        "topicYn": "N",
+        "topics": [],
+        "userId": "G*******",
+        "mallName": "삼성닷컴",
+        "our_topics": []
+    },
+    {
+        "id": "4358263800-dmacshop-8010745255",
+        "content": "1박2일용 정도 용량입니다 보조배터리에서 휴대폰 충전시 보조배터리의 잔량표시가 없어서 불편함",
+        "aidaModifyTime": "2023-10-29 03:34:55",
+        "mallId": "dmacshop",
+        "mallSeq": "243297",
+        "matchNvMid": "37823873619",
+        "nvMid": "85555245578",
+        "qualityScore": 0.063043,
+        "starScore": 3,
+        "topicCount": 0,
+        "topicYn": "N",
+        "topics": [],
+        "userId": "soon****",
+        "mallName": "삼성공식파트너 dmac",
+        "our_topics": []
+    },
+    {
+        "id": "4258134294-allinfok-8116010045",
+        "content": "바깥에서 쿵하는 소리에 택배인가 싶어 나갔는데\n완충재없이 포장이ㅠㅠ신경쓰시길~~~되는지는 확인해봐야겠네요ㅜㅜ",
+        "aidaModifyTime": "2023-09-11 16:29:14",
+        "mallId": "allinfok",
+        "mallSeq": "259852",
+        "matchNvMid": "37823873619",
+        "nvMid": "85660510368",
+        "qualityScore": 0.062624,
+        "starScore": 3,
+        "topicCount": 0,
+        "topicYn": "N",
+        "topics": [],
+        "userId": "mkli****",
+        "mallName": "삼성공식파트너 올인포케이",
+        "our_topics": []
+    },
+    {
+        "id": "4271316228-allinfok-8116010045",
+        "content": "너무 무거워요 ㅠㅠ 쫌ㅜㅜ",
+        "aidaModifyTime": "2023-09-11 16:29:24",
+        "mallId": "allinfok",
+        "mallSeq": "259852",
+        "matchNvMid": "37823873619",
+        "nvMid": "85660510368",
+        "qualityScore": 0.061315,
+        "starScore": 3,
+        "topicCount": 0,
+        "topicYn": "N",
+        "topics": [],
+        "userId": "ygyf****",
+        "mallName": "삼성공식파트너 올인포케이",
+        "our_topics": []
+    },
+    {
+        "id": "4314151246-allinfok-8116010045",
+        "content": "충전시간이나 사용시간은 보통 만족이나 색상 선택 한정은 매우 불만족",
+        "aidaModifyTime": "2023-09-11 16:29:22",
+        "mallId": "allinfok",
+        "mallSeq": "259852",
+        "matchNvMid": "37823873619",
+        "nvMid": "85660510368",
+        "qualityScore": 0.061266,
+        "starScore": 3,
+        "topicCount": 0,
+        "topicYn": "N",
+        "topics": [],
+        "userId": "esh3****",
+        "mallName": "삼성공식파트너 올인포케이",
+        "our_topics": []
+    },
+    {
+        "id": "4290398142-allinfok-8116010045",
+        "content": "좀 무거워요 ㅜㅜㅜ",
+        "aidaModifyTime": "2023-09-11 16:29:24",
+        "mallId": "allinfok",
+        "mallSeq": "259852",
+        "matchNvMid": "37823873619",
+        "nvMid": "85660510368",
+        "qualityScore": 0.057848,
+        "starScore": 3,
+        "topicCount": 0,
+        "topicYn": "N",
+        "topics": [],
+        "userId": "ygyf****",
+        "mallName": "삼성공식파트너 올인포케이",
+        "our_topics": []
+    }
+]

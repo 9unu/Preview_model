@@ -2,7 +2,7 @@ import pandas as pd
 import os
 from collections import Counter
 from sklearn.model_selection import GroupShuffleSplit
-
+import time
 
 def print_dist(d, flag):
     print(d.head())
@@ -19,7 +19,6 @@ def print_dist(d, flag):
 def file_split(args):
     # 파싱할 파일 list 구성
     file_list = [os.path.join(args.fp, file) for file in os.listdir(args.fp) if "csv" in file]
-
     # 파일을 저장할 경로가 없다면 생성
     if not os.path.exists(args.save_p):
         os.makedirs(args.save_p)

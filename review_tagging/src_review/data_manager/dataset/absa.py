@@ -226,5 +226,3 @@ class ABSADataset(IterableDataset):
             "target_sentiment_score": torch.tensor(target_sentiment_score, dtype=torch.long),#### 스코어 두개 추가
             "target_aspect_score": torch.tensor(target_aspect_score, dtype=torch.long)
             }
-
-
