@@ -118,5 +118,3 @@ def json_2_csv(args):
     
     for a, b in zip(now_path, result_path):
         process_json_files_in_folder(a, b)
-
-       

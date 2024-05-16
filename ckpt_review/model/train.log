@@ -1,0 +1,6 @@
+2024-05-16 16:17:04;[INFO];[실행 명령어]: sh ./scripts_review/model/do_train.sh
+2024-05-16 16:17:04;[INFO];[Config]
+2024-05-16 16:17:04;[INFO];{'epochs': 10, 'train_batch_size': 4, 'valid_batch_size': 4, 'init_model_path': 'klue/bert-base', 'max_length': 512, 'need_birnn': 0, 'sentiment_drop_ratio': 0.3, 'aspect_drop_ratio': 0.3, 'sentiment_in_feature': 768, 'aspect_in_feature': 768, 'sentiment_score_in_feature': 768, 'aspect_score_in_feature': 768, 'stop_patience': 3, 'train_fp': './resources_review/parsing_data/train/', 'valid_fp': './resources_review/parsing_data/valid/', 'base_path': './ckpt_review/model/', 'label_info_file': 'meta.bin', 'out_model_path': 'pytorch_model.bin', 'cmd': 'sh ./scripts_review/model/do_train.sh'}
+2024-05-16 16:17:04;[INFO];>>>>>>> Device Setting
+2024-05-16 16:17:04;[INFO];Now using CPU
+2024-05-16 16:17:04;[INFO];>>>>>>> Now setting Sentiment&Aspect Category Encoder

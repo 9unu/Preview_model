@@ -9,7 +9,6 @@ from data_manager.parsers.split_csv import file_split
 import warnings
 warnings.filterwarnings(action='ignore')
 
-
 '''
     [args 내 argument list]
     - fp: 학습 데이터 형태로 파싱할 json 데이터의 경로 혹은 파일명
@@ -33,6 +32,5 @@ if __name__ == "__main__":
     json_2_csv(args=args)
     print(">> file splitter start to making training/valid/test set")
     args.fp = args.save_p
+    print(args.fp)
     file_split(args=args) # json_2_csv를 통해 생성된 파일을 학습/검증/테스트셋으로 분할
-
-
