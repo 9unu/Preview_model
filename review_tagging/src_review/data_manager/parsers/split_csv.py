@@ -53,13 +53,13 @@ def file_split(args):
         # 결과 파일 저장
         train.to_csv(os.path.join(args.save_p + save_dir_name[0],
                                   output_base_fp + save_dir_name[0] + ".csv"), encoding=args.encoding, index=False,
-                     line_terminator='\n')
+                     )
         val.to_csv(os.path.join(args.save_p + save_dir_name[1],
                                 output_base_fp + save_dir_name[1] + ".csv"), encoding=args.encoding, index=False,
-                   line_terminator='\n')
+                   )
         test.to_csv(os.path.join(args.save_p + save_dir_name[2],
                                  output_base_fp + save_dir_name[2] + ".csv"), encoding=args.encoding, index=False,
-                    line_terminator='\n')
+                    )
 
 
 
