@@ -52,6 +52,9 @@ def process_json_file(file_path):
     rows = []
     sentence_counter = 1
     for item in data:
+        if 'our_topics' not in item or not item['our_topics']:
+            continue
+        
         content = preprocess_text(item['content'])
         sentences = split_content_into_sentences(content)
         our_topics = sorted(item['our_topics'], key=lambda x: len(x['text']), reverse=True)
