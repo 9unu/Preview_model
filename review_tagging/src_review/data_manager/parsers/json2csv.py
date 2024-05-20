@@ -45,19 +45,44 @@ def tag_sentence(sentence, topics):
             start_idx = end_idx
     return tags
 
+def clean_data(our_topics):
+    if not our_topics:
+        return []
+    
+    cleansed_topics = []
+    for topic in our_topics:
+        if (not topic.get('text')
+            or not topic.get("topic")
+            or not topic.get("start_pos")
+            or not topic.get("end_pos")
+            or not topic.get("positive_yn")
+            or not topic.get("sentiment_scale")
+            or not topic.get("topic_score")
+            ):
+            continue
+
+        cleansed_topics.append(topic)
+    
+    return cleansed_topics
+
 def process_json_file(file_path):
     with open(file_path, 'r', encoding='utf-8-sig') as file:
         data = json.load(file)
-    
+    # print(f"현재 파일명: {file_path}")
     rows = []
     sentence_counter = 1
     for item in data:
-        if 'our_topics' not in item or not item['our_topics']:
+        
+
+        if 'our_topics' not in item or not item['our_topics']:            
             continue
         
         content = preprocess_text(item['content'])
         sentences = split_content_into_sentences(content)
-        our_topics = sorted(item['our_topics'], key=lambda x: len(x['text']), reverse=True)
+        
+        #  Add data cleansing about our_topics
+        our_topics = clean_data(item['our_topics'])
+        our_topics = sorted(our_topics, key=lambda x: len(x['text']), reverse=True)
         
         sent_idx = 0
         while sent_idx < len(sentences):
