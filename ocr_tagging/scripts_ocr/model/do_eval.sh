@@ -1,6 +1,6 @@
 #!/bin/bash
 
-eval_fp="./resources_ocr/data/test/"
+eval_fp="./resources_ocr/parsing_data/test/"
 eval_batch_size=4
 init_model_path=klue/bert-base
 max_length=512
