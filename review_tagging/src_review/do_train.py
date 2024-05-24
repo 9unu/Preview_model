@@ -39,16 +39,14 @@ def train(config):
     # enc_aspect >> 일반 속성 카테고리를 위한 Encoder
     # enc_aspect2 >> 대분류 속성 카테고리를 위한 Encoder
     # enc_sentiment >> 감성 속성을 위한 Encoder
-    enc_aspect, enc_aspect2, enc_sentiment, enc_sentiment_score, enc_aspect_score = enc.get_encoder()
-    meta_data = {"enc_aspect": enc_aspect, "enc_aspect2": enc_aspect2, "enc_sentiment": enc_sentiment,
-                 "enc_sentiment_score":enc_sentiment_score, "enc_aspect_score":enc_aspect_score}
+    enc_aspect, enc_aspect2, enc_sentiment = enc.get_encoder()
+    meta_data = {"enc_aspect": enc_aspect, "enc_aspect2": enc_aspect2, "enc_sentiment": enc_sentiment,}
 
     # Encoder에 fitting 된 class의 수를 get
     num_aspect = len(list(enc_aspect.classes_))
     num_aspect2 = len(list(enc_aspect2.classes_))
     num_sentiment = len(list(enc_sentiment.classes_))
-    num_sentiment_score = len(list(enc_sentiment_score.classes_))
-    num_aspect_score = len(list(enc_aspect_score.classes_))
+
     
     log.info('>>>>>>> Now setting train/valid DataLoaders')
     train_data_loader = set_loader(fp=train_fp, config=config, meta_data=meta_data, batch_size=config.train_batch_size)
@@ -56,7 +54,6 @@ def train(config):
 
     log.info('>>>>>>> Now setting Model Architecture')
     model = ABSAModel(config=config, num_sentiment=num_sentiment, num_aspect=num_aspect, num_aspect2=num_aspect2,
-                      num_sentiment_score=num_sentiment_score, num_aspect_score=num_aspect_score,
                       need_birnn=bool(config.need_birnn))
     model.to(device)
 
@@ -112,8 +109,6 @@ def train(config):
             model,
             enc_sentiment,
             enc_aspect,
-            enc_sentiment_score,
-            enc_aspect_score,
             device,
             log
         )
@@ -144,10 +139,6 @@ if __name__ == "__main__":
     parser.add_argument("--aspect_in_feature", type=int, default=768,
                         help="각 Aspect Category input sample의 size")
     
-    parser.add_argument("--sentiment_score_in_feature", type=int, default=768, ### 스코어 2개 추가
-                        help="각 Sentiment_score sample의 size")
-    parser.add_argument("--aspect_score_in_feature", type=int, default=768,    ### 스코어 2개 추가
-                        help="각 Aspect score input sample의 size")
     
     parser.add_argument("--stop_patience", type=int, default=3, help="validation loss를 기준으로 성능이 증가하지 않는 "
                                                                      "epoch을 몇 번이나 허용할 것인지 설정")

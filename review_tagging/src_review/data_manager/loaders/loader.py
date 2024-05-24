@@ -16,8 +16,7 @@ def worker_init_fn(_):
 # DataLoader setting
 def set_loader(fp, config, meta_data, batch_size, extension="csv"):
     dataset = ABSADataset(fp=fp, config=config, extension=extension, enc_aspect=meta_data["enc_aspect"],
-                          enc_aspect2=meta_data["enc_aspect2"], enc_sentiment=meta_data["enc_sentiment"],
-                          enc_aspect_score=meta_data["enc_aspect_score"], enc_sentiment_score=meta_data["enc_sentiment_score"]
+                          enc_aspect2=meta_data["enc_aspect2"], enc_sentiment=meta_data["enc_sentiment"]
                           , batch_size=batch_size)
 
     data_loader = torch.utils.data.DataLoader(dataset,
