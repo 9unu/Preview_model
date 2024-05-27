@@ -268,3 +268,117 @@ weighted avg     0.5748    0.7489    0.6504       450
 
 2024-05-24 21:13:25;[INFO];Train Loss = 63.223463617265224 Valid Loss = 59.49133384227753
 2024-05-24 21:13:26;[INFO];[Now Epoch: 3]
+2024-05-27 16:26:06;[INFO];[실행 명령어]: sh ./scripts_ocr/model/do_train.sh
+2024-05-27 16:26:06;[INFO];[Config]
+2024-05-27 16:26:06;[INFO];{'epochs': 10, 'train_batch_size': 4, 'valid_batch_size': 4, 'init_model_path': 'klue/bert-base', 'max_length': 512, 'need_birnn': 0, 'aspect_drop_ratio': 0.3, 'aspect_in_feature': 768, 'stop_patience': 3, 'train_fp': './resources_ocr/parsing_data/train/', 'valid_fp': './resources_ocr/parsing_data/valid/', 'base_path': './ckpt_ocr/model/', 'label_info_file': 'meta.bin', 'out_model_path': 'pytorch_model.bin', 'cmd': 'sh ./scripts_ocr/model/do_train.sh'}
+2024-05-27 16:26:06;[INFO];>>>>>>> Device Setting
+2024-05-27 16:26:06;[INFO];Now using CPU
+2024-05-27 16:26:06;[INFO];>>>>>>> Now setting Aspect Category Encoder
+2024-05-27 16:26:06;[INFO];>>>>>>> Now setting train/valid DataLoaders
+2024-05-27 16:26:06;[DEBUG];Starting new HTTPS connection (1): huggingface.co:443
+2024-05-27 16:26:06;[DEBUG];https://huggingface.co:443 "HEAD /klue/bert-base/resolve/main/vocab.txt HTTP/1.1" 200 0
+2024-05-27 16:26:07;[DEBUG];https://huggingface.co:443 "HEAD /klue/bert-base/resolve/main/vocab.txt HTTP/1.1" 200 0
+2024-05-27 16:26:07;[INFO];>>>>>>> Now setting Model Architecture
+2024-05-27 16:26:07;[DEBUG];https://huggingface.co:443 "HEAD /klue/bert-base/resolve/main/config.json HTTP/1.1" 200 0
+2024-05-27 16:26:09;[INFO];>>>>>>> Training Start!
+2024-05-27 16:26:09;[INFO];[Now Epoch: 0]
+2024-05-27 19:33:48;[INFO];[실행 명령어]: sh ./scripts_ocr/model/do_train.sh
+2024-05-27 19:33:48;[INFO];[Config]
+2024-05-27 19:33:48;[INFO];{'epochs': 10, 'train_batch_size': 4, 'valid_batch_size': 4, 'init_model_path': 'klue/bert-base', 'max_length': 512, 'need_birnn': 0, 'aspect_drop_ratio': 0.3, 'aspect_in_feature': 768, 'stop_patience': 3, 'train_fp': './resources_ocr/parsing_data/train/', 'valid_fp': './resources_ocr/parsing_data/valid/', 'base_path': './ckpt_ocr/model/', 'label_info_file': 'meta.bin', 'out_model_path': 'pytorch_model.bin', 'cmd': 'sh ./scripts_ocr/model/do_train.sh'}
+2024-05-27 19:33:48;[INFO];>>>>>>> Device Setting
+2024-05-27 19:33:48;[INFO];Now using CPU
+2024-05-27 19:33:48;[INFO];>>>>>>> Now setting Aspect Category Encoder
+2024-05-27 19:33:48;[INFO];>>>>>>> Now setting train/valid DataLoaders
+2024-05-27 19:33:48;[DEBUG];Starting new HTTPS connection (1): huggingface.co:443
+2024-05-27 19:33:48;[DEBUG];https://huggingface.co:443 "HEAD /klue/bert-base/resolve/main/vocab.txt HTTP/1.1" 200 0
+2024-05-27 19:33:49;[DEBUG];https://huggingface.co:443 "HEAD /klue/bert-base/resolve/main/vocab.txt HTTP/1.1" 200 0
+2024-05-27 19:33:49;[INFO];>>>>>>> Now setting Model Architecture
+2024-05-27 19:33:49;[DEBUG];https://huggingface.co:443 "HEAD /klue/bert-base/resolve/main/config.json HTTP/1.1" 200 0
+2024-05-27 19:33:50;[INFO];>>>>>>> Training Start!
+2024-05-27 19:33:50;[INFO];[Now Epoch: 0]
+2024-05-27 19:47:32;[INFO];*****eval metrics*****
+2024-05-27 19:47:32;[INFO];eval_loss: 49.402870178222656
+2024-05-27 19:47:32;[INFO];eval_runtime: 0:00:45.805668
+2024-05-27 19:47:32;[INFO];eval_samples: 8
+2024-05-27 19:47:32;[INFO];eval_samples_per_second: 0:00:05.725708
+2024-05-27 19:47:32;[INFO];Aspect Accuracy: 0.55
+2024-05-27 19:47:32;[INFO];Aspect f1score micro : 0.55
+2024-05-27 19:47:32;[INFO];Aspect Accuracy Report:
+2024-05-27 19:47:32;[INFO];              precision    recall  f1-score   support
+
+      B-고속충전     0.0000    0.0000    0.0000        11
+     B-과충전방지     0.0000    0.0000    0.0000         1
+      B-동시충전     0.0000    0.0000    0.0000         1
+      B-멀티포트     0.0000    0.0000    0.0000         4
+        B-색감     0.0000    0.0000    0.0000         2
+      B-잔량표시     0.0000    0.0000    0.0000         2
+        B-충전     0.0000    0.0000    0.0000         2
+       B-케이스     0.0000    0.0000    0.0000         2
+       B-휴대성     0.0000    0.0000    0.0000         2
+      I-고속충전     0.0000    0.0000    0.0000         8
+     I-과충전방지     0.0000    0.0000    0.0000         2
+      I-동시충전     0.0000    0.0000    0.0000         2
+      I-멀티포트     0.0000    0.0000    0.0000         7
+        I-색감     0.0000    0.0000    0.0000         3
+      I-잔량표시     0.0000    0.0000    0.0000         1
+        I-충전     0.0000    0.0000    0.0000        19
+       I-케이스     0.0000    0.0000    0.0000         2
+       I-휴대성     0.0000    0.0000    0.0000         2
+           O     0.6756    1.0000    0.8064       152
+
+    accuracy                         0.6756       225
+   macro avg     0.0356    0.0526    0.0424       225
+weighted avg     0.4564    0.6756    0.5447       225
+
+2024-05-27 19:47:32;[INFO];Train Loss = 73.6145791709423 Valid Loss = 49.402870178222656
+2024-05-27 19:47:33;[INFO];[Now Epoch: 1]
+2024-05-27 20:15:43;[INFO];[실행 명령어]: sh ./scripts_ocr/model/do_train.sh
+2024-05-27 20:15:43;[INFO];[Config]
+2024-05-27 20:15:43;[INFO];{'epochs': 10, 'train_batch_size': 4, 'valid_batch_size': 4, 'init_model_path': 'klue/bert-base', 'max_length': 512, 'need_birnn': 0, 'aspect_drop_ratio': 0.3, 'aspect_in_feature': 768, 'stop_patience': 3, 'train_fp': './resources_ocr/parsing_data/train/', 'valid_fp': './resources_ocr/parsing_data/valid/', 'base_path': './ckpt_ocr/model/', 'label_info_file': 'meta.bin', 'out_model_path': 'pytorch_model.bin', 'cmd': 'sh ./scripts_ocr/model/do_train.sh'}
+2024-05-27 20:15:43;[INFO];>>>>>>> Device Setting
+2024-05-27 20:15:43;[INFO];Now using CPU
+2024-05-27 20:15:43;[INFO];>>>>>>> Now setting Aspect Category Encoder
+2024-05-27 20:15:43;[INFO];>>>>>>> Now setting train/valid DataLoaders
+2024-05-27 20:15:43;[DEBUG];Starting new HTTPS connection (1): huggingface.co:443
+2024-05-27 20:15:43;[DEBUG];https://huggingface.co:443 "HEAD /klue/bert-base/resolve/main/vocab.txt HTTP/1.1" 200 0
+2024-05-27 20:15:44;[DEBUG];https://huggingface.co:443 "HEAD /klue/bert-base/resolve/main/vocab.txt HTTP/1.1" 200 0
+2024-05-27 20:15:44;[INFO];>>>>>>> Now setting Model Architecture
+2024-05-27 20:15:44;[DEBUG];https://huggingface.co:443 "HEAD /klue/bert-base/resolve/main/config.json HTTP/1.1" 200 0
+2024-05-27 20:15:46;[INFO];>>>>>>> Training Start!
+2024-05-27 20:15:46;[INFO];[Now Epoch: 0]
+2024-05-27 20:25:35;[INFO];*****eval metrics*****
+2024-05-27 20:25:35;[INFO];eval_loss: 49.717087745666504
+2024-05-27 20:25:35;[INFO];eval_runtime: 0:00:30.348411
+2024-05-27 20:25:35;[INFO];eval_samples: 8
+2024-05-27 20:25:35;[INFO];eval_samples_per_second: 0:00:03.793551
+2024-05-27 20:25:35;[INFO];Aspect Accuracy: 0.55
+2024-05-27 20:25:35;[INFO];Aspect f1score micro : 0.55
+2024-05-27 20:25:35;[INFO];Aspect Accuracy Report:
+2024-05-27 20:25:35;[INFO];              precision    recall  f1-score   support
+
+      B-고속충전     0.0000    0.0000    0.0000        11
+     B-과충전방지     0.0000    0.0000    0.0000         1
+      B-동시충전     0.0000    0.0000    0.0000         1
+      B-멀티포트     0.0000    0.0000    0.0000         4
+        B-색감     0.0000    0.0000    0.0000         2
+      B-잔량표시     0.0000    0.0000    0.0000         2
+        B-충전     0.0000    0.0000    0.0000         2
+       B-케이스     0.0000    0.0000    0.0000         2
+       B-휴대성     0.0000    0.0000    0.0000         2
+      I-고속충전     0.0000    0.0000    0.0000         8
+     I-과충전방지     0.0000    0.0000    0.0000         2
+      I-동시충전     0.0000    0.0000    0.0000         2
+      I-멀티포트     0.0000    0.0000    0.0000         7
+        I-색감     0.0000    0.0000    0.0000         3
+      I-잔량표시     0.0000    0.0000    0.0000         1
+        I-충전     0.0000    0.0000    0.0000        19
+       I-케이스     0.0000    0.0000    0.0000         2
+       I-휴대성     0.0000    0.0000    0.0000         2
+           O     0.6756    1.0000    0.8064       152
+
+    accuracy                         0.6756       225
+   macro avg     0.0356    0.0526    0.0424       225
+weighted avg     0.4564    0.6756    0.5447       225
+
+2024-05-27 20:25:36;[INFO];Train Loss = 70.5297135412693 Valid Loss = 49.717087745666504
+2024-05-27 20:25:38;[INFO];[Now Epoch: 1]

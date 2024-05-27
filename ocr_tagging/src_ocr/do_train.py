@@ -130,7 +130,7 @@ if __name__ == "__main__":
                         help="각 Aspect Category input sample의 size")
     parser.add_argument("--stop_patience", type=int, default=3, help="validation loss를 기준으로 성능이 증가하지 않는 "
                                                                      "epoch을 몇 번이나 허용할 것인지 설정")
-    parser.add_argument("--train_fp", type=str, default="./resources_ocr/parsing_data/train/", help="학습 데이터들이 포함된 디렉토리 경로 or 학습 데이터 파일 경로 설정")
+    parser.add_argument("--train_fp", type=str, default="./ocr_tagging/resources_ocr/parsing_data/train/", help="학습 데이터들이 포함된 디렉토리 경로 or 학습 데이터 파일 경로 설정")
     parser.add_argument("--valid_fp", type=str, default="./resources_ocr/parsing_data/valid/", help="검증 데이터들이 포함된 디렉토리 경로 or 검증 데이터 파일 경로 설정")
     parser.add_argument("--base_path", type=str, help="Model이나 Encoder를 저장할 경로 설정", default="./ckpt_ocr/model/")
     parser.add_argument("--label_info_file", type=str, help="Encoder의 저장 파일명", default="meta.bin")
