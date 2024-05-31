@@ -99,8 +99,8 @@ def process_json_file(file_path):
                             tag_parts = tag.split(',')
                             sentiment = tag_parts[0] if len(tag_parts) > 0 else 'O'
                             aspect = tag_parts[1] if len(tag_parts) > 1 else 'O'
-                            sentiment_Score = tag_parts[2] if len(tag_parts) > 2 else '0'
-                            aspect_score = tag_parts[3] if len(tag_parts) > 3 else '0'
+                            sentiment_Score = tag_parts[2] if len(tag_parts) > 2 else 'O'
+                            aspect_score = tag_parts[3] if len(tag_parts) > 3 else 'O'
                             rows.append([f"Sentence {sentence_counter}", word, sentiment, aspect, sentiment_Score, aspect_score])
                         sentence_counter += 1
                         sent_idx += sent_concat_count
@@ -116,8 +116,8 @@ def process_json_file(file_path):
                     tag_parts = tag.split(',')
                     sentiment = tag_parts[0] if len(tag_parts) > 0 else 'O'
                     aspect = tag_parts[1] if len(tag_parts) > 1 else 'O'
-                    sentiment_Score = tag_parts[2] if len(tag_parts) > 2 else '0'
-                    aspect_score = tag_parts[3] if len(tag_parts) > 3 else '0'
+                    sentiment_Score = tag_parts[2] if len(tag_parts) > 2 else 'O'
+                    aspect_score = tag_parts[3] if len(tag_parts) > 3 else 'O'
                     rows.append([f"Sentence {sentence_counter}", word, sentiment, aspect, sentiment_Score, aspect_score])
                 sentence_counter += 1
                 sent_idx += 1
