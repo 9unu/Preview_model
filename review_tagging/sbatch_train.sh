@@ -9,8 +9,6 @@
 #SBATCH -t 10:0:0
 #SBATCH -w aurora-g7
 #SBATCH -o logs/slurm-%A.out
-#SBATCH --mail-type=ALL
-#SBATCH --mail-user=ket0825@gmail.com
 
 epochs=10
 train_batch_size=4
@@ -56,7 +54,6 @@ which python
 echo "HOSTNAME"
 hostname
 
-python ./src_review/do_parsingData.py --fp=$fp --save_p=$save_p --val_ratio=$val_ratio --test_ratio=$test_ratio --encoding=$encoding
 python ./src_review/do_train.py --epochs=$epochs --init_model_path=$init_model_path --train_batch_size=$train_batch_size --valid_batch_size=$valid_batch_size --max_length=$max_length --need_birnn=$need_birnn --sentiment_drop_ratio=$sentiment_drop_ratio --aspect_drop_ratio=$aspect_drop_ratio --sentiment_in_feature=$sentiment_in_feature --aspect_in_feature=$aspect_in_feature --stop_patience=$stop_patience --train_fp=$train_fp --valid_fp=$valid_fp --base_path=$base_path --label_info_file=$label_info_file --out_model_path=$out_model_path
 
 exit 0
