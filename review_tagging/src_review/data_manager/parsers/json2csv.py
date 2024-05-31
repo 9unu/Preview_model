@@ -71,10 +71,7 @@ def process_json_file(file_path):
     # print(f"현재 파일명: {file_path}")
     rows = []
     sentence_counter = 1
-<<<<<<< HEAD
-=======
     review_counter = 1
->>>>>>> 1749e797df96205e6530cbc18a87d514a6daf282
     for item in data:
         
 
@@ -151,8 +148,4 @@ def json_2_csv(args):
             result_path.append(result_fp)
     
     for a, b in zip(now_path, result_path):
-<<<<<<< HEAD
-        process_json_files_in_folder(a, b)
-=======
         process_json_files_in_folder(a, b)       
->>>>>>> 1749e797df96205e6530cbc18a87d514a6daf282
