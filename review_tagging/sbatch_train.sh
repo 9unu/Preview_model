@@ -1,6 +1,7 @@
-#!/bin/bash
+#! /usr/bin/bash
 
-#SBATCH -J p_review
+
+#SBATCH -J p-review
 #SBATCH --gres=gpu:1
 #SBATCH --cpus-per-gpu=8
 #SBATCH --mem-per-gpu=16G
@@ -33,8 +34,7 @@ fp="../../../../local_datasets/p_review_dataset/"
 save_p="./resources_review/parsing_data/"
 val_ratio=0.1
 test_ratio=0.1
-encoding=utf-8-sig
-
+encoding="utf-8-sig"
 cd /data/ndn825/Preview_model/review_tagging/resources_review/data/
 rm -rf p_review_dataset.tar
 tar -cf p_review_dataset.tar *.json
