@@ -46,7 +46,6 @@ def train(config):
     num_aspect = len(list(enc_aspect.classes_))
     num_aspect2 = len(list(enc_aspect2.classes_))
     num_sentiment = len(list(enc_sentiment.classes_))
-
     
     log.info('>>>>>>> Now setting train/valid DataLoaders')
     train_data_loader = set_loader(fp=train_fp, config=config, meta_data=meta_data, batch_size=config.train_batch_size)

@@ -35,7 +35,6 @@ class Encoder:
         
         self.aspect_labels, self.aspect2_labels = ['PAD', 'O'], ['PAD', 'O']
 
-
     # 저장된 Encoder 유무를 확인
     # 있으면 load, 없으면 생성
     def check_encoder_fp(self):
@@ -97,7 +96,6 @@ class ABSADataset(IterableDataset):
         self.enc_aspect = enc_aspect
         self.enc_aspect2 = enc_aspect2
         self.enc_sentiment = enc_sentiment
-
         
 
         # for embedding
@@ -152,7 +150,6 @@ class ABSADataset(IterableDataset):
         target_aspect = [] # target Aspect Category tensor ids 저장 리스트
         target_aspect2 = []  # target 대분류 Aspect Category tensor ids 저장 리스트 (대분류 기준 성능 측정을 위함)
         target_sentiment = [] # target Sentiment tensor ids 저장 리스트
-
         
         for i, s in enumerate(text):
             inputs = self.tokenizer.encode(s, add_special_tokens=False)
@@ -161,7 +158,6 @@ class ABSADataset(IterableDataset):
             target_aspect.extend([aspect[i]] * input_len)
             target_aspect2.extend([aspect2[i]] * input_len)
             target_sentiment.extend([sentiment[i]] * input_len)
-
             
 
         # BERT가 처리할 수 있는 길이 (max_length)에 맞추어 slicing
@@ -169,7 +165,6 @@ class ABSADataset(IterableDataset):
         target_aspect = target_aspect[:self.max_len - 2]
         target_aspect2 = target_aspect2[:self.max_len - 2]
         target_sentiment = target_sentiment[:self.max_len - 2]
-
         
 
         # SPECIAL TOKEN 추가 및 PADDING 수행
@@ -177,7 +172,6 @@ class ABSADataset(IterableDataset):
         target_aspect = self.PADDING_TAG_IDS + target_aspect + self.PADDING_TAG_IDS  # CLS, SEP 태그 0
         target_aspect2 = self.PADDING_TAG_IDS + target_aspect2 + self.PADDING_TAG_IDS
         target_sentiment = self.PADDING_TAG_IDS + target_sentiment + self.PADDING_TAG_IDS
-
         
         
 
@@ -191,7 +185,6 @@ class ABSADataset(IterableDataset):
         target_aspect = target_aspect + (self.PADDING_TAG_IDS * padding_len)
         target_aspect2 = target_aspect2 + (self.PADDING_TAG_IDS * padding_len)
         target_sentiment = target_sentiment + (self.PADDING_TAG_IDS * padding_len)#### 스코어 두개 추가
-
         
 
         return {

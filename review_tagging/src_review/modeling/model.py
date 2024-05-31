@@ -20,7 +20,6 @@ class ABSAModel(nn.Module):
         # Sentiment 및 Aspect Category layer 차원 설정
         sentiment_in_feature = config.sentiment_in_feature
         aspect_in_feature = config.aspect_in_feature
-
         
         # birnn layer 추가
         if need_birnn:
@@ -37,7 +36,6 @@ class ABSAModel(nn.Module):
 
         # Sentiment와 Aspect Category의 Linear Layer 구성
         self.hidden2senttag = nn.Linear(sentiment_in_feature, self.num_sentiment)
-
         
         self.hidden2asptag, self.hidden2asp2tag = nn.Linear(aspect_in_feature, self.num_aspect), \
                                                   nn.Linear(aspect_in_feature, self.num_aspect2)
@@ -55,7 +53,6 @@ class ABSAModel(nn.Module):
         if self.need_birnn:
             sentiment_output, _ = self.sentiment_birnn(model_output)
 
-
             aspect_output, _ = self.aspect_birnn(model_output)
             aspect2_output, _ = self.aspect2_birnn(model_output)
         else:
@@ -72,7 +69,6 @@ class ABSAModel(nn.Module):
 
         # CRF Layer Decoding
         sentiment = self.sent_crf.decode(sentiment_emmisions)
-
 
         aspect, aspect2 = self.asp_crf.decode(aspect_emmisions), self.asp2_crf.decode(aspect2_emmisions)
 
