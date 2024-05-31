@@ -6,6 +6,7 @@ import time
 
 def print_dist(d, flag):
     print(d.head())
+
     asp = pd.DataFrame([dict(Counter(d["Aspect"]))]).T
     pol = pd.DataFrame([dict(Counter(d["Sentiment"]))]).T
     print("\n" + '*' * 50)
