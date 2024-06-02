@@ -26,85 +26,170 @@ def concat_find_bbox(text, topic_data, bbox_list):
  
 
 
-    cur_pos = 0 
-    find_start_idx = 0
+    try:
+        cur_pos = 0 # 텍스트 분리를 위한 pos
+        find_start_idx = 0 # bbox 찾기 위한 텍스트 pos
+        bbox_idx = 0 # 텍스트 찾으면서 bbox 추가하기 위한 인덱스
+    
+        if (type(topic_data) == list): # 태깅 되어있는 경우
+            topic_data = sorted([item for item in topic_data if isinstance(item, dict)], key=lambda x: len(x['text']), reverse=True)
+            new_topic_data = []
+            for i in range(len(topic_data)): # len(topic_data)
+                text_to_find = topic_data[i]['text']
+                new_start_pos = text.find(text_to_find)
+                new_end_pos = new_start_pos + len(text_to_find)
+                for j in range(len(new_topic_data)): # 검사하면서 new_pos들 업데이트해주는 부분
+                    if(new_topic_data[j]['start_pos'] <= new_start_pos < new_topic_data[j]['end_pos']):
+                        new_start_pos = text.find(text_to_find,new_end_pos)
+                        new_end_pos = new_start_pos + len(text_to_find)
+                    else:
+                        continue
+                new_dict = {'text': topic_data[i]['text'], 'topic': topic_data[i]['topic'], 'start_pos': new_start_pos, 'end_pos': new_end_pos}
+                new_topic_data.append(new_dict)
+                new_topic_data = sorted([item for item in new_topic_data if isinstance(item, dict)], key=lambda x: x['start_pos'], reverse=False)
 
-    bbox_idx = 0
+            for j in range(2 * len(new_topic_data) + 1):
+                if(j % 2 == 0 and j != 2*len(new_topic_data)): # 태깅 안 되어있는 case
+                    start_pos = cur_pos
+                    end_pos = new_topic_data[j//2]['start_pos']
+                    if(start_pos == end_pos):
+                        continue
+                    cur_dict = {'original_text' : text[start_pos:end_pos], 'topic' : 'O', 'bbox' : []}
+                    if(cur_dict['original_text'] == ' ' or cur_dict['original_text'] == '\n'):
+                        continue
+                    cur_dict_list.append(cur_dict)
+                    cur_pos = end_pos
+                elif(j % 2 == 0 and j == 2*len(new_topic_data)): # 태깅 안 되어있는 case 중 마지막 부분 분리
+                    start_pos = cur_pos
+                    end_pos = len(text)
+                    if(start_pos == end_pos):
+                        continue
+                    cur_dict = {'original_text' : text[start_pos:end_pos], 'topic' : 'O', 'bbox' : []}
+                    if(cur_dict['original_text'] == ' ' or cur_dict['original_text'] == '\n'):
+                        continue
+                    cur_dict_list.append(cur_dict)
+                    cur_pos = end_pos
+                else: # 태깅되어 있는 데이터 처리
+                    start_pos = cur_pos
+                    end_pos = new_topic_data[j//2]['end_pos']
+                    if (start_pos >= end_pos):
+                        continue
+                    cur_dict = {'original_text' : text[start_pos:end_pos], 'topic' : new_topic_data[j//2]['topic'], 'bbox' : []}
+                    
 
-    if (type(topic_data) == list): # 태깅 되어있는 경우
-        topic_data = sorted([item for item in topic_data if isinstance(item, dict)], key=lambda x: len(x['text']), reverse=True)
-        new_topic_data = []
-        for i in range(len(topic_data)): # len(topic_data)
-            text_to_find = topic_data[i]['text']
-            new_start_pos = text.find(text_to_find)
-            new_end_pos = new_start_pos + len(text_to_find)
-            for j in range(len(new_topic_data)): # 검사하면서 new_pos들 업데이트해주는 부분
-                if(new_topic_data[j]['start_pos'] <= new_start_pos < new_topic_data[j]['end_pos']):
-                    new_start_pos = text.find(text_to_find,new_end_pos)
-                    new_end_pos = new_start_pos + len(text_to_find)
-                else:
-                    continue
-            new_dict = {'text': topic_data[i]['text'], 'topic': topic_data[i]['topic'], 'start_pos': new_start_pos, 'end_pos': new_end_pos}
-            new_topic_data.append(new_dict)
-            new_topic_data = sorted([item for item in new_topic_data if isinstance(item, dict)], key=lambda x: x['start_pos'], reverse=False)
+                    # start_idx_found --> 띄어쓰기 없앤 텍스트에서 찾은 시작 인덱스
+                    start_idx_found = text_spacingx.find(cur_dict['original_text'].strip().replace(' ', '').replace('\n', '') , find_start_idx)
+                    # end_idx_found --> 띄어쓰기 없앤 텍스트에서 찾은 마지막 인덱스
+                    end_idx_found = start_idx_found + len(cur_dict['original_text'].strip().replace(' ', '').replace('\n', ''))
 
-        for j in range(2 * len(new_topic_data) + 1):
-            if(j % 2 == 0 and j != 2*len(new_topic_data)): # 태깅 안 되어있는 case
-                start_pos = cur_pos
-                end_pos = new_topic_data[j//2]['start_pos']
-                if(start_pos == end_pos):
-                    continue
-                cur_dict = {'original_text' : text[start_pos:end_pos], 'topic' : 'O', 'bbox' : []}
-                if(cur_dict['original_text'] == ' ' or cur_dict['original_text'] == '\n'):
-                    continue
-                cur_dict_list.append(cur_dict)
-                cur_pos = end_pos
-            elif(j % 2 == 0 and j == 2*len(new_topic_data)): # 태깅 안 되어있는 case 중 마지막 부분 분리
-                start_pos = cur_pos
-                end_pos = len(text)
-                if(start_pos == end_pos):
-                    continue
-                cur_dict = {'original_text' : text[start_pos:end_pos], 'topic' : 'O', 'bbox' : []}
-                if(cur_dict['original_text'] == ' ' or cur_dict['original_text'] == '\n'):
-                    continue
-                cur_dict_list.append(cur_dict)
-                cur_pos = end_pos
-            else: # 태깅되어 있는 데이터 처리
-                start_pos = cur_pos
-                end_pos = new_topic_data[j//2]['end_pos']
-                if (start_pos >= end_pos):
-                    continue
-                cur_dict = {'original_text' : text[start_pos:end_pos], 'topic' : new_topic_data[j//2]['topic'], 'bbox' : []}
-                
-
-                start_idx_found = text_spacingx.find(cur_dict['original_text'].strip().replace(' ', '').replace('\n', '') , find_start_idx)
-                end_idx_found = start_idx_found + len(cur_dict['original_text'].strip().replace(' ', '').replace('\n', ''))
-
-                
-                while (not(bbox_list[bbox_idx]['start_pos_spacingx'] <= start_idx_found <= (bbox_list[bbox_idx]['end_pos_spacingx'] - 1))):
-                    bbox_idx += 1
-                bbox_start_idx = bbox_idx
-                while (not(bbox_list[bbox_idx]['start_pos_spacingx'] <= (end_idx_found - 1) <= (bbox_list[bbox_idx]['end_pos_spacingx'] - 1))):
-                    bbox_idx += 1
-                bbox_end_idx = bbox_idx
+                    
+                    while (not(bbox_list[bbox_idx]['start_pos_spacingx'] <= start_idx_found <= (bbox_list[bbox_idx]['end_pos_spacingx'] - 1))):
+                        bbox_idx += 1
+                    bbox_start_idx = bbox_idx
+                    while (not(bbox_list[bbox_idx]['start_pos_spacingx'] <= (end_idx_found - 1) <= (bbox_list[bbox_idx]['end_pos_spacingx'] - 1))):
+                        bbox_idx += 1
+                    bbox_end_idx = bbox_idx
 
 
-                for idx in range(bbox_start_idx, bbox_end_idx + 1):
-                    cur_dict['bbox'].append(bbox_list[idx]['bbox'])
-                
+                    for idx in range(bbox_start_idx, bbox_end_idx + 1):
+                        cur_dict['bbox'].append(bbox_list[idx]['bbox'])
+                    
 
-                find_start_idx = end_idx_found
+                    find_start_idx = end_idx_found
 
-                cur_dict_list.append(cur_dict)
-                cur_pos = end_pos
-                
+                    cur_dict_list.append(cur_dict)
+                    cur_pos = end_pos
+                    
 
-    else: # 태깅 안 되어있는 경우
-        cur_dict = {'original_text' : text, 'topic' : 'O', 'bbox' : []}
-        cur_dict_list.append(cur_dict)
+        else: # 태깅 안 되어있는 경우
+            cur_dict = {'original_text' : text, 'topic' : 'O', 'bbox' : []}
+            cur_dict_list.append(cur_dict)
+        
+        
+        return cur_dict_list
+    
+    except IndexError as e: # 태깅 실수로 인한 에러 발생 시 코드
+        cur_pos = 0 # 텍스트 분리를 위한 pos
 
-    return cur_dict_list
+        if (type(topic_data) == list): # 태깅 되어있는 경우
+            topic_data = sorted([item for item in topic_data if isinstance(item, dict)], key=lambda x: len(x['text']), reverse=True)
+            new_topic_data = []
+            for i in range(len(topic_data)): # len(topic_data)
+                text_to_find = topic_data[i]['text']
+                new_start_pos = text.find(text_to_find)
+                new_end_pos = new_start_pos + len(text_to_find)
+                for j in range(len(new_topic_data)): # 검사하면서 new_pos들 업데이트해주는 부분
+                    if(new_topic_data[j]['start_pos'] <= new_start_pos < new_topic_data[j]['end_pos']):
+                        new_start_pos = text.find(text_to_find,new_end_pos)
+                        new_end_pos = new_start_pos + len(text_to_find)
+                    else:
+                        continue
+                new_dict = {'text': topic_data[i]['text'], 'topic': topic_data[i]['topic'], 'start_pos': new_start_pos, 'end_pos': new_end_pos}
+                new_topic_data.append(new_dict)
+                new_topic_data = sorted([item for item in new_topic_data if isinstance(item, dict)], key=lambda x: x['start_pos'], reverse=False)
 
+            for j in range(2 * len(new_topic_data) + 1):
+                if(j % 2 == 0 and j != 2*len(new_topic_data)): # 태깅 안 되어있는 case
+                    start_pos = cur_pos
+                    end_pos = new_topic_data[j//2]['start_pos']
+                    if(start_pos == end_pos):
+                        continue
+                    cur_dict = {'original_text' : text[start_pos:end_pos], 'topic' : 'O', 'bbox' : []}
+                    if(cur_dict['original_text'] == ' ' or cur_dict['original_text'] == '\n'):
+                        continue
+                    cur_dict_list.append(cur_dict)
+                    cur_pos = end_pos
+                elif(j % 2 == 0 and j == 2*len(new_topic_data)): # 태깅 안 되어있는 case 중 마지막 부분 분리
+                    start_pos = cur_pos
+                    end_pos = len(text)
+                    if(start_pos == end_pos):
+                        continue
+                    cur_dict = {'original_text' : text[start_pos:end_pos], 'topic' : 'O', 'bbox' : []}
+                    if(cur_dict['original_text'] == ' ' or cur_dict['original_text'] == '\n'):
+                        continue
+                    cur_dict_list.append(cur_dict)
+                    cur_pos = end_pos
+                else: # 태깅되어 있는 데이터 처리
+                    # print("태깅된 데이터 처리 시작")
+                    bbox_idx = 0 # 텍스트 찾으면서 bbox 추가하기 위한 인덱스
+
+                    start_pos = cur_pos
+                    end_pos = new_topic_data[j//2]['end_pos']
+                    if (start_pos >= end_pos):
+                        continue
+                    cur_dict = {'original_text' : text[start_pos:end_pos], 'topic' : new_topic_data[j//2]['topic'], 'bbox' : []}
+                    
+
+                    # start_idx_found --> 띄어쓰기 없앤 텍스트에서 찾은 시작 인덱스
+                    start_idx_found = text_spacingx.find(cur_dict['original_text'].strip().replace(' ', '').replace('\n', ''))
+                    # end_idx_found --> 띄어쓰기 없앤 텍스트에서 찾은 마지막 인덱스
+                    end_idx_found = start_idx_found + len(cur_dict['original_text'].strip().replace(' ', '').replace('\n', ''))
+
+                    
+                    while (not(bbox_list[bbox_idx]['start_pos_spacingx'] <= start_idx_found <= (bbox_list[bbox_idx]['end_pos_spacingx'] - 1))):
+                        bbox_idx += 1
+                    bbox_start_idx = bbox_idx
+                    while (not(bbox_list[bbox_idx]['start_pos_spacingx'] <= (end_idx_found - 1) <= (bbox_list[bbox_idx]['end_pos_spacingx'] - 1))):
+                        bbox_idx += 1
+                    bbox_end_idx = bbox_idx
+
+
+                    for idx in range(bbox_start_idx, bbox_end_idx + 1):
+                        cur_dict['bbox'].append(bbox_list[idx]['bbox'])
+                    
+
+                    
+
+                    cur_dict_list.append(cur_dict)
+                    cur_pos = end_pos
+                    # print("처리 끝")
+
+        else: # 태깅 안 되어있는 경우
+            cur_dict = {'original_text' : text, 'topic' : 'O', 'bbox' : []}
+            cur_dict_list.append(cur_dict)
+        
+        # print("n 루프 하나 끝!")
+        return cur_dict_list
 
 
 def preprocessing_ocr(args):
@@ -115,17 +200,24 @@ def preprocessing_ocr(args):
 
     file_list.sort()
 
+    ocr_count = 0
+
     for filename in file_list:
         if filename.endswith('.json'):  # JSON 파일인지 확인
             filepath = os.path.join(directory, filename)
             with open(filepath, 'r', encoding='utf-8-sig') as file:
                 ocr_list = json.load(file) # JSON 파일 불러오기
             for n in range(len(ocr_list)):
+                ocr_count += 1
                 text = ocr_list[n][0]
                 topic_data = ocr_list[n][1]
                 topic_data = sorted([item for item in ocr_list[n][1] if isinstance(item, dict)], key=lambda x: x['start_pos'], reverse=False)
                 bbox_list = ocr_list[n][2:]
-                sentence_dict_list.extend(concat_find_bbox(text, topic_data, bbox_list))
+                cur_dict_list = concat_find_bbox(text, topic_data, bbox_list)
+                for cur_dict in cur_dict_list:
+                    cur_dict["Ocr #"] = "Ocr " + str(ocr_count)
+                sentence_dict_list.extend(cur_dict_list)
+                # sentence_dict_list.extend(concat_find_bbox(text, topic_data, bbox_list))
             print(f"{filename} Processed")
         
 
@@ -137,7 +229,8 @@ def preprocessing_ocr(args):
             if(sentence_dict_list[i]['original_text'].split('\n')[j].strip() != ''):
                 split_sentence_dict_list.append({'original_text': sentence_dict_list[i]['original_text'].split('\n')[j],
                                                 'topic': sentence_dict_list[i]['topic'],
-                                                'bbox': sentence_dict_list[i]['bbox']})
+                                                'bbox': sentence_dict_list[i]['bbox'],
+                                                'Ocr #': sentence_dict_list[i]['Ocr #']})
 
     for i in range(len(split_sentence_dict_list)): # 분리한 텍스트의 전체 개수
         split_sentence_dict_list[i]['original_text'] = split_sentence_dict_list[i]['original_text'].strip()
@@ -161,7 +254,8 @@ def preprocessing_ocr(args):
                 topic = split_sentence_dict_list[i]['topic']
             
 
-            row_dict = {'Sentence #': 'Sentence '+ str(sentence_count),
+            row_dict = {'Ocr #': split_sentence_dict_list[i]['Ocr #'],
+                        'Sentence #': 'Sentence '+ str(sentence_count),
                         'Word': split_sentence_dict_list[i]['words'][j],
                         'Aspect': topic,
                         "Bbox": split_sentence_dict_list[i]['bbox']}
@@ -169,6 +263,7 @@ def preprocessing_ocr(args):
 
     print("단어 개수:", word_count)
     print("문장 개수:", sentence_count)
+    print("OCR 이미지 개수:", ocr_count)
     return final_sentence_dict_list
 
 
