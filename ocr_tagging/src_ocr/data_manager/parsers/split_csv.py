@@ -30,12 +30,13 @@ def file_split(args):
     
     df = pd.read_csv(file_list[0], encoding=args.encoding)
     df.loc[:, "Sentence #"] = df["Sentence #"].fillna(method="ffill") # 결측치 fill
+    df.loc[:, "Ocr #"] = df["Ocr #"].fillna(method="ffill") # 결측치 fill
 
 
 
     # Sentnece ID를 기준으로 group화하여 test set 랜덤 추출
     test_split = GroupShuffleSplit(test_size=args.test_ratio, n_splits=1,
-                                       random_state=42).split(df, groups=df['Sentence #'])
+                                       random_state=42).split(df, groups=df['Ocr #'])
     train_val_idxs, test_idxs = next(test_split)
 
     train_val = df.iloc[train_val_idxs]
@@ -43,7 +44,7 @@ def file_split(args):
 
         # Sentnece ID를 기준으로 group화하여 validation set 랜덤 추출
     val_split = GroupShuffleSplit(test_size=args.val_ratio,
-                                      n_splits=1, random_state=42).split(train_val, groups=train_val['Sentence #'])
+                                      n_splits=1, random_state=42).split(train_val, groups=train_val['Ocr #'])
     train_idxs, val_idxs = next(val_split)
     train = train_val.iloc[train_idxs]
     val = train_val.iloc[val_idxs]
