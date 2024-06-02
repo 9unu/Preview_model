@@ -263,7 +263,7 @@ def preprocessing_ocr(args):
 
     print("단어 개수:", word_count)
     print("문장 개수:", sentence_count)
-    print("OCR 이미지 개수:", ocr_count)
+    # print("OCR 이미지 개수:", ocr_count)
     return final_sentence_dict_list
 
 
