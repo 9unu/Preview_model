@@ -101,21 +101,9 @@ class ABSADataset(IterableDataset):
             aspects = df.groupby("Sentence #")["Aspect"].apply(list).values
             aspects2 = df.groupby("Sentence #")["Aspect2"].apply(list).values
 
-            # for i in range(len(sentences)):
-            #     self.s_len += 1
-            #     yield self.parsing_data(sentences[i], aspects[i], aspects2[i])
             for i in range(len(sentences)):
                 self.s_len += 1
-                if(i % 2 == 0):
-                    yield self.parsing_data(sentences[i], sentences[i+1], aspects[i], aspects[i+1], aspects2[i], aspects2[i+1])
-                elif(i & 2 == 0 and i == len(sentences)-1):
-                    yield self.parsing_data(sentences[i], sentences[i], aspects[i], aspects[i], aspects2[i], aspects2[i])
-                # if(i == len(sentences)-1):
-                #     self.s_len += 2
-                #     yield self.parsing_data(sentences[i], sentences[i], aspects[i], aspects[i], aspects2[i], aspects2[i])
-                # else:
-                #     self.s_len += 2
-                #     yield self.parsing_data(sentences[i], sentences[i+1], aspects[i], aspects[i+1], aspects2[i], aspects2[i+1])
+                yield self.parsing_data(sentences[i], aspects[i], aspects2[i])
 
     def __len__(self):
         if self.data_len == 0:
@@ -134,25 +122,17 @@ class ABSADataset(IterableDataset):
             self.data_len = math.ceil(self.data_len / self.batch_size)
             return self.data_len
     
-    def parsing_data(self, text_1, text_2, aspect_1, aspect_2, aspect2_1, aspect2_2):
+    def parsing_data(self, text, aspect, aspect2):
         ids = []
         target_aspect = [] # target Aspect Category tensor ids 저장 리스트
         target_aspect2 = []  # target 대분류 Aspect Category tensor ids 저장 리스트 (대분류 기준 성능 측정을 위함)
 
-        # for i, s in enumerate(text):
-        #     inputs = self.tokenizer.encode(s, add_special_tokens=False)
-        #     input_len = len(inputs)
-        #     ids.extend(inputs)
-        #     target_aspect.extend([aspect[i]] * input_len)
-        #     target_aspect2.extend([aspect2[i]] * input_len)
-        for i, (s1, s2) in enumerate(zip(text_1, text_2)):
-            inputs_1 = self.tokenizer.encode(s1, add_special_tokens=False)
-            inputs_2 = self.tokenizer.encode(s2, add_special_tokens=False)
-            inputs_1_len = len(inputs_1)
-            inputs_2_len = len(inputs_2)
-            ids.extend(inputs_1 + self.SEP_IDS + inputs_2)
-            target_aspect.extend([aspect_1[i]] * inputs_1_len + self.PADDING_TAG_IDS + [aspect_2[i]] * inputs_2_len)
-            target_aspect2.extend([aspect2_1[i]] * inputs_1_len + self.PADDING_TAG_IDS + [aspect2_2[i]] * inputs_2_len)
+        for i, s in enumerate(text):
+            inputs = self.tokenizer.encode(s, add_special_tokens=False)
+            input_len = len(inputs)
+            ids.extend(inputs)
+            target_aspect.extend([aspect[i]] * input_len)
+            target_aspect2.extend([aspect2[i]] * input_len)
 
         # BERT가 처리할 수 있는 길이 (max_length)에 맞추어 slicing
         ids = ids[:self.max_len - 2]
