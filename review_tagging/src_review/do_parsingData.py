@@ -33,5 +33,5 @@ if __name__ == "__main__":
     json_2_csv(args=args)
     print(">> file splitter start to making training/valid/test set")
     args.fp = args.save_p
-    print(args.fp)
+    print(f"args.fp 변경: {args.fp}")
     file_split(args=args) # json_2_csv를 통해 생성된 파일을 학습/검증/테스트셋으로 분할

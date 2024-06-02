@@ -71,6 +71,7 @@ def process_json_file(file_path):
     # print(f"현재 파일명: {file_path}")
     rows = []
     sentence_counter = 1
+    review_counter = 1
     for item in data:
         
 
@@ -101,7 +102,7 @@ def process_json_file(file_path):
                             aspect = tag_parts[1] if len(tag_parts) > 1 else 'O'
                             sentiment_Score = tag_parts[2] if len(tag_parts) > 2 else '0'
                             aspect_score = tag_parts[3] if len(tag_parts) > 3 else '0'
-                            rows.append([f"Sentence {sentence_counter}", word, sentiment, aspect, sentiment_Score, aspect_score])
+                            rows.append([f"Review {review_counter}", f"Sentence {sentence_counter}", word, sentiment, aspect, sentiment_Score, aspect_score])
                         sentence_counter += 1
                         sent_idx += sent_concat_count
                         break
@@ -118,11 +119,13 @@ def process_json_file(file_path):
                     aspect = tag_parts[1] if len(tag_parts) > 1 else 'O'
                     sentiment_Score = tag_parts[2] if len(tag_parts) > 2 else '0'
                     aspect_score = tag_parts[3] if len(tag_parts) > 3 else '0'
-                    rows.append([f"Sentence {sentence_counter}", word, sentiment, aspect, sentiment_Score, aspect_score])
+                    rows.append([f"Review {review_counter}", f"Sentence {sentence_counter}", word, sentiment, aspect, sentiment_Score, aspect_score])
                 sentence_counter += 1
                 sent_idx += 1
+        review_counter += 1
+        sentence_counter = 1
     
-    df = pd.DataFrame(rows, columns=['Sentence #', 'Word', 'Sentiment', 'Aspect', 'Sentiment_Score', 'Aspect_Score'])
+    df = pd.DataFrame(rows, columns=['Review #', 'Sentence #', 'Word', 'Sentiment', 'Aspect', 'Sentiment_Score', 'Aspect_Score'])
     return df
 
 def process_json_files_in_folder(now_path, result_path):    
@@ -145,4 +148,4 @@ def json_2_csv(args):
             result_path.append(result_fp)
     
     for a, b in zip(now_path, result_path):
-        process_json_files_in_folder(a, b)
+        process_json_files_in_folder(a, b)       
