@@ -68,14 +68,12 @@ def clean_data(our_topics):
 def process_json_file(file_path):
     with open(file_path, 'r', encoding='utf-8-sig') as file:
         data = json.load(file)
-    # print(f"현재 파일명: {file_path}")
+    
     rows = []
     sentence_counter = 1
     review_counter = 1
     for item in data:
-        
-
-        if 'our_topics' not in item or not item['our_topics']:            
+        if 'our_topics' not in item or not item['our_topics'] or 'content' not in item:            
             continue
         
         content = preprocess_text(item['content'])
@@ -84,6 +82,9 @@ def process_json_file(file_path):
         #  Add data cleansing about our_topics
         our_topics = clean_data(item['our_topics'])
         our_topics = sorted(our_topics, key=lambda x: len(x['text']), reverse=True)
+        
+        if not our_topics:
+            continue
         
         sent_idx = 0
         while sent_idx < len(sentences):
@@ -125,6 +126,9 @@ def process_json_file(file_path):
         review_counter += 1
         sentence_counter = 1
     
+    if not rows:
+        return None
+    
     df = pd.DataFrame(rows, columns=['Review #', 'Sentence #', 'Word', 'Sentiment', 'Aspect', 'Sentiment_Score', 'Aspect_Score'])
     return df
 
@@ -133,8 +137,11 @@ def process_json_files_in_folder(now_path, result_path):
     output_csv_path = result_path
 
     df = process_json_file(json_file_path)
-    df.to_csv(output_csv_path, index=False)
-    print(f"Processed and saved as {output_csv_path}")
+    if df is not None:
+        df.to_csv(output_csv_path, index=False)
+        print(f"Processed and saved as {output_csv_path}")
+    else:
+        print(f"Skipping {json_file_path} due to no valid tagging data")
 
 
 def json_2_csv(args):
@@ -148,4 +155,4 @@ def json_2_csv(args):
             result_path.append(result_fp)
     
     for a, b in zip(now_path, result_path):
-        process_json_files_in_folder(a, b)       
+        process_json_files_in_folder(a, b)
