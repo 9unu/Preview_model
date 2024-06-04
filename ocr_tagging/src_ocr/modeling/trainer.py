@@ -49,7 +49,7 @@ def eval_fn(data_loader, model, enc_aspect, device, log, f1_mode='micro', flag='
     for data in tqdm(data_loader, total=loader_len):
         data = parsing_batch(data, device)
         loss, _, predict_aspect = model(**data)
-        aspect_label = data['target_aspect2'].cpu().numpy().reshape(-1)
+        aspect_label = data['target_aspect'].cpu().numpy().reshape(-1)
 
         aspect_pred = np.array(predict_aspect).reshape(-1)
 

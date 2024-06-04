@@ -110,19 +110,23 @@ class ABSADataset(IterableDataset):
         # read data
         for now_fp in self.file_list:
             df = read_csv(now_fp)
-            df.loc[:, "Sentence #"] = df["Sentence #"].fillna(method="ffill")
+            df.loc[:, "Review #"] = df["Review #"].fillna(method="ffill")
             df["Aspect2"] = df["Aspect"]
             df = df.replace({"Aspect2": label_changing_rule})
 
             df.loc[:, "Aspect"] = self.enc_aspect.transform(df[["Aspect"]])
             df.loc[:, "Aspect2"] = self.enc_aspect2.transform(df[["Aspect2"]])
             df.loc[:, "Sentiment"] = self.enc_sentiment.transform(df[["Sentiment"]])
+            df.loc[:, "Sentiment_Score"] = self.enc_sentiment_score.transform(df[["Sentiment_Score"]])#### 스코어 두개 추가
+            df.loc[:, "Aspect_Score"] = self.enc_aspect_score.transform(df[["Aspect_Score"]])#### 스코어 두개 추가
+            
 
-            sentences = df.groupby("Sentence #")["Word"].apply(list).values
-            aspects = df.groupby("Sentence #")["Aspect"].apply(list).values
-            aspects2 = df.groupby("Sentence #")["Aspect2"].apply(list).values
-            sentiments = df.groupby("Sentence #")["Sentiment"].apply(list).values 
-
+            sentences = df.groupby("Review #")["Word"].apply(list).values
+            aspects = df.groupby("Review #")["Aspect"].apply(list).values
+            aspects2 = df.groupby("Review #")["Aspect2"].apply(list).values
+            sentiments = df.groupby("Review #")["Sentiment"].apply(list).values 
+            sentiment_scores=df.groupby("Review #")["Sentiment_Score"].apply(list).values #### 스코어 두개 추가
+            aspect_scores=df.groupby("Review #")["Aspect_Score"].apply(list).values #### 스코어 두개 추가
 
             for i in range(len(sentences)):
                 self.s_len += 1
@@ -140,7 +144,7 @@ class ABSADataset(IterableDataset):
         else:
             for now_fp in self.file_list:
                 df = read_csv(now_fp)
-                sentences = df.groupby("Sentence #")["Word"].apply(list).values
+                sentences = df.groupby("Review #")["Word"].apply(list).values
                 self.data_len += len(sentences)
             self.data_len = math.ceil(self.data_len / self.batch_size)
             return self.data_len

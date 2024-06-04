@@ -20,12 +20,12 @@ warnings.filterwarnings(action='ignore')
 '''
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='parsing json files to csv')
-    parser.add_argument('--fp', help='to parse Directory', default="./resources_review/data/")
-    parser.add_argument('--save_p', help='Directory to save parsed Files', default="./resources_review/parsing_data/")
+    parser.add_argument('--fp', help='to parse Directory', default="./review_tagging/resources_review/data/")
+    parser.add_argument('--save_p', help='Directory to save parsed Files', default="./review_tagging/resources_review/parsing_data/")
     parser.add_argument('--encoding', help='encode', default="utf-8-sig")
     parser.add_argument('--val_ratio', type=float, help='Directory to save parsed Files', default=0.1)
     parser.add_argument('--test_ratio', type=float, help='Directory to save parsed Files', default=0.1)
-    parser.add_argument("--cmd", type=str, help="실행된 명령어", default="sh ./scripts_review/data/data_parsing.sh")
+    parser.add_argument("--cmd", type=str, help="실행된 명령어", default="sh ./review_tagging/scripts_review/data/data_parsing.sh")
     args = parser.parse_args()
     
     print(f"[실행 명령어]: {args.cmd}")
