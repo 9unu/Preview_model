@@ -90,16 +90,16 @@ class ABSADataset(IterableDataset):
         # read data
         for now_fp in self.file_list:
             df = read_csv(now_fp)
-            df.loc[:, "Sentence #"] = df["Sentence #"].fillna(method="ffill")
+            df.loc[:, "Ocr #"] = df["Ocr #"].fillna(method="ffill")
             df["Aspect2"] = df["Aspect"]
             df = df.replace({"Aspect2": label_changing_rule})
 
             df.loc[:, "Aspect"] = self.enc_aspect.transform(df[["Aspect"]])
             df.loc[:, "Aspect2"] = self.enc_aspect2.transform(df[["Aspect2"]])
 
-            sentences = df.groupby("Sentence #")["Word"].apply(list).values
-            aspects = df.groupby("Sentence #")["Aspect"].apply(list).values
-            aspects2 = df.groupby("Sentence #")["Aspect2"].apply(list).values
+            sentences = df.groupby("Ocr #")["Word"].apply(list).values
+            aspects = df.groupby("Ocr #")["Aspect"].apply(list).values
+            aspects2 = df.groupby("Ocr #")["Aspect2"].apply(list).values
 
             for i in range(len(sentences)):
                 self.s_len += 1
@@ -117,7 +117,7 @@ class ABSADataset(IterableDataset):
         else:
             for now_fp in self.file_list:
                 df = read_csv(now_fp)
-                sentences = df.groupby("Sentence #")["Word"].apply(list).values
+                sentences = df.groupby("Ocr #")["Word"].apply(list).values
                 self.data_len += len(sentences)
             self.data_len = math.ceil(self.data_len / self.batch_size)
             return self.data_len
