@@ -30,7 +30,7 @@ def file_split(args):
         if not os.path.exists(os.path.join(args.save_p, p)):
          os.makedirs(os.path.join(args.save_p, p))
 
-    print(file_list)
+    # print(file_list)
     total_df = pd.DataFrame()
     review_count = 1
 
