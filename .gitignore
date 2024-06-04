@@ -18,3 +18,7 @@
 *.csv
 *.json
 *.log
+*.out
+*.tar
+*.txt
+*.bin
