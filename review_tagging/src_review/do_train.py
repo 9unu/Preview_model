@@ -108,6 +108,7 @@ def train(config):
             model,
             enc_sentiment,
             enc_aspect,
+            enc_aspect2,    # 대분류로 변경
             device,
             log
         )

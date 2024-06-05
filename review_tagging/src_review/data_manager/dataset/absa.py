@@ -80,7 +80,7 @@ class Encoder:
         self.enc_sentiment = self.enc_sentiment.fit(self.sentiment_labels)
 
         
-        return {"enc_aspect": self.enc_aspect, "enc_aspect2": self.enc_aspect2, "enc_sentiment": self.enc_sentiment}#### 스코어 두개 추가
+        return {"enc_aspect": self.enc_aspect, "enc_aspect2": self.enc_aspect2, "enc_sentiment": self.enc_sentiment}
 
 
 class ABSADataset(IterableDataset):
@@ -112,21 +112,17 @@ class ABSADataset(IterableDataset):
             df = read_csv(now_fp)
             df.loc[:, "Review #"] = df["Review #"].fillna(method="ffill")
             df["Aspect2"] = df["Aspect"]
-            df = df.replace({"Aspect2": label_changing_rule})
+            df = df.replace({"Aspect2": label_changing_rule})   #대분류 매핑
 
             df.loc[:, "Aspect"] = self.enc_aspect.transform(df[["Aspect"]])
             df.loc[:, "Aspect2"] = self.enc_aspect2.transform(df[["Aspect2"]])
             df.loc[:, "Sentiment"] = self.enc_sentiment.transform(df[["Sentiment"]])
-            df.loc[:, "Sentiment_Score"] = self.enc_sentiment_score.transform(df[["Sentiment_Score"]])#### 스코어 두개 추가
-            df.loc[:, "Aspect_Score"] = self.enc_aspect_score.transform(df[["Aspect_Score"]])#### 스코어 두개 추가
             
 
             sentences = df.groupby("Review #")["Word"].apply(list).values
             aspects = df.groupby("Review #")["Aspect"].apply(list).values
             aspects2 = df.groupby("Review #")["Aspect2"].apply(list).values
             sentiments = df.groupby("Review #")["Sentiment"].apply(list).values 
-            sentiment_scores=df.groupby("Review #")["Sentiment_Score"].apply(list).values #### 스코어 두개 추가
-            aspect_scores=df.groupby("Review #")["Aspect_Score"].apply(list).values #### 스코어 두개 추가
 
             for i in range(len(sentences)):
                 self.s_len += 1

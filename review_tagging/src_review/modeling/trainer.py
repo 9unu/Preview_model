@@ -33,13 +33,12 @@ def train_fn(data_loader, model, optimizer, device, scheduler):
     return final_loss / loader_len
 
 
-def eval_fn(data_loader, model, enc_sentiment, enc_aspect, device, log, f1_mode='micro', flag='valid'):
+def eval_fn(data_loader, model, enc_sentiment, enc_aspect, enc_aspect2, device, log, f1_mode='micro', flag='valid'):
     model.eval()
     final_loss = 0
     nb_eval_steps = 0
     # 성능 측정 변수 선언
     sentiment_accuracy, aspect_accuracy = 0, 0
-
 
     sentiment_f1score, aspect_f1score = 0, 0
 
@@ -53,13 +52,14 @@ def eval_fn(data_loader, model, enc_sentiment, enc_aspect, device, log, f1_mode=
     eval_start_time = time.time()  # evaluation을 시작한 시간을 저장 (소요 시간 측정을 위함)
     for data in tqdm(data_loader, total=loader_len):
         data = parsing_batch(data, device)
-        loss, predict_sentiment, _, predict_aspect= model(**data)
+        loss, predict_sentiment, predict_aspect, predict_aspect2= model(**data)
+        
         sentiment_label = data['target_sentiment'].cpu().numpy().reshape(-1)
-        aspect_label = data['target_aspect'].cpu().numpy().reshape(-1)
+        aspect_label = data['target_aspect2'].cpu().numpy().reshape(-1)
 
 
         sentiment_pred = np.array(predict_sentiment).reshape(-1)
-        aspect_pred = np.array(predict_aspect).reshape(-1)
+        aspect_pred = np.array(predict_aspect2).reshape(-1)
 
 
         # remove padding indices
@@ -94,10 +94,8 @@ def eval_fn(data_loader, model, enc_sentiment, enc_aspect, device, log, f1_mode=
     sentiment_pred_names = enc_sentiment.inverse_transform(sentiment_preds)
     sentiment_label_names = enc_sentiment.inverse_transform(sentiment_labels)
     
-
-
-    aspect_pred_names = enc_aspect.inverse_transform(aspect_preds)
-    aspect_label_names = enc_aspect.inverse_transform(aspect_labels)
+    aspect_pred_names = enc_aspect2.inverse_transform(aspect_preds)
+    aspect_label_names = enc_aspect2.inverse_transform(aspect_labels)
 
 
     # [Sentiment에 대한 성능 계산]
