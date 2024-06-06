@@ -20,7 +20,7 @@ def preprocess_text(text):
 
 def split_content_into_sentences(content):
     sentences = kss.split_sentences(content)
-    return [preprocess_text(sent.strip()) for sent in sentences if sent.strip()]
+    return [preprocess_text(sent.strip()) + '.' for sent in sentences if sent.strip()]
 
 def tag_sentence(sentence, topics):
     words = sentence.split()
@@ -70,7 +70,6 @@ def process_json_file(file_path):
         data = json.load(file)
     
     rows = []
-    sentence_counter = 1
     review_counter = 1
     for item in data:
         if 'our_topics' not in item or not item['our_topics'] or 'content' not in item:            
@@ -86,45 +85,19 @@ def process_json_file(file_path):
         if not our_topics:
             continue
         
-        sent_idx = 0
-        while sent_idx < len(sentences):
-            concat_sent = ""
-            for sent_concat_count in range(3, 0, -1):
-                if sent_idx + sent_concat_count > len(sentences):
-                    continue
-                concat_sent = " ".join(sentences[sent_idx:sent_idx+sent_concat_count])
-                for topic in our_topics:
-                    if preprocess_text(topic['text']) in concat_sent:
-                        words = concat_sent.split()
-                        tags = tag_sentence(concat_sent, our_topics)
-                        for word, tag in zip(words, tags):
-                            tag_parts = tag.split(',')
-                            sentiment = tag_parts[0] if len(tag_parts) > 0 else 'O'
-                            aspect = tag_parts[1] if len(tag_parts) > 1 else 'O'
-                            sentiment_Score = tag_parts[2] if len(tag_parts) > 2 else 'O'
-                            aspect_score = tag_parts[3] if len(tag_parts) > 3 else 'O'
-                            rows.append([f"Review {review_counter}", f"Sentence {sentence_counter}", word, sentiment, aspect, sentiment_Score, aspect_score])
-                        sentence_counter += 1
-                        sent_idx += sent_concat_count
-                        break
-                else:
-                    continue
-                break
-            else:
-                concat_sent = sentences[sent_idx]
-                words = concat_sent.split()
-                tags = tag_sentence(concat_sent, our_topics)
-                for word, tag in zip(words, tags):
-                    tag_parts = tag.split(',')
-                    sentiment = tag_parts[0] if len(tag_parts) > 0 else 'O'
-                    aspect = tag_parts[1] if len(tag_parts) > 1 else 'O'
-                    sentiment_Score = tag_parts[2] if len(tag_parts) > 2 else 'O'
-                    aspect_score = tag_parts[3] if len(tag_parts) > 3 else 'O'
-                    rows.append([f"Review {review_counter}", f"Sentence {sentence_counter}", word, sentiment, aspect, sentiment_Score, aspect_score])
-                sentence_counter += 1
-                sent_idx += 1
+        sentence_counter = 1  # 문장 번호 초기화
+        for sentence in sentences:
+            words = sentence.split()
+            tags = tag_sentence(sentence, our_topics)
+            for word, tag in zip(words, tags):
+                tag_parts = tag.split(',')
+                sentiment = tag_parts[0] if len(tag_parts) > 0 else 'O'
+                aspect = tag_parts[1] if len(tag_parts) > 1 else 'O'
+                sentiment_Score = tag_parts[2] if len(tag_parts) > 2 else 'O'
+                aspect_score = tag_parts[3] if len(tag_parts) > 3 else 'O'
+                rows.append([f"Review {review_counter}", f"Sentence {sentence_counter}", word, sentiment, aspect, sentiment_Score, aspect_score])
+            sentence_counter += 1  # 문장 번호 증가
         review_counter += 1
-        sentence_counter = 1
     
     if not rows:
         return None
