@@ -2,7 +2,7 @@
 /review_tagging/ckpt_review/model/meta.bin
 /ocr_tagging/ckpt_ocr/model/pytorch_model.bin
 /ocr_tagging/ckpt_ocr/model/meta.bin
-
+/ckpt_review
 # Default ignored files
 .idea/shelf/
 .idea/workspace.xml
