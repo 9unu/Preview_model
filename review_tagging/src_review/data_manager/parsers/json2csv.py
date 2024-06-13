@@ -3,9 +3,37 @@ import os
 import json
 import re
 from collections import Counter
+import transformers
 import kss
 from pykospacing import Spacing # 추가한 부분
 
+# tokenizer = transformers.BertTokenizer.from_pretrained('klue/bert-base', do_lower_case=False)('^^')
+# print(tokenizer)
+pattern1 = re.compile(r"[ㄱ-ㅎㅏ-ㅣ]+") # 한글 자모음만 반복되면 삭제
+pattern2 = re.compile(r":\)|[\@\#\$\^\*\(\)\[\]\{\}\<\>\/\"\'\=\+\\\|\_(:\))]+") # ~, !, %, &, -, ,, ., ;, :, ?는 제거 X /// 특수문자 제거
+pattern3 = re.compile(r"([^\d])\1{2,}") # 숫자를 제외한 동일한 문자 3개 이상이면 삭제
+
+
+def regexp(sentences):
+    for i in range(len(sentences)):
+        sent = sentences[i]
+        # og_sent = sent
+        # if '"' in og_sent:
+        #     print(og_sent)  
+        new_sent1 = pattern1.sub('', sent)
+        new_sent2 = pattern2.sub('', new_sent1)
+        new_sent3 = pattern3.sub('', new_sent2)
+        # if (og_sent != new_sent1 
+        #     or og_sent != new_sent2 
+        #     or og_sent != new_sent3
+        #     ):
+        #     print(f"og: {og_sent}, new: {new_sent1}")
+        #     print(f"og: {og_sent}, new: {new_sent2}")
+        #     print(f"og: {og_sent}, new: {new_sent3}")
+
+        sentences[i] = new_sent3
+
+    return sentences
 
 def making_result_fp(args, filename):
     result_dir = args.save_p
@@ -19,8 +47,9 @@ def making_result_fp(args, filename):
 def preprocess_text(text):
     return text.replace('\n', ' ')
 
-def split_content_into_sentences(content):
+def split_content_into_sentences(content): # 이 함수에서 정규표현식으로 특수문자 처리
     sentences = kss.split_sentences(content)
+    sentences = regexp(sentences) # 수정한 부분
     return [preprocess_text(sent.strip()) + '.' for sent in sentences if sent.strip()]
 
 def pykospaincg_preprocessing(sentences):  # 수정한 부분
@@ -91,6 +120,7 @@ def process_json_file(file_path):
 
         sentences = pykospaincg_preprocessing(sentences) # 추가한 부분(pyko)
         
+        
         #  Add data cleansing about our_topics
         our_topics = clean_data(item['our_topics'])
         our_topics = sorted(our_topics, key=lambda x: len(x['text']), reverse=True)
@@ -142,3 +172,4 @@ def json_2_csv(args):
     
     for a, b in zip(now_path, result_path):
         process_json_files_in_folder(a, b)
+
