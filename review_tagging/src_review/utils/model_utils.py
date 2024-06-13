@@ -65,7 +65,6 @@ def device_setting(log):
         log.info('Now using CPU')
     return device
 
-
 # 모델에 저장된 state dict를 탑재
 def load_model(model, state_dict_path, device):
     current_model_dict = model.state_dict()

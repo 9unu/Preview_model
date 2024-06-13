@@ -12,7 +12,6 @@ import argparse
 import warnings
 warnings.filterwarnings(action='ignore')
 
-
 def train(config):
     # 생성된 모델 및 Encoder / log 등을 저장할 base 경로의 존재 유무 체킹 - 없다면 새로 생성
     if not os.path.exists(config.base_path):
