@@ -43,8 +43,8 @@ class ABSAModel(nn.Module):
             sentiment_in_feature = rnn_dim * 2
             aspect_in_feature = rnn_dim * 2
 
-        self.hidden2senttag = nn.Linear(sentiment_in_feature, self.num_sentiment)
-        self.hidden2asptag = nn.Linear(aspect_in_feature, self.num_aspect)
+        self.hidden2senttag = nn.Linear(sentiment_in_feature, self.num_sentiment) # B, I, 긍정 부정, PAD, O
+        self.hidden2asptag = nn.Linear(aspect_in_feature, self.num_aspect) # B, I, PAD, O
 
         """옵션에 맞춰서 레이어 설정"""
         if self.sentiment_score_bool:
@@ -135,19 +135,19 @@ class ABSAModel(nn.Module):
         if self.aspect_score_bool and self.sentiment_score_bool:
             if self.aspect_2_bool:
                 for target in target_list:
-                    if target is False:
+                    if target is None:
                         return sentiment, aspect, aspect2, sentiment_score, aspect_score
                     else:
                         return loss, sentiment, aspect, aspect2, sentiment_score, aspect_score
             else:
                 for target in target_list:
-                    if target is False:
+                    if target is None:
                         return sentiment, aspect, sentiment_score, aspect_score
                     else:
                         return loss, sentiment, aspect, sentiment_score, aspect_score
         
         for target in target_list:
-            if target is False:
+            if target is None:
                 return sentiment, aspect
             else:
                 return loss, sentiment, aspect

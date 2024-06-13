@@ -152,12 +152,12 @@ class ABSADataset(IterableDataset):
             self.data_len = self.get_length()
         return self.data_len
 
-    # data length를 계산
+    # data length를 계산 # 리뷰 개수임.
     def get_length(self):
-        if self.data_len > 0:
+        if self.data_len > 0: 
             return self.data_len
         else:
-            for now_fp in self.file_list:
+            for now_fp in self.file_list: # 리뷰 개수임.
                 df = read_csv(now_fp)
                 sentences = df.groupby("Review #")["Word"].apply(list).values
                 self.data_len += len(sentences)
