@@ -4,6 +4,7 @@ import json
 import re
 from collections import Counter
 import kss
+from pykospacing import Spacing # 추가한 부분
 
 
 def making_result_fp(args, filename):
@@ -21,6 +22,15 @@ def preprocess_text(text):
 def split_content_into_sentences(content):
     sentences = kss.split_sentences(content)
     return [preprocess_text(sent.strip()) + '.' for sent in sentences if sent.strip()]
+
+def pykospaincg_preprocessing(sentences):  # 수정한 부분
+    spacing = Spacing()
+    for sent in sentences:
+        sent_spacingx = sent.replace(' ','') # 띄어쓰기 없애고
+        pykospacing_sent = spacing(sent_spacingx) # pyko 돌리기
+        sent = pykospacing_sent
+        
+    return sentences
 
 def tag_sentence(sentence, topics):
     words = sentence.split()
@@ -77,6 +87,8 @@ def process_json_file(file_path):
         
         content = preprocess_text(item['content'])
         sentences = split_content_into_sentences(content)
+
+        sentences = pykospaincg_preprocessing(sentences) # 추가한 부분(pyko)
         
         #  Add data cleansing about our_topics
         our_topics = clean_data(item['our_topics'])
