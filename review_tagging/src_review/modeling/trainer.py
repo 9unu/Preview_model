@@ -25,7 +25,7 @@ def train_fn(data_loader, model, optimizer, device, scheduler):
     for data in tqdm(data_loader, total=loader_len):
         data = parsing_batch(data, device)
         optimizer.zero_grad() # backward를 위한 gradients 초기화
-        loss, sentiment, aspect, aspect2 = model(**data)
+        loss, sentiment, aspect2 = model(**data)
         loss.backward()
         optimizer.step()
         scheduler.step()
@@ -52,7 +52,7 @@ def eval_fn(data_loader, model, enc_sentiment, enc_aspect, enc_aspect2, device, 
     eval_start_time = time.time()  # evaluation을 시작한 시간을 저장 (소요 시간 측정을 위함)
     for data in tqdm(data_loader, total=loader_len):
         data = parsing_batch(data, device)
-        loss, predict_sentiment, predict_aspect, predict_aspect2= model(**data)
+        loss, predict_sentiment, predict_aspect2= model(**data)
         
         sentiment_label = data['target_sentiment'].cpu().numpy().reshape(-1)
         aspect_label = data['target_aspect2'].cpu().numpy().reshape(-1)

@@ -58,12 +58,12 @@ class Encoder:
     def set_encoder(self):
         if len(self.file_list) == 0:
             print(f"파일 경로 {self.fp}에 Encoding할 데이터가 존재하지 않습니다.")
+            
             raise FileExistsError()
 
         for now_fp in self.file_list:
             df = read_csv(now_fp)
             self.aspect_labels.extend(list(df["Aspect"].unique()))
-            self.sentiment_labels.extend(list(df["Sentiment"].unique()))
             self.sentiment_labels.extend(list(df["Sentiment"].unique()))
     
     
