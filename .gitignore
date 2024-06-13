@@ -20,5 +20,5 @@
 *.log
 *.out
 *.tar
-*.txt
+# *.txt
 *.bin
