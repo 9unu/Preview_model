@@ -25,10 +25,11 @@ def split_content_into_sentences(content):
 
 def pykospaincg_preprocessing(sentences):  # 수정한 부분
     spacing = Spacing()
-    for sent in sentences:
+    for i in range(len(sentences)):
+        sent = sentences[i]
         sent_spacingx = sent.replace(' ','') # 띄어쓰기 없애고
         pykospacing_sent = spacing(sent_spacingx) # pyko 돌리기
-        sent = pykospacing_sent
+        sentences[i] = pykospacing_sent
         
     return sentences
 
