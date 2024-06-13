@@ -12,6 +12,15 @@ from pykospacing import Spacing # 추가한 부분
 pattern1 = re.compile(r"[ㄱ-ㅎㅏ-ㅣ]+") # 한글 자모음만 반복되면 삭제
 pattern2 = re.compile(r":\)|[\@\#\$\^\*\(\)\[\]\{\}\<\>\/\"\'\=\+\\\|\_(:\))]+") # ~, !, %, &, -, ,, ., ;, :, ?는 제거 X /// 특수문자 제거
 pattern3 = re.compile(r"([^\d])\1{2,}") # 숫자를 제외한 동일한 문자 3개 이상이면 삭제
+pattern4 = re.compile( # 이모티콘 삭제
+    "["                               
+    "\U0001F600-\U0001F64F"  # 감정 관련 이모티콘
+    "\U0001F300-\U0001F5FF"  # 기호 및 픽토그램
+    "\U0001F680-\U0001F6FF"  # 교통 및 지도 기호
+    "\U0001F1E0-\U0001F1FF"  # 국기
+    # "\U00002702-\U000027B0"  # 기타 기호
+    # "\U000024C2-\U0001F251"  # 추가 기호 및 픽토그램      # 이거 2줄까지 하면 한글이 사라짐
+    "]+", flags=re.UNICODE)
 
 
 def regexp(sentences):
@@ -23,6 +32,7 @@ def regexp(sentences):
         new_sent1 = pattern1.sub('', sent)
         new_sent2 = pattern2.sub('', new_sent1)
         new_sent3 = pattern3.sub('', new_sent2)
+        new_sent4 = pattern4.sub(r'', new_sent3)
         # if (og_sent != new_sent1 
         #     or og_sent != new_sent2 
         #     or og_sent != new_sent3
@@ -31,7 +41,7 @@ def regexp(sentences):
         #     print(f"og: {og_sent}, new: {new_sent2}")
         #     print(f"og: {og_sent}, new: {new_sent3}")
 
-        sentences[i] = new_sent3
+        sentences[i] = new_sent4
 
     return sentences
 
