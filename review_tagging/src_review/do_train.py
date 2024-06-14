@@ -39,20 +39,22 @@ def train(config):
     # enc_aspect >> 일반 속성 카테고리를 위한 Encoder
     # enc_aspect2 >> 대분류 속성 카테고리를 위한 Encoder
     # enc_sentiment >> 감성 속성을 위한 Encoder
-    enc_aspect, enc_aspect2, enc_sentiment = enc.get_encoder()
-    meta_data = {"enc_aspect": enc_aspect, "enc_aspect2": enc_aspect2, "enc_sentiment": enc_sentiment,}
+    enc_aspect, enc_aspect2, enc_sentiment, enc_sentiment_score, enc_aspect_score = enc.get_encoder()
+    meta_data = {"enc_aspect": enc_aspect, "enc_aspect2": enc_aspect2, "enc_sentiment": enc_sentiment,"enc_sentiment_score": enc_sentiment_score,"enc_aspect_score": enc_aspect_score }
 
     # Encoder에 fitting 된 class의 수를 get
     num_aspect = len(list(enc_aspect.classes_))
     num_aspect2 = len(list(enc_aspect2.classes_))
     num_sentiment = len(list(enc_sentiment.classes_))
+    num_sentiment_score = len(list(enc_sentiment_score.classes_))
+    num_aspect_score = len(list(enc_aspect_score.classes_))
     
     log.info('>>>>>>> Now setting train/valid DataLoaders')
     train_data_loader = set_loader(fp=train_fp, config=config, meta_data=meta_data, batch_size=config.train_batch_size)
     valid_data_loader = set_loader(fp=valid_fp, config=config, meta_data=meta_data, batch_size=config.valid_batch_size)
 
     log.info('>>>>>>> Now setting Model Architecture')
-    model = ABSAModel(config=config, num_sentiment=num_sentiment, num_aspect=num_aspect, num_aspect2=num_aspect2,
+    model = ABSAModel(config=config, num_sentiment=num_sentiment, num_aspect=num_aspect, num_aspect2=num_aspect2,num_aspect_score=num_aspect_score, num_sentiment_score=num_sentiment_score,
                       need_birnn=bool(config.need_birnn))
     model.to(device)
 
@@ -96,6 +98,7 @@ def train(config):
         log.info(f'[Now Epoch: {epoch}]')
         # Training
         train_loss = train_fn(
+            config,
             train_data_loader,
             model,
             optimizer,
@@ -104,10 +107,14 @@ def train(config):
         )
         # Validation
         test_loss = eval_fn(
+            config,
             valid_data_loader,
             model,
             enc_sentiment,
             enc_aspect,
+            enc_aspect2,    # 대분류로 변경
+            enc_sentiment_score,  # Add this argument
+            enc_aspect_score,
             device,
             log
         )
@@ -146,6 +153,9 @@ if __name__ == "__main__":
     parser.add_argument("--base_path", type=str, help="Model이나 Encoder를 저장할 경로 설정", default="./ckpt_review/model/")
     parser.add_argument("--label_info_file", type=str, help="Encoder의 저장 파일명", default="meta.bin")
     parser.add_argument("--out_model_path", type=str, help="model의 저장 파일명", default="pytorch_model.bin")
+    parser.add_argument("--aspect_score_bool", type=bool, help="aspect score 여부", default=True)
+    parser.add_argument("--sentiment_score_bool", type=bool, help="sent score 여부", default=True)
+    parser.add_argument("--aspect_2_bool", type=bool, help="소분류 여부", default=True)
     parser.add_argument("--cmd", type=str, help="실행된 명령어", default="sh ./scripts_review/model/do_train.sh")
     args = parser.parse_args()
     
