@@ -3,6 +3,14 @@ import os
 from collections import Counter
 from sklearn.model_selection import GroupShuffleSplit
 import time
+etc_list=["AS", "과충전방지", "교환", "구성품", "그립감", "기내반입", "기능", "기타",
+    "동시충전", "문의", "배송/포장/발송", "배터리를충전하는호환성", "부착", "서비스",
+    "수명", "인증", "저전력", "케이스", "파우치", "호환성"]
+def remove_etc(text):
+    for etc in etc_list:
+        if etc in text:
+            text='O'
+    return text
 
 def print_dist(d, flag):
     print(d.head())
@@ -43,6 +51,10 @@ def file_split(args):
         review_count += max_review_num
         total_df = pd.concat([total_df, df])
 
+    '''3점 단위로 축소'''
+    total_df['Aspect_Score']=total_df['Aspect_Score'].replace('B-4', 'B-3').replace('B-5', 'B-3').replace('I-4', 'i-3').replace('I-5', 'I-3')
+    '''쓸데없는 소분류 삭제'''
+    total_df['Aspect']=total_df['Aspect'].apply(remove_etc)
     # Review ID를 기준으로 group화하여 test set 랜덤 추출
     test_split = GroupShuffleSplit(test_size=args.test_ratio, n_splits=1,
                                        random_state=42).split(total_df, groups=total_df['Review #'])
@@ -57,7 +69,6 @@ def file_split(args):
     train_idxs, val_idxs = next(val_split)
     train = train_val.iloc[train_idxs]
     val = train_val.iloc[val_idxs]
-
     # 결과 파일 저장
     train.to_csv(os.path.join(args.save_p, save_dir_name[0], save_dir_name[0] + ".csv"), encoding=args.encoding, index=False)
     val.to_csv(os.path.join(args.save_p, save_dir_name[1], save_dir_name[1] + ".csv"), encoding=args.encoding, index=False)

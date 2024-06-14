@@ -1,9 +1,8 @@
 import torch.nn as nn
-from torchcrf import CRF
+from TorchCRF import CRF
 import transformers
 
 class ABSAModel(nn.Module):
-    def __init__(self, config, num_sentiment, num_aspect, num_aspect2, num_sentiment_score, num_aspect_score, need_birnn=False, rnn_dim=128):
     def __init__(self, config, num_sentiment, num_aspect, num_aspect2, num_sentiment_score, num_aspect_score, need_birnn=False, rnn_dim=128):
         super(ABSAModel, self).__init__()
         # Sentiment와 Aspect Category의 class 개수

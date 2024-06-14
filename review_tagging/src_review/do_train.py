@@ -144,7 +144,7 @@ if __name__ == "__main__":
     parser.add_argument("--valid_batch_size", type=int, default=4, help="한 batch에 속할 검증 데이터 샘플의 size")
     parser.add_argument("--init_model_path", type=str, default="klue/bert-base", help="사용할 BERT의 종류")
     parser.add_argument("--max_length", type=int, default=512, help="토큰화된 문장의 최대 길이를 설정 (bert는 기본 512)")
-    parser.add_argument("--need_birnn", type=int, default=1, help="model에 Birnn Layer를 추가 여부 (True: 1/False: 0)")
+    parser.add_argument("--need_birnn", type=int, default=0, help="model에 Birnn Layer를 추가 여부 (True: 1/False: 0)")
     parser.add_argument("--sentiment_drop_ratio", type=float, default=0.3,
                         help="Sentiment 속성의 과적합 방지를 위해 dropout을 수행할 비율")
     parser.add_argument("--aspect_drop_ratio", type=float, default=0.3,
