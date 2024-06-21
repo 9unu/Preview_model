@@ -29,10 +29,10 @@ def regexp(sentences):
         # og_sent = sent
         # if '"' in og_sent:
         #     print(og_sent)  
-        new_sent1 = pattern1.sub('', sent)
-        new_sent2 = pattern2.sub('', new_sent1)
-        new_sent3 = pattern3.sub('', new_sent2)
-        new_sent4 = pattern4.sub(r'', new_sent3)
+        new_sent1 = pattern1.sub(' ', sent)
+        new_sent2 = pattern2.sub(' ', new_sent1)
+        new_sent3 = pattern3.sub(' ', new_sent2)
+        new_sent4 = pattern4.sub(r' ', new_sent3)
         # if (og_sent != new_sent1 
         #     or og_sent != new_sent2 
         #     or og_sent != new_sent3
