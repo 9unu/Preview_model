@@ -2,16 +2,17 @@ import pandas as pd
 import os
 import json
 import re
-from collections import Counter
-import transformers
+# from collections import Counter
+# import transformers
 import kss
-from pykospacing import Spacing # 추가한 부분
-
+# from pykospacing import Spacing # 추가한 부분
+# spacing = Spacing()
 # tokenizer = transformers.BertTokenizer.from_pretrained('klue/bert-base', do_lower_case=False)('^^')
 # print(tokenizer)
 pattern1 = re.compile(r"[ㄱ-ㅎㅏ-ㅣ]+") # 한글 자모음만 반복되면 삭제
-pattern2 = re.compile(r":\)|[\@\#\$\^\*\(\)\[\]\{\}\<\>\/\"\'\=\+\\\|\_(:\))]+") # ~, !, %, &, -, ,, ., ;, :, ?는 제거 X /// 특수문자 제거
+pattern2 = re.compile(r":\)|[\@\#\$\^\*\(\)\[\]\{\}\<\>\/\"\'\=\+\\\|\_(:\));]+") # ~, !, %, &, -, ,, ., ;(얘는 제거함), :, ?는 제거 X /// 특수문자 제거
 pattern3 = re.compile(r"([^\d])\1{2,}") # 숫자를 제외한 동일한 문자 3개 이상이면 삭제
+emoticon_pattern = r'[:;]-?[()D\/]'
 pattern4 = re.compile( # 이모티콘 삭제
     "["                               
     "\U0001F600-\U0001F64F"  # 감정 관련 이모티콘
@@ -24,24 +25,27 @@ pattern4 = re.compile( # 이모티콘 삭제
 
 
 def regexp(sentences):
+    replaced_str = ' '
     for i in range(len(sentences)):
         sent = sentences[i]
         # og_sent = sent
         # if '"' in og_sent:
         #     print(og_sent)  
-        new_sent1 = pattern1.sub(' ', sent)
-        new_sent2 = pattern2.sub(' ', new_sent1)
-        new_sent3 = pattern3.sub(' ', new_sent2)
-        new_sent4 = pattern4.sub(r' ', new_sent3)
+        new_sent = pattern1.sub(replaced_str, sent)
+        new_sent = pattern2.sub(replaced_str, new_sent)
+        new_sent = pattern3.sub(replaced_str, new_sent)        
+        new_sent = emoticon_pattern.sub(replaced_str, new_sent)
+        new_sent = pattern4.sub(replaced_str, new_sent)
+
         # if (og_sent != new_sent1 
         #     or og_sent != new_sent2 
         #     or og_sent != new_sent3
         #     ):
         #     print(f"og: {og_sent}, new: {new_sent1}")
         #     print(f"og: {og_sent}, new: {new_sent2}")
-        #     print(f"og: {og_sent}, new: {new_sent3}")
+        #     print(f"og: {og_sent}, new: {new_sent3}")        
 
-        sentences[i] = new_sent4
+        sentences[i] = new_sent
 
     return sentences
 
@@ -59,16 +63,15 @@ def preprocess_text(text):
 
 def split_content_into_sentences(content): # 이 함수에서 정규표현식으로 특수문자 처리
     sentences = kss.split_sentences(content)
-    sentences = regexp(sentences) # 수정한 부분
+    sentences = regexp(sentences) # 수정한 부분s
     return [preprocess_text(sent.strip()) + '.' for sent in sentences if sent.strip()]
 
-def pykospaincg_preprocessing(sentences):  # 수정한 부분
-    spacing = Spacing()
+def pykospaincg_preprocessing(sentences):  # 수정한 부분    
     for i in range(len(sentences)):
         sent = sentences[i]
         sent_spacingx = sent.replace(' ','') # 띄어쓰기 없애고
-        pykospacing_sent = spacing(sent_spacingx) # pyko 돌리기
-        sentences[i] = pykospacing_sent
+        # pykospacing_sent = spacing(sent_spacingx) # pyko 돌리기
+        # sentences[i] = pykospacing_sent
         
     return sentences
 
@@ -128,7 +131,7 @@ def process_json_file(file_path):
         content = preprocess_text(item['content'])
         sentences = split_content_into_sentences(content)
 
-        sentences = pykospaincg_preprocessing(sentences) # 추가한 부분(pyko)
+        # sentences = pykospaincg_preprocessing(sentences) # 추가한 부분(pyko)
         
         
         #  Add data cleansing about our_topics
