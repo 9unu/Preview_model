@@ -12,7 +12,7 @@ import kss
 pattern1 = re.compile(r"[ㄱ-ㅎㅏ-ㅣ]+") # 한글 자모음만 반복되면 삭제
 pattern2 = re.compile(r":\)|[\@\#\$\^\*\(\)\[\]\{\}\<\>\/\"\'\=\+\\\|\_(:\));]+") # ~, !, %, &, -, ,, ., ;(얘는 제거함), :, ?는 제거 X /// 특수문자 제거
 pattern3 = re.compile(r"([^\d])\1{2,}") # 숫자를 제외한 동일한 문자 3개 이상이면 삭제
-emoticon_pattern = r'[:;]-?[()D\/]'
+emoticon_pattern = re.compile(r'[:;]-?[()D\/]')
 pattern4 = re.compile( # 이모티콘 삭제
     "["                               
     "\U0001F600-\U0001F64F"  # 감정 관련 이모티콘
@@ -49,6 +49,15 @@ def regexp(sentences):
 
     return sentences
 
+def regexp_content(content):
+    replaced_str = ' '    
+    new_sent = pattern1.sub(replaced_str, content)
+    new_sent = pattern2.sub(replaced_str, new_sent)
+    new_sent = pattern3.sub(replaced_str, new_sent)        
+    new_sent = emoticon_pattern.sub(replaced_str, new_sent)
+    new_sent = pattern4.sub(replaced_str, new_sent)
+    return new_sent
+
 def making_result_fp(args, filename):
     result_dir = args.save_p
     os.makedirs(result_dir, exist_ok=True)
@@ -62,8 +71,9 @@ def preprocess_text(text):
     return text.replace('\n', ' ')
 
 def split_content_into_sentences(content): # 이 함수에서 정규표현식으로 특수문자 처리
+    content = regexp_content(content) # 수정한 부분    
     sentences = kss.split_sentences(content)
-    sentences = regexp(sentences) # 수정한 부분s
+    # sentences = regexp(sentences) # 수정한 부분
     return [preprocess_text(sent.strip()) + '.' for sent in sentences if sent.strip()]
 
 def pykospaincg_preprocessing(sentences):  # 수정한 부분    
