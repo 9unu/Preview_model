@@ -1,5 +1,5 @@
 #! /usr/bin/bash
-
+# 배치 사이즈 변경, kss, regex 띄어쓰기 대체.
 
 #SBATCH -J p-review
 #SBATCH --gres=gpu:1
@@ -12,8 +12,8 @@
 
 
 epochs=10
-train_batch_size=4
-valid_batch_size=4
+train_batch_size=1 
+valid_batch_size=1
 init_model_path=klue/bert-base
 max_length=512
 need_birnn=0
@@ -32,7 +32,7 @@ out_model_path="pytorch_model.bin"
 fp="../../../../local_datasets/p_review_dataset/"
 save_p="./resources_review/parsing_data/"
 val_ratio=0.1
-test_ratio=0.1
+test_ratio=0.01
 encoding="utf-8-sig"
 cd /data/ndn825/Preview_model/review_tagging/resources_review/data/
 rm -rf p_review_dataset.tar
