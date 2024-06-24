@@ -59,7 +59,7 @@ class Encoder:
             or self.enc_aspect_score is None
             ):
             self.check_encoder_fp()
-        return self.enc_aspect, self.enc_aspect2, self.enc_sentiment, self.enc_sentiment_score, self.enc_aspect_score #### 스코어 두개 추가
+        return self.enc_aspect, self.enc_aspect2, self.enc_sentiment,  self.enc_aspect_score, self.enc_sentiment_score #### 스코어 두개 추가
 
     def set_encoder(self):
         if len(self.file_list) == 0:
@@ -69,7 +69,6 @@ class Encoder:
         for now_fp in self.file_list:
             df = read_csv(now_fp)
             self.aspect_labels.extend(list(df["Aspect"].unique()))
-            self.sentiment_labels.extend(list(df["Sentiment"].unique()))
             self.sentiment_labels.extend(list(df["Sentiment"].unique()))
     
             self.aspect_score_labels.extend(list(df["Aspect_Score"].unique())) # 스코어 두개 레이블 리스트
