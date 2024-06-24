@@ -54,7 +54,7 @@ class ABSAModel(nn.Module):
     def forward(self, ids, mask=None, token_type_ids=None, target_aspect=None, target_aspect2=None, target_sentiment=None, target_aspect_score=None, target_sentiment_score=None):
         # 사전학습된 bert에 input을 feed
         model_output = self.bert(ids, attention_mask=mask, token_type_ids=token_type_ids)[0]
-        
+
         # BI-RNN layer
         if self.need_birnn:
             sentiment_output, _ = self.sentiment_birnn(model_output)

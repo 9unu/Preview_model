@@ -15,7 +15,7 @@ def parsing_batch(data, device):
     return d
 
 # 모델 학습
-def train_fn(config, data_loader, model, optimizer, device, scheduler):
+def train_fn(data_loader, model, optimizer, device, scheduler):
     model.train()
     final_loss = 0
     sentiment_loss_total = 0
@@ -89,6 +89,8 @@ def eval_fn(data_loader, model, enc_sentiment, enc_aspect, enc_aspect2, enc_sent
         pad_label_indices = np.where(sentiment_label == 0)  # pad 레이블
         sentiment_label = np.delete(sentiment_label, pad_label_indices)
         sentiment_pred = np.delete(sentiment_pred, pad_label_indices)
+
+        pad_label_indices = np.where(aspect_label == 0)  # pad 레이블
         aspect_label = np.delete(aspect_label, pad_label_indices)
         aspect_pred = np.delete(aspect_pred, pad_label_indices)
 
@@ -155,9 +157,6 @@ def eval_fn(data_loader, model, enc_sentiment, enc_aspect, enc_aspect2, enc_sent
 
     # 각 감정 속성 별 성능 계산
     sentiment_report = classification_report(sentiment_label_names, sentiment_pred_names, digits=4)
-    
-    if config.sentiment_score_bool and config.aspect_score_bool:
-        sentiment_score_report = classification_report(sentiment_score_label_names, sentiment_score_pred_names, digits=4)
 
     # [Aspect Category에 대한 성능 계산]
     aspect_accuracy = round(aspect_accuracy / nb_eval_steps, 2)
@@ -199,13 +198,6 @@ def eval_fn(data_loader, model, enc_sentiment, enc_aspect, enc_aspect2, enc_sent
                 asp_result = "X"
             else:
                 asp_result = "O"
-            
-            if config.aspect_2_bool:
-                if aspect_2_label_names[i] != aspect_2_pred_names[i]:
-                    asp_2_result = "X"
-                else:
-                    asp_2_result = "O"
-            
             if sentiment_label_names[i] != sentiment_pred_names[i]:
                 pol_result = "X"
             else:
@@ -222,11 +214,6 @@ def eval_fn(data_loader, model, enc_sentiment, enc_aspect, enc_aspect2, enc_sent
     log.info(f"eval_samples_per_second: {eval_sample_per_sec}")
     log.info(f"Sentiment Accuracy: {sentiment_accuracy}")
     log.info(f"Sentiment f1score {f1_mode} : {sentiment_f1score}")
-    
-    if config.sentiment_score_bool and config.aspect_score_bool:
-        log.info(f"Sentiment Score Accuracy: {sentiment_score_accuracy}")
-        log.info(f"Sentiment Score f1score {f1_mode} : {sentiment_score_f1score}")
-    
     log.info(f"Aspect Accuracy: {aspect_accuracy}")
     log.info(f"Aspect f1score {f1_mode} : {aspect_f1score}")
     log.info(f"Aspect2 Accuracy: {aspect2_accuracy}")
@@ -237,11 +224,6 @@ def eval_fn(data_loader, model, enc_sentiment, enc_aspect, enc_aspect2, enc_sent
     log.info(f"Aspect Score f1score {f1_mode} : {aspect_score_f1score}")
     log.info(f"Sentiment Accuracy Report:")
     log.info(sentiment_report)
-    
-    if config.sentiment_score_bool and config.aspect_score_bool:
-        log.info(f"Sentiment Score Accuracy Report:")
-        log.info(sentiment_score_report)
-    
     log.info(f"Aspect Accuracy Report:")
     log.info(aspect_report)
     log.info(f"Aspect2 Accuracy Report:")

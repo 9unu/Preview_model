@@ -111,7 +111,6 @@ def train(config):
         log.info(f'[Now Epoch: {epoch}]')
         # Training
         train_loss = train_fn(
-            config,
             train_data_loader,
             model,
             optimizer,
@@ -119,7 +118,6 @@ def train(config):
             scheduler
         )
         test_loss = eval_fn(
-            config,
             valid_data_loader,
             model,
             enc_sentiment,
@@ -160,9 +158,6 @@ if __name__ == "__main__":
     parser.add_argument("--base_path", type=str, help="Model이나 Encoder를 저장할 경로 설정", default="./ckpt_review/model/")
     parser.add_argument("--label_info_file", type=str, help="Encoder의 저장 파일명", default="meta.bin")
     parser.add_argument("--out_model_path", type=str, help="model의 저장 파일명", default="pytorch_model.bin")
-    parser.add_argument("--aspect_score_bool", type=bool, help="aspect score 여부", default=True)
-    parser.add_argument("--sentiment_score_bool", type=bool, help="sent score 여부", default=True)
-    parser.add_argument("--aspect_2_bool", type=bool, help="소분류 여부", default=True)
     parser.add_argument("--cmd", type=str, help="실행된 명령어", default="sh ./scripts_review/model/do_train.sh")
     args = parser.parse_args()
     
