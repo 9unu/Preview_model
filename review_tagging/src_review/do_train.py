@@ -55,6 +55,15 @@ def train(config):
     num_aspect_score = len(list(enc_aspect_score.classes_))
     num_sentiment_score = len(list(enc_sentiment_score.classes_))
 
+    # classes 확인
+    log.info('>>>>>>> Now checking classes')
+    log.info(f'enc_aspect.classes_: {enc_aspect.classes_}')
+    log.info(f'enc_aspect2.classes_: {enc_aspect2.classes_}')
+    log.info(f'enc_sentiment.classes_: {enc_sentiment.classes_}')
+    log.info(f'enc_aspect_score.classes_: {enc_aspect_score.classes_}')
+    log.info(f'enc_sentiment_score.classes_: {enc_sentiment_score.classes_}')
+    
+
     log.info('>>>>>>> Now setting train/valid DataLoaders')
     train_data_loader = set_loader(fp=train_fp, config=config, meta_data=meta_data, batch_size=config.train_batch_size)
     valid_data_loader = set_loader(fp=valid_fp, config=config, meta_data=meta_data, batch_size=config.valid_batch_size)

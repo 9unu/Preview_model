@@ -2,9 +2,62 @@ import pandas as pd
 import os
 import json
 import re
-from collections import Counter
+# from collections import Counter
+# import transformers
 import kss
+# from pykospacing import Spacing # 추가한 부분
+# spacing = Spacing()
+# tokenizer = transformers.BertTokenizer.from_pretrained('klue/bert-base', do_lower_case=False)('^^')
+# print(tokenizer)
+pattern1 = re.compile(r"[ㄱ-ㅎㅏ-ㅣ]+") # 한글 자모음만 반복되면 삭제
+pattern2 = re.compile(r":\)|[\@\#\$\^\*\(\)\[\]\{\}\<\>\/\"\'\=\+\\\|\_(:\));]+") # ~, !, %, &, -, ,, ., ;(얘는 제거함), :, ?는 제거 X /// 특수문자 제거
+pattern3 = re.compile(r"([^\d])\1{2,}") # 숫자를 제외한 동일한 문자 3개 이상이면 삭제
+emoticon_pattern = re.compile(r'[:;]-?[()D\/]')
+pattern4 = re.compile( # 이모티콘 삭제
+    "["                               
+    "\U0001F600-\U0001F64F"  # 감정 관련 이모티콘
+    "\U0001F300-\U0001F5FF"  # 기호 및 픽토그램
+    "\U0001F680-\U0001F6FF"  # 교통 및 지도 기호
+    "\U0001F1E0-\U0001F1FF"  # 국기
+    # "\U00002702-\U000027B0"  # 기타 기호
+    # "\U000024C2-\U0001F251"  # 추가 기호 및 픽토그램      # 이거 2줄까지 하면 한글이 사라짐
+    "]+", flags=re.UNICODE)
 
+
+def regexp(sentences):
+    replaced_str = ' '
+    for i in range(len(sentences)):
+        sent = sentences[i]
+        # og_sent = sent
+        # if '"' in og_sent:
+        #     print(og_sent)  
+        new_sent = pattern1.sub(replaced_str, sent)
+        new_sent = pattern2.sub(replaced_str, new_sent)
+        new_sent = pattern3.sub(replaced_str, new_sent)        
+        new_sent = emoticon_pattern.sub(replaced_str, new_sent)
+        new_sent = pattern4.sub(replaced_str, new_sent)
+
+        # if (og_sent != new_sent1 
+        #     or og_sent != new_sent2 
+        #     or og_sent != new_sent3
+        #     ):
+        #     print(f"og: {og_sent}, new: {new_sent1}")
+        #     print(f"og: {og_sent}, new: {new_sent2}")
+        #     print(f"og: {og_sent}, new: {new_sent3}")        
+
+        sentences[i] = new_sent
+
+    return sentences
+
+def regexp_text(text):
+    replaced_str = ' '    
+    new_text = pattern1.sub(replaced_str, text)
+    new_text = pattern2.sub(replaced_str, new_text)
+    new_text = pattern3.sub(replaced_str, new_text)        
+    new_text = emoticon_pattern.sub(replaced_str, new_text)
+    new_text = pattern4.sub(replaced_str, new_text)
+    new_text = new_text.replace('  ', ' ').strip()
+    return new_text
 
 def making_result_fp(args, filename):
     result_dir = args.save_p
@@ -18,9 +71,20 @@ def making_result_fp(args, filename):
 def preprocess_text(text):
     return text.replace('\n', ' ')
 
-def split_content_into_sentences(content):
+def split_content_into_sentences(content): # 이 함수에서 정규표현식으로 특수문자 처리
+    content = regexp_text(content) # 수정한 부분    
     sentences = kss.split_sentences(content)
-    return [preprocess_text(sent.strip()) for sent in sentences if sent.strip()]
+    # sentences = regexp(sentences) # 수정한 부분
+    return [preprocess_text(sent.strip()) + '.' for sent in sentences if sent.strip()]
+
+def pykospaincg_preprocessing(sentences):  # 수정한 부분    
+    for i in range(len(sentences)):
+        sent = sentences[i]
+        sent_spacingx = sent.replace(' ','') # 띄어쓰기 없애고
+        # pykospacing_sent = spacing(sent_spacingx) # pyko 돌리기
+        # sentences[i] = pykospacing_sent
+        
+    return sentences
 
 def tag_sentence(sentence, topics):
     words = sentence.split()
@@ -60,7 +124,8 @@ def clean_data(our_topics):
             or not topic.get("topic_score")
             ):
             continue
-
+        
+        topic['text'] = regexp_text(topic['text']).strip() # 수정한 부분
         cleansed_topics.append(topic)
     
     return cleansed_topics
@@ -70,7 +135,6 @@ def process_json_file(file_path):
         data = json.load(file)
     
     rows = []
-    sentence_counter = 1
     review_counter = 1
     for item in data:
         if 'our_topics' not in item or not item['our_topics'] or 'content' not in item:            
@@ -78,6 +142,9 @@ def process_json_file(file_path):
         
         content = preprocess_text(item['content'])
         sentences = split_content_into_sentences(content)
+
+        # sentences = pykospaincg_preprocessing(sentences) # 추가한 부분(pyko)
+        
         
         #  Add data cleansing about our_topics
         our_topics = clean_data(item['our_topics'])
@@ -86,45 +153,19 @@ def process_json_file(file_path):
         if not our_topics:
             continue
         
-        sent_idx = 0
-        while sent_idx < len(sentences):
-            concat_sent = ""
-            for sent_concat_count in range(3, 0, -1):
-                if sent_idx + sent_concat_count > len(sentences):
-                    continue
-                concat_sent = " ".join(sentences[sent_idx:sent_idx+sent_concat_count])
-                for topic in our_topics:
-                    if preprocess_text(topic['text']) in concat_sent:
-                        words = concat_sent.split()
-                        tags = tag_sentence(concat_sent, our_topics)
-                        for word, tag in zip(words, tags):
-                            tag_parts = tag.split(',')
-                            sentiment = tag_parts[0] if len(tag_parts) > 0 else 'O'
-                            aspect = tag_parts[1] if len(tag_parts) > 1 else 'O'
-                            sentiment_Score = tag_parts[2] if len(tag_parts) > 2 else 'O'
-                            aspect_score = tag_parts[3] if len(tag_parts) > 3 else 'O'
-                            rows.append([f"Review {review_counter}", f"Sentence {sentence_counter}", word, sentiment, aspect, sentiment_Score, aspect_score])
-                        sentence_counter += 1
-                        sent_idx += sent_concat_count
-                        break
-                else:
-                    continue
-                break
-            else:
-                concat_sent = sentences[sent_idx]
-                words = concat_sent.split()
-                tags = tag_sentence(concat_sent, our_topics)
-                for word, tag in zip(words, tags):
-                    tag_parts = tag.split(',')
-                    sentiment = tag_parts[0] if len(tag_parts) > 0 else 'O'
-                    aspect = tag_parts[1] if len(tag_parts) > 1 else 'O'
-                    sentiment_Score = tag_parts[2] if len(tag_parts) > 2 else 'O'
-                    aspect_score = tag_parts[3] if len(tag_parts) > 3 else 'O'
-                    rows.append([f"Review {review_counter}", f"Sentence {sentence_counter}", word, sentiment, aspect, sentiment_Score, aspect_score])
-                sentence_counter += 1
-                sent_idx += 1
+        sentence_counter = 1  # 문장 번호 초기화
+        for sentence in sentences:
+            words = sentence.split()
+            tags = tag_sentence(sentence, our_topics)
+            for word, tag in zip(words, tags):
+                tag_parts = tag.split(',')
+                sentiment = tag_parts[0] if len(tag_parts) > 0 else 'O'
+                aspect = tag_parts[1] if len(tag_parts) > 1 else 'O'
+                sentiment_Score = tag_parts[2] if len(tag_parts) > 2 else 'O'
+                aspect_score = tag_parts[3] if len(tag_parts) > 3 else 'O'
+                rows.append([f"Review {review_counter}", f"Sentence {sentence_counter}", word, sentiment, aspect, sentiment_Score, aspect_score])
+            sentence_counter += 1  # 문장 번호 증가
         review_counter += 1
-        sentence_counter = 1
     
     if not rows:
         return None
