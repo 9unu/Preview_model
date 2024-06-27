@@ -98,6 +98,10 @@ def process_json_file(file_path, output_csv_path):
             or not item['our_topics'] 
             or 'content' not in item
             ):
+            continue    
+        
+        our_topics = clean_data(item['our_topics']) # 이 안에 regexp 들어가 있음.
+        if not our_topics:
             continue        
 
         # print(f"review_counter: {review_counter}")
@@ -105,8 +109,7 @@ def process_json_file(file_path, output_csv_path):
         # content = preprocess_text(item['content']) # 이거 빼고도 해봐야 함.
         content = more_than_one_space.sub(" ", content)
         sentences = split_content_into_sentences(content)        
-        our_topics = clean_data(item['our_topics']) # 이 안에 regexp 들어가 있음.
-        our_topics = sorted(item['our_topics'], key=lambda x: len(x['text']), reverse=True)
+        
 
         sentence_dict_list = []        
         word_index = 0
@@ -184,7 +187,7 @@ def process_json_file(file_path, output_csv_path):
         #         print("[MISMATCH]")
      
         sentence_words_concat = content                                              
-        
+        our_topics = sorted(our_topics, key=lambda x: len(x['text']), reverse=True)        
         checked_indice_set = set()
         for topic in our_topics:
             try:
@@ -271,6 +274,9 @@ def process_json_files_in_folder(folder_path, output_folder):
 
     # 폴더 내의 모든 JSON 파일 처리    
     for filename in os.listdir(folder_path):        
+        if "20240401_04h29m01s_extra_battery_아이엠듀 아이폰 보조배터리 8핀 일체형 C타입 충전형 5000mAh_review.json" not in filename:
+            continue
+
         if filename.endswith(".json"):
             json_file_path = os.path.join(folder_path, filename)
             output_csv_path = os.path.join(output_folder, f"{os.path.splitext(filename)[0]}.csv")
