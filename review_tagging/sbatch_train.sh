@@ -11,8 +11,8 @@
 
 # batch size down, train_fp, valid_fp change, out_model_path change
 epochs=10
-train_batch_size=2
-valid_batch_size=2
+train_batch_size=1
+valid_batch_size=1
 init_model_path=klue/bert-base
 max_length=512
 need_birnn=0
