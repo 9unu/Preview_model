@@ -273,10 +273,7 @@ def process_json_files_in_folder(folder_path, output_folder):
         os.makedirs(output_folder, exist_ok=True)
 
     # 폴더 내의 모든 JSON 파일 처리    
-    for filename in os.listdir(folder_path):        
-        if "20240401_04h29m01s_extra_battery_아이엠듀 아이폰 보조배터리 8핀 일체형 C타입 충전형 5000mAh_review.json" not in filename:
-            continue
-
+    for filename in os.listdir(folder_path):                
         if filename.endswith(".json"):
             json_file_path = os.path.join(folder_path, filename)
             output_csv_path = os.path.join(output_folder, f"{os.path.splitext(filename)[0]}.csv")
