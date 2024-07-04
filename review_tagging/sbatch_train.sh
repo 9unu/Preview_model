@@ -5,8 +5,8 @@
 #SBATCH --cpus-per-gpu=8
 #SBATCH --mem-per-gpu=16G
 #SBATCH -p batch_ugrad
-#SBATCH -t 24:0:0
-#SBATCH -w aurora-g7
+#SBATCH -t 18:0:0
+#SBATCH -w aurora-g5
 #SBATCH -o logs/slurm-%A.out
 
 # batch size down, train_fp, valid_fp change, out_model_path change
@@ -20,7 +20,7 @@ sentiment_drop_ratio=0.3
 aspect_drop_ratio=0.3
 sentiment_in_feature=768
 aspect_in_feature=768
-stop_patience=3
+stop_patience=5
 train_fp="../../../../local_datasets/p_review_dataset/parsing_data/train/"
 valid_fp="../../../../local_datasets/p_review_dataset/parsing_data/valid/"
 base_path="./ckpt_review/model/"
@@ -57,6 +57,8 @@ hostname
 rm -rf ckpt_review
 
 python ./src_review/do_parsingData.py --fp=$fp --save_p=$save_p --val_ratio=$val_ratio --test_ratio=$test_ratio --encoding=$encoding
+
+cp -rf /local_datasets/p_review_dataset/parsing_data ./resources_review
 python ./src_review/do_train.py --epochs=$epochs --init_model_path=$init_model_path --train_batch_size=$train_batch_size --valid_batch_size=$valid_batch_size --max_length=$max_length --need_birnn=$need_birnn --sentiment_drop_ratio=$sentiment_drop_ratio --aspect_drop_ratio=$aspect_drop_ratio --sentiment_in_feature=$sentiment_in_feature --aspect_in_feature=$aspect_in_feature --stop_patience=$stop_patience --train_fp=$train_fp --valid_fp=$valid_fp --base_path=$base_path --label_info_file=$label_info_file --out_model_path=$out_model_path
 
 exit 0
