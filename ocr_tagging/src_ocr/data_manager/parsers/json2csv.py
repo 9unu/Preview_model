@@ -2,6 +2,9 @@ import os
 import csv
 import json
 import kss
+import pandas as pd
+import ast
+import re
 
 
 def add_period_to_texts(text_list): # 문장 마침표 추가 함수
@@ -211,7 +214,6 @@ def preprocessing_ocr(args):
                 ocr_count += 1
                 text = ocr_list[n][0]
                 topic_data = ocr_list[n][1]
-                topic_data = sorted([item for item in ocr_list[n][1] if isinstance(item, dict)], key=lambda x: x['start_pos'], reverse=False)
                 bbox_list = ocr_list[n][2:]
                 cur_dict_list = concat_find_bbox(text, topic_data, bbox_list)
                 for cur_dict in cur_dict_list:
@@ -276,8 +278,23 @@ def json_2_csv(args):
 
     final_sent_dict_list = preprocessing_ocr(args)
 
-    with open(csv_file, mode = 'w', newline='', encoding='utf-8-sig') as file:
-        writer = csv.DictWriter(file, fieldnames = final_sent_dict_list[0].keys())
-        writer.writeheader()
-        for row_dict in final_sent_dict_list:
-            writer.writerow(row_dict)
+    df = pd.DataFrame(final_sent_dict_list)
+    # df['New_Sentence #'] = df.groupby('Ocr #').cumcount() + 1
+    df['New_Sentence #'] = df.groupby('Ocr #')['Sentence #'].apply(lambda x: x.rank(method='dense').astype(int))
+
+    df = df.drop(['Sentence #'], axis=1).reset_index(drop=True)
+    df.rename(columns={'New_Sentence #': 'Sentence #'}, inplace=True)
+
+
+    df['Ocr_Num'] = df['Ocr #'].apply(lambda x: int(re.findall(r'\d+', x)[0]))
+
+    df = df.sort_values(by=['Ocr_Num', 'Sentence #'], ascending=[True, True])
+
+    df = df.drop(['Ocr_Num'], axis=1).reset_index(drop=True)
+
+    df['Sentence #'] = df['Sentence #'].astype(str)  # 정수를 문자열로 변환
+    df['Sentence #'] = 'Sentence ' + df['Sentence #']  # 문자열 연결
+
+    df = df[['Ocr #', 'Sentence #', 'Word', 'Aspect', 'Bbox']]
+
+    df.to_csv(csv_file, encoding='utf-8-sig', index=False)
