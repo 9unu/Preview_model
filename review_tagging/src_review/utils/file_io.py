@@ -15,3 +15,7 @@ def get_file_list(fp, extension="csv"):
 def read_csv(data_path, encoding='utf-8'):
     df = pd.read_csv(data_path, encoding=encoding)
     return df
+
+def read_json(data_path, encoding='utf-8-sig'):
+    df = pd.read_json(data_path, encoding=encoding)
+    return df
