@@ -63,8 +63,13 @@ class ABSAModel(nn.Module):
             aspect_score_output, _ = self.aspect_score_birnn(model_output)
             sentiment_score_output, _ = self.sentiment_score_birnn(model_output)
         else:
-            sentiment_output = aspect_output = aspect2_output = aspect_score_output = sentiment_score_output = model_output
+            sentiment_output = model_output
+            sentiment_score_output = model_output
+            aspect_score_output = model_output
+            aspect_output = model_output
+            aspect2_output = model_output
 
+            
         # 과적합 방지를 위해 Sentiment와 Aspect Category Dropout 수행
         sentiment_output = self.sentiment_drop(sentiment_output)
         aspect_output = self.aspect_drop(aspect_output)
