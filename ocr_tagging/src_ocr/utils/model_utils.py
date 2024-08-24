@@ -1,6 +1,6 @@
 import numpy as np
 import torch
-
+from collections import OrderedDict
 
 # 과적합 방지를 위한 조기 학습 종료 클래스
 class EarlyStopping:
@@ -70,8 +70,16 @@ def device_setting(log):
 def load_model(model, state_dict_path, device):
     current_model_dict = model.state_dict()
     loaded_state_dict = torch.load(state_dict_path, map_location=device)
-    new_state_dict = {k: v if v.size() == current_model_dict[k].size() else current_model_dict[k] for k, v in
-                      zip(current_model_dict.keys(), loaded_state_dict.values())}
+
+    new_state_dict = OrderedDict()
+    # 현재 모델의 키 순서대로 반복
+    for k in current_model_dict.keys():
+        # 로드된 상태 사전에 키가 있고 크기가 일치하는 경우
+        if k in loaded_state_dict and loaded_state_dict[k].size() == current_model_dict[k].size():
+            new_state_dict[k] = loaded_state_dict[k]
+        else:
+            new_state_dict[k] = current_model_dict[k]
+
     model.load_state_dict(new_state_dict, strict=False)
     model.to(device)
 

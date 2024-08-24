@@ -29,7 +29,7 @@ class ABSAModel(nn.Module):
             aspect_in_feature = rnn_dim * 2
 
         # Sentiment와 Aspect Category의 Linear Layer 구성
-        self.hidden2asptag, self.hidden2asp2tag = nn.Linear(aspect_in_feature, self.num_aspect), \
+        self.hidden2asp_tag, self.hidden2asp2_tag = nn.Linear(aspect_in_feature, self.num_aspect), \
                                                   nn.Linear(aspect_in_feature, self.num_aspect2)
         # Sentiment와 Aspect Category의 CRF Layer 구성
         self.asp_crf, self.asp2_crf = CRF(self.num_aspect, batch_first=True), \
@@ -50,7 +50,7 @@ class ABSAModel(nn.Module):
         aspect_output, aspect2_output = self.aspect_drop(aspect_output), self.aspect2_drop(aspect2_output)
 
         # Linear Layer feeding
-        aspect_emmisions, aspect2_emmisions = self.hidden2asptag(aspect_output), self.hidden2asp2tag(aspect2_output)
+        aspect_emmisions, aspect2_emmisions = self.hidden2asp_tag(aspect_output), self.hidden2asp2_tag(aspect2_output)
 
         # CRF Layer Decoding
         aspect, aspect2 = self.asp_crf.decode(aspect_emmisions), self.asp2_crf.decode(aspect2_emmisions)
