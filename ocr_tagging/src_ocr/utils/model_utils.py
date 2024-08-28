@@ -79,7 +79,7 @@ def load_model(model, state_dict_path, device):
             new_state_dict[k] = loaded_state_dict[k]
         else:
             new_state_dict[k] = current_model_dict[k]
-            
+
     model.load_state_dict(new_state_dict, strict=False)
     model.to(device)
 

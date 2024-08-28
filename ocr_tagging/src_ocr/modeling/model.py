@@ -27,13 +27,12 @@ class ABSAModel(nn.Module):
             self.aspect2_birnn = nn.LSTM(aspect_in_feature, rnn_dim, num_layers=1, bidirectional=True, batch_first=True)
             aspect_in_feature = rnn_dim * 2
 
-        # Aspect Category의 Linear Layer 구성
-        self.hidden2asp_tag = nn.Linear(aspect_in_feature, self.num_aspect)
-        self.hidden2asp2_tag = nn.Linear(aspect_in_feature, self.num_aspect2)
-
-        # Aspect Category의 CRF Layer 구성
-        self.asp_crf = CRF(self.num_aspect, batch_first=True)
-        self.asp2_crf = CRF(self.num_aspect2, batch_first=True)
+        # Sentiment와 Aspect Category의 Linear Layer 구성
+        self.hidden2asp_tag, self.hidden2asp2_tag = nn.Linear(aspect_in_feature, self.num_aspect), \
+                                                  nn.Linear(aspect_in_feature, self.num_aspect2)
+        # Sentiment와 Aspect Category의 CRF Layer 구성
+        self.asp_crf, self.asp2_crf = CRF(self.num_aspect, batch_first=True), \
+                                      CRF(self.num_aspect2, batch_first=True)
 
     def forward(self, ids, mask=None, token_type_ids=None, target_aspect=None, target_aspect2=None):
         # 사전학습된 bert에 input을 feed
@@ -52,8 +51,7 @@ class ABSAModel(nn.Module):
         aspect2_output = self.aspect2_drop(aspect2_output)
 
         # Linear Layer feeding
-        aspect_emmisions = self.hidden2asp_tag(aspect_output)
-        aspect2_emmisions = self.hidden2asp2_tag(aspect2_output)
+        aspect_emmisions, aspect2_emmisions = self.hidden2asp_tag(aspect_output), self.hidden2asp2_tag(aspect2_output)
 
         # CRF Layer Decoding
         aspect = self.asp_crf.decode(aspect_emmisions)
