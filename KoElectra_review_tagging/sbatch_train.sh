@@ -5,43 +5,43 @@
 #SBATCH --cpus-per-gpu=8
 #SBATCH --mem-per-gpu=16G
 #SBATCH -p batch_ugrad
-#SBATCH -t 18:0:0
-#SBATCH -w aurora-g5
+#SBATCH -t 24:0:0
+#SBATCH -w aurora-g7
 #SBATCH -o logs/slurm-%A.out
 
 # batch size down, train_fp, valid_fp change, out_model_path change
 epochs=10
 train_batch_size=1
 valid_batch_size=1
-init_model_path=klue/bert-base
+init_model_path=monologg/koelectra-base-v3-discriminator
 max_length=512
-need_birnn=0
+need_birnn=1
 sentiment_drop_ratio=0.3
 aspect_drop_ratio=0.3
 sentiment_in_feature=768
 aspect_in_feature=768
 stop_patience=5
-train_fp="../../../../local_datasets/p_review_dataset/parsing_data/train/"
-valid_fp="../../../../local_datasets/p_review_dataset/parsing_data/valid/"
+train_fp="/local_datasets/p_review_dataset/parsing_data/train/"
+valid_fp="/local_datasets/p_review_dataset/parsing_data/valid/"
 base_path="./ckpt_review/model/"
 label_info_file="meta.bin"
 out_model_path="pytorch_model.bin"
 
 # dataset path
-fp="../../../../local_datasets/p_review_dataset/"
-save_p="../../../../local_datasets/p_review_dataset/parsing_data/"
+fp="/local_datasets/p_review_dataset/"
+save_p="/local_datasets/p_review_dataset/parsing_data/"
 val_ratio=0.1
 test_ratio=0.01
 encoding="utf-8-sig"
-cd /data/ndn825/Preview_model/review_tagging/resources_review/data/
+cd /data/ndn825/Preview_model/KoElectra_review_tagging/resources_review/data/
 rm -rf p_review_dataset.tar
 tar -cf p_review_dataset.tar *.json
 rm -rf /local_datasets/p_review_dataset/
 mkdir /local_datasets/p_review_dataset/
-tar -xf /data/ndn825/Preview_model/review_tagging/resources_review/data/p_review_dataset.tar -C /local_datasets/p_review_dataset/
+tar -xf /data/ndn825/Preview_model/KoElectra_review_tagging/resources_review/data/p_review_dataset.tar -C /local_datasets/p_review_dataset/
 echo "Data is ready!"
 
-cd /data/ndn825/Preview_model/review_tagging
+cd /data/ndn825/Preview_model/KoElectra_review_tagging
 
 /data/$USER/anaconda3/bin/conda init
 source ~/.bashrc

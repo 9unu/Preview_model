@@ -21,15 +21,15 @@ aspect_drop_ratio=0.3
 sentiment_in_feature=768
 aspect_in_feature=768
 stop_patience=5
-train_fp="../../../../local_datasets/p_review_dataset/parsing_data/train/"
-valid_fp="../../../../local_datasets/p_review_dataset/parsing_data/valid/"
+train_fp="/local_datasets/p_review_dataset/parsing_data/train/"
+valid_fp="/local_datasets/p_review_dataset/parsing_data/valid/"
 base_path="./ckpt_review/model/"
 label_info_file="meta.bin"
 out_model_path="pytorch_model.bin"
 
 # dataset path
-fp="../../../../local_datasets/p_review_dataset/"
-save_p="../../../../local_datasets/p_review_dataset/parsing_data/"
+fp="/local_datasets/p_review_dataset/"
+save_p="/local_datasets/p_review_dataset/parsing_data/"
 val_ratio=0.1
 test_ratio=0.01
 encoding="utf-8-sig"
