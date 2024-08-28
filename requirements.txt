@@ -11,4 +11,13 @@ sklearn==0.0
 torch==1.9.0
 transformers==4.25.1
 zipp==3.6.0
-kss
+kss==6.0.4
+python-mecab-ko==1.3.5
+python-mecab-ko-dic==2.1.1.post2
+
+# Belows are for the deployment.
+
+fastapi==0.111.1
+uvicorn==0.30.3
+google-cloud-storage==2.18.0
+google-cloud-pubsub==2.23.0
