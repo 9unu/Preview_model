@@ -133,6 +133,7 @@ def preprocess(config):
     # preprocess_fn2(config)
 
 
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--eval_batch_size", type=int, default=1, help="한 batch에 속할 테스트 데이터 샘플의 size")
@@ -151,9 +152,9 @@ if __name__ == "__main__":
     parser.add_argument("--aspect_in_feature", type=int, default=768,
                         help="각 Aspect Category input sample의 size")
     # ===================================================
-    # parser.add_argument("--preprocessing_fp", type=str, help="전처리할 데이터들이 포함된 디렉토리 경로 or 전처리할 데이터 파일 경로 설정", default="./resources_ocr/data_json_copy/")
-    parser.add_argument("--preprocessing_fp", type=str, help="전처리할 데이터들이 포함된 디렉토리 경로 or 전처리할 데이터 파일 경로 설정", default="./resources_ocr/data_json/")
-    
+    parser.add_argument("--json_fp", type=str, help="json 구조 바꿔야하는 데이터들이 포함된 디렉토리 경로 or 전처리할 데이터 파일 경로 설정", default="./resources_ocr/data_json/")
+
+    parser.add_argument("--preprocessing_fp", type=str, help="전처리할 데이터들이 포함된 디렉토리 경로 or 전처리할 데이터 파일 경로 설정", default="./resources_ocr/data_json_structure/")
     ### path 수정
     parser.add_argument("--tagging_fp", type=str, help="태깅할 데이터들이 포함된 디렉토리 경로 or 태깅할 데이터 파일 경로 설정", default="./resources_ocr/preprocessed_results_json/")
     parser.add_argument("--valid_fp", type=str, help="valid 데이터 포함된 디렉토리 경로 or valid 데이터 파일 경로 설정", default="./resources_ocr/parsing_data/valid/")
