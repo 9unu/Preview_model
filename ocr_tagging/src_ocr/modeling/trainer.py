@@ -252,7 +252,7 @@ def preprocess_content(content):
     sentences_period_added = [[replace_newline(sent[0].strip()) + '.'] for sent in sentences if sent[0].strip()]
     sentences_regexp = [regexp(sent_list) for sent_list in sentences_period_added]
     preprocessed_content = ' '.join([''.join(row) for row in sentences_regexp])
-    return preprocessed_content, sentences_regexp
+    return text, preprocessed_content, sentences_regexp
 
 
 def normalize_whitespace(content):
@@ -599,7 +599,7 @@ def update_json_structure(config):
 
 def preprocess_fn(config): # 전처리와 모델 예측 분리(그 중에서 전처리 함수)
     if(config.need_preprocessing):
-        # update_json_structure(config)
+        update_json_structure(config)
         print("preprocessing_start")
         file_list = get_file_list(config.preprocessing_fp, 'json')
 
@@ -625,8 +625,9 @@ def preprocess_fn(config): # 전처리와 모델 예측 분리(그 중에서 전
             df.loc[:, "img_str_preprocessed"] = df["img_str_preprocessed"].fillna(method="ffill")
 
             df["temp"] = df['img_str'].apply(preprocess_content)
-            df['img_str_preprocessed'] = df['temp'].apply(lambda x: x[0])
-            df['img_sent_list_preprocessed'] = df['temp'].apply(lambda x: x[1])
+            df['img_str'] = df['temp'].apply(lambda x: x[0])
+            df['img_str_preprocessed'] = df['temp'].apply(lambda x: x[1])
+            df['img_sent_list_preprocessed'] = df['temp'].apply(lambda x: x[2])
 
             df = df[df['img_str'] != '']
             df = df[df['img_str_preprocessed'] != ''] # 빈 텍스트 삭제(의미 없으니까)
@@ -935,8 +936,8 @@ def tag_fn(config, tokenizer, model, enc_aspect, enc_aspect2, device, log):
 
             
 
-        print(filename + " Process(Tagging / Finding_bbox) finished")
 
+    print(" Process(Tagging / Finding_bbox) finished")
     tagging_end_time = time.time() - tagging_start_time  # 모든 데이터에 대한 태깅 소요 시간
     tagging_times = str(datetime.timedelta(seconds=tagging_end_time))  # 시:분:초 형식으로 변환
     current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
