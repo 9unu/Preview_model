@@ -121,6 +121,7 @@ def eval_fn(data_loader, model, enc_aspect, device, log, f1_mode='micro', flag='
 from utils.file_io import get_file_list, read_json, read_csv
 from collections import Counter
 import re
+import kss
 
 
 def parsing_data(tokenizer, text, words_in_sent): # text는 리뷰 하나임
@@ -233,7 +234,7 @@ def regexp(sentences):
         new_sent = pattern4.sub(replaced_str, new_sent)
         new_sent = new_sent.replace('!.', '!').replace('?.', '?')
 
-        sentences[i] = new_sent
+        sentences[i] = new_sent.strip()
 
     return sentences
 
@@ -241,8 +242,12 @@ def regexp(sentences):
 def replace_newline(text):
     return text.replace('\n', ' ')
 
+
 def preprocess_content(content):
-    sentences = content.split('\n')
+    # content = content.replace('\n', '. ')
+    kss_sent_list = kss.split_sentences(content)
+    text = '\n'.join(kss_sent_list)
+    sentences = text.split('\n')
     sentences = [[sent] for sent in sentences]
     sentences_period_added = [[replace_newline(sent[0].strip()) + '.'] for sent in sentences if sent[0].strip()]
     sentences_regexp = [regexp(sent_list) for sent_list in sentences_period_added]
@@ -291,7 +296,7 @@ def create_our_topics_dict(row): # 각 문장 별로 dict 만드는 함수
         "bbox": 0
         }
 
-def find_bbox(text_og, text_preprocessed, topic_data, bbox_list): # text는 텍스트 전체 / topic_data는 태깅된 딕셔너리 리스트 / bbox_list = ocr_list[n][2:]
+def find_bbox(text_og, text_preprocessed, topic_data, bbox_text): # text는 텍스트 전체 / topic_data는 태깅된 딕셔너리 리스트 / bbox_text = ocr_list[n][2:]
     splitted_text_list = text_og.split('\n')
     
     cur_dict_list = []
@@ -301,10 +306,10 @@ def find_bbox(text_og, text_preprocessed, topic_data, bbox_list): # text는 텍�
 
     start_pos_spacingx = 0
     end_pos_spacingx = 0
-    for i in range(len(bbox_list)):
-        end_pos_spacingx = start_pos_spacingx + len(bbox_list[i]['text'].replace('\n', '').strip().replace(' ', '')) ### 수정(\n)
-        bbox_list[i]['start_pos_spacingx'] = start_pos_spacingx
-        bbox_list[i]['end_pos_spacingx'] = end_pos_spacingx
+    for i in range(len(bbox_text)):
+        end_pos_spacingx = start_pos_spacingx + len(bbox_text[i]['text'].replace('\n', '').strip().replace(' ', '')) ### 수정(\n)
+        bbox_text[i]['start_pos_spacingx'] = start_pos_spacingx
+        bbox_text[i]['end_pos_spacingx'] = end_pos_spacingx
         start_pos_spacingx = end_pos_spacingx
 
 
@@ -368,16 +373,16 @@ def find_bbox(text_og, text_preprocessed, topic_data, bbox_list): # text는 텍�
                     end_idx_found = start_idx_found + len(cur_dict['original_text'].strip().replace(' ', '').replace('\n', ''))
 
                     
-                    while (not(bbox_list[bbox_idx]['start_pos_spacingx'] <= start_idx_found <= (bbox_list[bbox_idx]['end_pos_spacingx'] - 1))):
+                    while (not(bbox_text[bbox_idx]['start_pos_spacingx'] <= start_idx_found <= (bbox_text[bbox_idx]['end_pos_spacingx'] - 1))):
                         bbox_idx += 1
                     bbox_start_idx = bbox_idx
-                    while (not(bbox_list[bbox_idx]['start_pos_spacingx'] <= (end_idx_found - 1) <= (bbox_list[bbox_idx]['end_pos_spacingx'] - 1))):
+                    while (not(bbox_text[bbox_idx]['start_pos_spacingx'] <= (end_idx_found - 1) <= (bbox_text[bbox_idx]['end_pos_spacingx'] - 1))):
                         bbox_idx += 1
                     bbox_end_idx = bbox_idx
 
 
                     for idx in range(bbox_start_idx, bbox_end_idx + 1):
-                        cur_dict['bbox'].append(bbox_list[idx]['bbox'])
+                        cur_dict['bbox'].append(bbox_text[idx]['bbox'])
                     
                     new_json_topic_dict = {'text' : new_topic_data[j//2]['text'], 'topic' : new_topic_data[j//2]['topic'],
                                            'start_pos' : text_preprocessed.find(new_topic_data[j//2]['text']),
@@ -462,16 +467,16 @@ def find_bbox(text_og, text_preprocessed, topic_data, bbox_list): # text는 텍�
                     end_idx_found = start_idx_found + len(cur_dict['original_text'].strip().replace(' ', '').replace('\n', ''))
 
                     
-                    while (not(bbox_list[bbox_idx]['start_pos_spacingx'] <= start_idx_found <= (bbox_list[bbox_idx]['end_pos_spacingx'] - 1))):
+                    while (not(bbox_text[bbox_idx]['start_pos_spacingx'] <= start_idx_found <= (bbox_text[bbox_idx]['end_pos_spacingx'] - 1))):
                         bbox_idx += 1
                     bbox_start_idx = bbox_idx
-                    while (not(bbox_list[bbox_idx]['start_pos_spacingx'] <= (end_idx_found - 1) <= (bbox_list[bbox_idx]['end_pos_spacingx'] - 1))):
+                    while (not(bbox_text[bbox_idx]['start_pos_spacingx'] <= (end_idx_found - 1) <= (bbox_text[bbox_idx]['end_pos_spacingx'] - 1))):
                         bbox_idx += 1
                     bbox_end_idx = bbox_idx
 
 
                     for idx in range(bbox_start_idx, bbox_end_idx + 1):
-                        cur_dict['bbox'].append(bbox_list[idx]['bbox'])
+                        cur_dict['bbox'].append(bbox_text[idx]['bbox'])
                     
                     new_json_topic_dict = {'text' : new_topic_data[j//2]['text'], 'topic' : new_topic_data[j//2]['topic'],
                                            'start_pos' : text_preprocessed.find(new_topic_data[j//2]['text']),
@@ -560,48 +565,81 @@ def words_count_per_sent(sent_list):
     return no_words_in_sentence_list
 
 
-
-def preprocess_fn(config): # 전처리와 모델 예측 분리(그 중에서 전처리 함수)
-    print("preprocessing_start")
-    file_list = get_file_list(config.preprocessing_fp, 'json')
+def update_json_structure(config):
+    print("Updating_json_structure")
+    file_list = get_file_list(config.json_fp, 'json')
 
     for file in file_list:
-        if os.path.exists(file.replace("data_json","preprocessed_results_json").replace('.json', '_전처리.json')):
-            print(file.replace("data_json","preprocessed_results_json").replace('.json', '_전처리.json')+" exists --> continue")
+        if os.path.exists(file.replace("data_json","data_json_structure")):
+            print(file.replace("data_json","data_json_structure")+" exists --> continue")
             continue
-
 
         with open(file, 'r', encoding='utf-8-sig') as json_file:
             ocr_data = json.load(json_file) # JSON 파일 불러오기
         df = pd.DataFrame()
         df['img_str'] = []
-        df['bbox_list'] = []
+        df['bbox_text'] = []
 
         for data in ocr_data:
-            content = data[0]  # 긴 텍스트 추출
-            bbox_list = list(data[1:])  # 나머지 데이터를 DataFrame으로 변환
-            df = df.append({'img_str': content, 'img_str_preprocessed': content, 'bbox_list': bbox_list}, ignore_index=True)
-
-
-        df.loc[:, "img_str"] = df["img_str"].fillna(method="ffill")
-        df.loc[:, "img_str_preprocessed"] = df["img_str_preprocessed"].fillna(method="ffill")
-
-        df["temp"] = df['img_str'].apply(preprocess_content)
-        df['img_str_preprocessed'] = df['temp'].apply(lambda x: x[0])
-        df['img_sent_list_preprocessed'] = df['temp'].apply(lambda x: x[1])
-
-        df = df[df['img_str'] != '']
-        df = df[df['img_str_preprocessed'] != ''] # 빈 텍스트 삭제(의미 없으니까)
-        df = df.reset_index(drop=True)
-        
-        df['img_str_preprocessed'] = df['img_str_preprocessed'].apply(normalize_whitespace) # spacing 문제 해결 위해서 공백은 무조건 1칸으로 고정
-        df = df.drop(['temp'], axis=1)
-        df = df[['img_str', 'img_str_preprocessed', 'img_sent_list_preprocessed', 'bbox_list']]
+            if (type(data[1]) == list):
+                content = data[0]  # 긴 텍스트 추출
+                our_topics = data[1]
+                bbox_text = data[2:]  # 나머지 데이터를 DataFrame으로 변환
+                df = df.append({'img_str': content, 'our_topics': our_topics, 'bbox_text': bbox_text}, ignore_index=True)
+            else:
+                content = data[0]  # 긴 텍스트 추출
+                bbox_text = data[1:]  # 나머지 데이터를 DataFrame으로 변환
+                df = df.append({'img_str': content, 'img_str_preprocessed': content, 'bbox_text': bbox_text}, ignore_index=True)
 
         data_dict = df.to_dict(orient='records')
 
-        with open(file.replace("data_json","preprocessed_results_json").replace('.json', '_전처리.json'), 'w', encoding='utf-8-sig') as json_file:
+        with open(file.replace("data_json","data_json_structure"), 'w', encoding='utf-8-sig') as json_file:
             json.dump(data_dict, json_file, indent=4, ensure_ascii=False)
+
+
+def preprocess_fn(config): # 전처리와 모델 예측 분리(그 중에서 전처리 함수)
+    if(config.need_preprocessing):
+        # update_json_structure(config)
+        print("preprocessing_start")
+        file_list = get_file_list(config.preprocessing_fp, 'json')
+
+        for file in file_list:
+            if os.path.exists(file.replace("data_json_structure","preprocessed_results_json").replace('.json', '_전처리.json')):
+                print(file.replace("data_json_structure","preprocessed_results_json").replace('.json', '_전처리.json')+" exists --> continue")
+                continue
+
+
+            with open(file, 'r', encoding='utf-8-sig') as json_file:
+                ocr_data = json.load(json_file) # JSON 파일 불러오기
+            df = pd.DataFrame()
+            df['img_str'] = []
+            df['bbox_text'] = []
+
+            for data in ocr_data:
+                content = data['img_str']  # 긴 텍스트 추출
+                bbox_text = data['bbox_text']  # 나머지 데이터를 DataFrame으로 변환
+                df = df.append({'img_str': content, 'img_str_preprocessed': content, 'bbox_text': bbox_text}, ignore_index=True)
+
+
+            df.loc[:, "img_str"] = df["img_str"].fillna(method="ffill")
+            df.loc[:, "img_str_preprocessed"] = df["img_str_preprocessed"].fillna(method="ffill")
+
+            df["temp"] = df['img_str'].apply(preprocess_content)
+            df['img_str_preprocessed'] = df['temp'].apply(lambda x: x[0])
+            df['img_sent_list_preprocessed'] = df['temp'].apply(lambda x: x[1])
+
+            df = df[df['img_str'] != '']
+            df = df[df['img_str_preprocessed'] != ''] # 빈 텍스트 삭제(의미 없으니까)
+            df = df.reset_index(drop=True)
+            
+            df['img_str_preprocessed'] = df['img_str_preprocessed'].apply(normalize_whitespace) # spacing 문제 해결 위해서 공백은 무조건 1칸으로 고정
+            df = df.drop(['temp'], axis=1)
+            df = df[['img_str', 'img_str_preprocessed', 'img_sent_list_preprocessed', 'bbox_text']]
+
+            data_dict = df.to_dict(orient='records')
+
+            with open(file.replace("data_json_structure","preprocessed_results_json").replace('.json', '_전처리.json'), 'w', encoding='utf-8-sig') as json_file:
+                json.dump(data_dict, json_file, indent=4, ensure_ascii=False)
 
 
 
@@ -819,7 +857,7 @@ def tag_fn(config, tokenizer, model, enc_aspect, enc_aspect2, device, log):
 
 
         df = df.drop(['img_sent_list_preprocessed'], axis=1)
-        df = df[['img_str', 'img_str_preprocessed', 'our_topics', 'bbox_list']]
+        df = df[['img_str', 'img_str_preprocessed', 'our_topics', 'bbox_text']]
 
 
 
@@ -863,25 +901,26 @@ def tag_fn(config, tokenizer, model, enc_aspect, enc_aspect2, device, log):
     directory = 'resources_ocr/tagged_results_json/'
     file_list_to_find_bbox = os.listdir(directory)
     file_list_to_find_bbox.sort()
-    new_order = ['img_str', 'our_topics', 'bbox_list']
+    new_order = ['img_str', 'our_topics', 'bbox_text']
     for filename in file_list_to_find_bbox:
         if filename.endswith('.json'):  # JSON 파일인지 확인
             new_ocr_list = []
             filepath = os.path.join(directory, filename)
             with open(filepath, 'r', encoding='utf-8-sig') as file_to_find_bbox:
                 ocr_list = json.load(file_to_find_bbox) # JSON 파일 불러오기
-            for n in range(len(ocr_list)):
+            print("Finding_bbox " + filename)
+            for n in tqdm(range(len(ocr_list))):
                 text_og = ocr_list[n]['img_str']
                 text_preprocessed = ocr_list[n]['img_str_preprocessed']
                 topic_data = ocr_list[n]['our_topics']
-                bbox_list = ocr_list[n]['bbox_list']
-                new_json_topic_list = find_bbox(text_og, text_preprocessed, topic_data, bbox_list)
+                bbox_text = ocr_list[n]['bbox_text']
+                new_json_topic_list = find_bbox(text_og, text_preprocessed, topic_data, bbox_text)
                 if(new_json_topic_list != []):
                     ocr_list[n]['our_topics'] = new_json_topic_list
                 del ocr_list[n]['img_str']
                 ocr_list[n]['img_str'] = ocr_list[n]['img_str_preprocessed']
                 del ocr_list[n]['img_str_preprocessed']
-                for item in bbox_list:
+                for item in bbox_text:
                     del item["start_pos_spacingx"]
                     del item["end_pos_spacingx"]
                 new_ocr_dict = {key: ocr_list[n][key] for key in new_order}
@@ -896,7 +935,7 @@ def tag_fn(config, tokenizer, model, enc_aspect, enc_aspect2, device, log):
 
             
 
-        print(filename + " tagging finished")
+        print(filename + " Process(Tagging / Finding_bbox) finished")
 
     tagging_end_time = time.time() - tagging_start_time  # 모든 데이터에 대한 태깅 소요 시간
     tagging_times = str(datetime.timedelta(seconds=tagging_end_time))  # 시:분:초 형식으로 변환
