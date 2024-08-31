@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from data_manager.loaders.loader import set_loader
 from modeling.model import ABSAModel
-from modeling.trainer import tag_valid_fn, valid_eval_fn, tag_fn, preprocess_fn ### 함수import 수정
+from modeling.trainer import tag_valid_fn, valid_eval_fn, tag_fn, preprocess_fn, preprocess_fn2 ### 함수import 수정
 from utils.model_utils import device_setting, load_model
 from utils.set_logger import Log
 import os
@@ -130,6 +130,7 @@ def preprocess(config):
     device = device_setting(log)
 
     preprocess_fn(config)
+    # preprocess_fn2(config)
 
 
 if __name__ == "__main__":
@@ -150,7 +151,9 @@ if __name__ == "__main__":
     parser.add_argument("--aspect_in_feature", type=int, default=768,
                         help="각 Aspect Category input sample의 size")
     # ===================================================
+    # parser.add_argument("--preprocessing_fp", type=str, help="전처리할 데이터들이 포함된 디렉토리 경로 or 전처리할 데이터 파일 경로 설정", default="./resources_ocr/data_json_copy/")
     parser.add_argument("--preprocessing_fp", type=str, help="전처리할 데이터들이 포함된 디렉토리 경로 or 전처리할 데이터 파일 경로 설정", default="./resources_ocr/data_json/")
+    
     ### path 수정
     parser.add_argument("--tagging_fp", type=str, help="태깅할 데이터들이 포함된 디렉토리 경로 or 태깅할 데이터 파일 경로 설정", default="./resources_ocr/preprocessed_results_json/")
     parser.add_argument("--valid_fp", type=str, help="valid 데이터 포함된 디렉토리 경로 or valid 데이터 파일 경로 설정", default="./resources_ocr/parsing_data/valid/")
@@ -179,3 +182,5 @@ if __name__ == "__main__":
 
     # json 파일들에 대해서 모델이 예측한 결과를 json으로 저장하는 함수
     tag(config)
+    
+

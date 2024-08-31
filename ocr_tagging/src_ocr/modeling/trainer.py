@@ -9,6 +9,32 @@ import datetime
 import transformers
 import json
 import os
+import glob
+import pathlib
+
+from utils.file_io import get_file_list, read_json, read_csv
+from collections import Counter
+import re
+
+pattern1 = re.compile(r"[ㄱ-ㅎㅏ-ㅣ]+") # 한글 자모음만 반복되면 삭제
+pattern2 = re.compile(r":\)|[\@\#\$\^\*\(\)\[\]\{\}\<\>\/\"\'\=\+\\\|\_(:\));]+") # ~, !, %, &, -, ,, ., :, ?는 제거 X /// 특수문자 제거
+pattern3 = re.compile(r"([^\d])\1{2,}") # 숫자를 제외한 동일한 문자 3개 이상이면 삭제
+emoticon_pattern = re.compile(r'[:;]-?[()D\/]')
+pattern4 = re.compile( # 이모티콘 삭제
+    "["                               
+    "\U0001F600-\U0001F64F"  # 감정 관련 이모티콘
+    "\U0001F300-\U0001F5FF"  # 기호 및 픽토그램
+    "\U0001F680-\U0001F6FF"  # 교통 및 지도 기호
+    "\U0001F1E0-\U0001F1FF"  # 국기
+    # "\U00002702-\U000027B0"  # 기타 기호
+    # "\U000024C2-\U0001F251"  # 추가 기호 및 픽토그램      # 이거 2줄까지 하면 한글이 사라짐
+    "]+", flags=re.UNICODE)
+
+
+whitespace_pattern = re.compile(r'\s+') # 빈칸 여러개 무조건 1개로 고정시키기 위한 pattern
+
+special_char_pattern = re.compile(r'\s+([~!%&-,.:?…])') # 특수문자 띄어쓰기 문제 해결하기 위한 코드(인코딩 후 디코딩 과정에서 띄어쓰기 추가되는 듯)
+
 
 # input tensor의 구조 변경을 위한 함수
 def parsing_batch(data, device):
@@ -162,9 +188,6 @@ def eval_fn(data_loader, model, enc_aspect, enc_aspect2, device, log, f1_mode='m
 
 
 
-from utils.file_io import get_file_list, read_json, read_csv
-from collections import Counter
-import re
 
 
 def parsing_data(tokenizer, text, words_in_sent): # text는 리뷰 하나임
@@ -174,7 +197,7 @@ def parsing_data(tokenizer, text, words_in_sent): # text는 리뷰 하나임
     CLS_IDS = tokenizer.encode('[CLS]', add_special_tokens=False)  # [2]
     PAD_IDS = tokenizer.encode('[PAD]', add_special_tokens=False)  # [0]
     SEP_IDS = tokenizer.encode('[SEP]', add_special_tokens=False)  # [3]
-    PADDING_TAG_IDS = [0]
+    PADDING_TAG_IDS = [0]    
     
     for i, s in enumerate(text):
         inputs = tokenizer.encode(s, add_special_tokens=False)
@@ -188,6 +211,25 @@ def parsing_data(tokenizer, text, words_in_sent): # text는 리뷰 하나임
 
     # words_list도 ids의 요소와 일치하게 slicing
     flattened_ids_list = [item for sublist in words_list for item in sublist]
+    
+    #TODO: 추가 여부 확인
+    # words_list도 slicing 필요한듯.    
+    # words_list_slicing_idx = 0
+    # token_counter = 0
+    
+    
+    # for i, word in enumerate(words_list):        
+    #     token_counter += len(word)
+    #     if token_counter > len(ids):
+    #         words_list_slicing_idx = i
+    #         break
+    
+    # if token_counter > len(ids):            
+    #     words_list = words_list[:words_list_slicing_idx] + words_list[words_list_slicing_idx][:token_counter - len(ids)]    
+    #     updated_words_in_sent = words_in_sent[:words_list_slicing_idx] + [len(words_list[words_list_slicing_idx])]
+    
+    
+        
     sliced_flattened_ids_list = flattened_ids_list[:max_len - 2]
 
     # sliced_flattened_ids_list를 다시 원래 구조로 되돌리기
@@ -195,15 +237,14 @@ def parsing_data(tokenizer, text, words_in_sent): # text는 리뷰 하나임
     current_length = 0
 
 
-    updated_words_in_sent = []  # 업데이트된 words_in_sent 리스트
     last_idx = len(words_list) # 포함된 단어의 총 개수
     for i, sublist in enumerate(words_list):
         if current_length + len(sublist) > max_len - 2:
             if (max_len - 2 - current_length == 0): # 해당 단어는 토큰이 하나도 포함이 안되는거지
                 last_idx = i
                 pass
-            else:
-                sliced_words_list.append(sublist[:max_len - 2 - current_length])
+            else:# 단어 단위로 자르는 게 맞지 않나??
+                sliced_words_list.append(sublist[:max_len - 2 - current_length])                
                 last_idx = (i+1)
                 # updated_words_in_sent.append(min(words_in_sent[i], max_len - 2 - current_length))
             break
@@ -212,6 +253,8 @@ def parsing_data(tokenizer, text, words_in_sent): # text는 리뷰 하나임
             # updated_words_in_sent.append(words_in_sent[i])
             current_length += len(sublist)
     
+    # 자르고 난 다음 sentence의 단어 개수 업데이트
+    updated_words_in_sent = []  # 업데이트된 words_in_sent 리스트
     sum = 0
     for i in range(len(words_in_sent)):
         sum += words_in_sent[i]
@@ -223,8 +266,7 @@ def parsing_data(tokenizer, text, words_in_sent): # text는 리뷰 하나임
 
     # SPECIAL TOKEN 추가 및 PADDING 수행
     ids = CLS_IDS + ids + SEP_IDS
-    
-    
+            
 
     mask = [1] * len(ids)
     token_type_ids = PAD_IDS * len(ids)
@@ -247,24 +289,7 @@ def parsing_data(tokenizer, text, words_in_sent): # text는 리뷰 하나임
 
 
 
-pattern1 = re.compile(r"[ㄱ-ㅎㅏ-ㅣ]+") # 한글 자모음만 반복되면 삭제
-pattern2 = re.compile(r":\)|[\@\#\$\^\*\(\)\[\]\{\}\<\>\/\"\'\=\+\\\|\_(:\));]+") # ~, !, %, &, -, ,, ., :, ?는 제거 X /// 특수문자 제거
-pattern3 = re.compile(r"([^\d])\1{2,}") # 숫자를 제외한 동일한 문자 3개 이상이면 삭제
-emoticon_pattern = re.compile(r'[:;]-?[()D\/]')
-pattern4 = re.compile( # 이모티콘 삭제
-    "["                               
-    "\U0001F600-\U0001F64F"  # 감정 관련 이모티콘
-    "\U0001F300-\U0001F5FF"  # 기호 및 픽토그램
-    "\U0001F680-\U0001F6FF"  # 교통 및 지도 기호
-    "\U0001F1E0-\U0001F1FF"  # 국기
-    # "\U00002702-\U000027B0"  # 기타 기호
-    # "\U000024C2-\U0001F251"  # 추가 기호 및 픽토그램      # 이거 2줄까지 하면 한글이 사라짐
-    "]+", flags=re.UNICODE)
 
-
-whitespace_pattern = re.compile(r'\s+') # 빈칸 여러개 무조건 1개로 고정시키기 위한 pattern
-
-special_char_pattern = re.compile(r'\s+([~!%&-,.:?…])') # 특수문자 띄어쓰기 문제 해결하기 위한 코드(인코딩 후 디코딩 과정에서 띄어쓰기 추가되는 듯)
 
 def regexp(sentences):
     replaced_str = ' '
@@ -603,23 +628,61 @@ def words_count_per_sent(sent_list):
     
     return no_words_in_sentence_list
 
+def preprocess_fn2(config):
+    print("preprocessing_start")
+    file_list = get_file_list(config.preprocessing_fp, 'json')        
+    
+    for fp in file_list:
+        exist_file = fp.replace("data_json_copy","preprocessed_results_json").replace('.json', '_전처리.json')        
+        
+        if os.path.exists(exist_file):            
+            print(f"{exist_file} exists --> continue")
+            continue
 
+        # 아마 형식 통일되면 아래와 같이 가능할듯.
+        df = read_json(fp)
+        df["img_str"] = df["img_str"].fillna(method="ffill")        
+
+        df["temp"] = df['img_str'].apply(preprocess_content)                
+        df['img_str_preprocessed'] = df['temp'].apply(lambda x: x[0])
+        df['img_sent_list_preprocessed'] = df['temp'].apply(lambda x: x[1])
+        df.drop('temp', axis=1, inplace=True)
+        
+        df = df[df['img_str'] != ''] # 빈 텍스트 삭제(의미 없으니까)
+        df = df[df['img_str_preprocessed'] != ''] # 빈 텍스트 삭제(의미 없으니까)
+        df = df.reset_index(drop=True)
+        
+        df['img_str_preprocessed'] = df['img_str_preprocessed'].apply(normalize_whitespace) # spacing 문제 해결 위해서 공백은 무조건 1칸으로 고정        
+        df = df[['img_str', 'img_str_preprocessed', 'img_sent_list_preprocessed', 'bbox_text']]
+
+        data_dict = df.to_dict(orient='records')        
+        with open(exist_file, 'w', encoding='utf-8-sig') as json_file:
+            json.dump(data_dict, json_file, indent=4, ensure_ascii=False)
+        
+        
+        
 
 def preprocess_fn(config): # 전처리와 모델 예측 분리(그 중에서 전처리 함수)
     print("preprocessing_start")
-    file_list = get_file_list(config.preprocessing_fp, 'json')
-
+    file_list = get_file_list(config.preprocessing_fp, 'json')        
+    
     for file in file_list:
-        if os.path.exists(file.replace("data_json","preprocessed_results_json").replace('.json', '_전처리.json')):
-            print(file.replace("data_json","preprocessed_results_json").replace('.json', '_전처리.json')+" exists --> continue")
+        exist_file = file.replace("data_json","preprocessed_results_json").replace('.json', '_전처리.json')        
+        
+        if os.path.exists(exist_file):            
+            print(f"{exist_file} exists --> continue")
             continue
-
 
         with open(file, 'r', encoding='utf-8-sig') as json_file:
             ocr_data = json.load(json_file) # JSON 파일 불러오기
+                
         df = pd.DataFrame()
         df['img_str'] = []
         df['bbox_list'] = []
+        
+        
+        
+    
 
         for data in ocr_data:
             content = data[0]  # 긴 텍스트 추출
@@ -630,20 +693,20 @@ def preprocess_fn(config): # 전처리와 모델 예측 분리(그 중에서 전
         df.loc[:, "img_str"] = df["img_str"].fillna(method="ffill")
         df.loc[:, "img_str_preprocessed"] = df["img_str_preprocessed"].fillna(method="ffill")
 
-        df["temp"] = df['img_str'].apply(preprocess_content)
+        df["temp"] = df['img_str'].apply(preprocess_content)        
+        
         df['img_str_preprocessed'] = df['temp'].apply(lambda x: x[0])
         df['img_sent_list_preprocessed'] = df['temp'].apply(lambda x: x[1])
-
-        df = df[df['img_str'] != '']
+        df.drop('temp', axis=1, inplace=True)
+        
+        df = df[df['img_str'] != ''] # 빈 텍스트 삭제(의미 없으니까)
         df = df[df['img_str_preprocessed'] != ''] # 빈 텍스트 삭제(의미 없으니까)
         df = df.reset_index(drop=True)
         
         df['img_str_preprocessed'] = df['img_str_preprocessed'].apply(normalize_whitespace) # spacing 문제 해결 위해서 공백은 무조건 1칸으로 고정
-        df = df.drop(['temp'], axis=1)
         df = df[['img_str', 'img_str_preprocessed', 'img_sent_list_preprocessed', 'bbox_list']]
 
-        data_dict = df.to_dict(orient='records')
-
+        data_dict = df.to_dict(orient='records')        
         with open(file.replace("data_json","preprocessed_results_json").replace('.json', '_전처리.json'), 'w', encoding='utf-8-sig') as json_file:
             json.dump(data_dict, json_file, indent=4, ensure_ascii=False)
 
@@ -683,7 +746,7 @@ def tag_fn(config, tokenizer, model, enc_aspect, enc_aspect2, device, log):
 
         sentences = [text.split() for text in df["img_str_preprocessed"]]
 
-        sentences = np.array(sentences)
+        # sentences = np.array(sentences)
         words_in_each_sentence = df["# of words in each sentence"].tolist() # 한 리뷰에 대해서 각 문장이 가지는 단어의 개수를 모은 2차원 리스트
 
 
@@ -758,14 +821,22 @@ def tag_fn(config, tokenizer, model, enc_aspect, enc_aspect2, device, log):
             final_aspect2_pred_names.append(final_aspect2_pred_names_for_content)
 
 
+        # TODO: 코드 리팩토링 필요.
+        # new_data = []
+        # sentence_count_list = []
+        # sentence_counter = 0
+        # for i in range(len(words_in_sent_for_file)):    # c++ 코드와 같음.
+        #     for j in words_in_sent_for_file[i]:
+        #         sentence_counter += 1
+        #         sentence_count_list.extend(['sentence '+ str(sentence_counter)]*j)
 
-
+        # TODO: 코드 리팩토링 필요.
         new_data = []
         sentence_count_list = []
         sentence_counter = 0
         for i in range(len(words_in_sent_for_file)):
             for j in words_in_sent_for_file[i]:
-                sentence_counter += 1
+                sentence_counter += 1                
                 for k in range(j):
                     sentence_count_list.append('sentence '+ str(sentence_counter))
 
