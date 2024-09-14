@@ -446,22 +446,28 @@ def replace_newline(text):
     return text.replace('\n', ' ')
 
 def preprocess_content(content):
-    # sentences = kss.split_sentences(content)
-    # # sentences = [[sent] for sent in sentences]
-    # sentences = regexp(sentences)
-    # sentences_period_added = [replace_newline(sent.strip()) + '.' for sent in sentences if sent.strip()]
-    # preprocessed_content = ' '.join(sentences_period_added)
     sentences = kss.split_sentences(content)
     sentences = [[sent] for sent in sentences]
     sentences_regexp = [regexp(sent_list) for sent_list in sentences]
     sentences_period_added = [replace_newline(sent[0].strip()) + '.' for sent in sentences_regexp if sent[0].strip()]
     sentences_period_added = [[sent] for sent in sentences_period_added]
-    no_words_in_sentence_list = [] # sentence 단위를 확인하기 위해 sentence 별 단어의 개수 확인
-    for row in sentences_period_added:
+    # no_words_in_sentence_list = [] # sentence 단위를 확인하기 위해 sentence 별 단어의 개수 확인
+    # for row in sentences_period_added:
+    #     for element in row:
+    #         no_words_in_sentence_list.append(len(element.split()))
+    preprocessed_content = ' '.join([''.join(row) for row in sentences_period_added])
+    return preprocessed_content, sentences_period_added
+
+# def process_content(content):
+#     sentences = content.split('. ')
+#     sentences = [[sent] for sent in sentences]
+#     no_words_in_sentence_list = [] # sentence 단위를 확인하기 위해 sentence 별 단어의 개수 확인
+    
+    for row in sentences:
         for element in row:
             no_words_in_sentence_list.append(len(element.split()))
-    preprocessed_content = ' '.join([''.join(row) for row in sentences_period_added])
-    return preprocessed_content, no_words_in_sentence_list
+    return no_words_in_sentence_list
+
 
 def normalize_whitespace(content):
     # 정규 표현식을 사용하여 연속된 공백을 단일 공백으로 변환
@@ -482,25 +488,6 @@ def remove_bio_prefix(tag): # BI 태그 제거
 
 def majority_vote_for_valid_eval(labels):
     return Counter(labels).most_common(1)[0][0]
-
-    # # 다수결을 위해 Counter 사용
-    # sentiment_counts = Counter(group['Sentiment'])
-    # aspect_counts = Counter(group['Aspect'])
-    # sentiment_score_counts = Counter(group['Sentiment_Score'])
-    # aspect_score_counts = Counter(group['Aspect_Score'])
-    
-    # # 가장 많이 나온 값을 찾아 반환
-    # majority_sentiment = sentiment_counts.most_common(1)[0][0]
-    # majority_aspect = aspect_counts.most_common(1)[0][0]
-    # majority_sentiment_score = sentiment_score_counts.most_common(1)[0][0]
-    # majority_aspect_score = aspect_score_counts.most_common(1)[0][0]
-    
-    # return pd.Series({
-    #     'sentiment_majority': majority_sentiment,
-    #     'aspect_majority': majority_aspect,
-    #     'sentiment_score_majority': majority_sentiment_score,
-    #     'aspect_score_majority': majority_aspect_score
-    # })
 
 
 
@@ -523,7 +510,7 @@ def create_ourt_topics_dict(row): # 각 문장 별로 dict 만드는 함수
             "start_pos": 0,  # Start position placeholder
             "end_pos": 0,  # End position placeholder
             "positive_yn": 'Y' if row['sentiment'] == '긍정' else 'N',
-            "sentiment_scale": row['sentiment_score'],
+            "sentiment_scale": row['sentiment_score'] if row['sentiment_score'] == 'O' or row['sentiment_score'] == '[PAD]' else int(row['sentiment_score']),
             "topic_score": 0 if row['aspect_score'] == 'O' or row['aspect_score'] == '[PAD]' else int(row['aspect_score'])
             }
 
@@ -585,10 +572,67 @@ def remove_space_before_special_char(text):
     return normalized_text
 
 
+def words_count_per_sent(sent_list): # preprocess_content 함수 참고
+    no_words_in_sentence_list = []
+    for row in sent_list:
+        for element in row:
+            no_words_in_sentence_list.append(len(element.split()))
+    
+    return no_words_in_sentence_list
+
+
+def preprocess_fn(config):
+    if(config.need_preprocessing):
+        print("preprocessing_start")
+        file_list = get_file_list(config.preprocessing_fp, 'json')
+
+        for file in file_list:
+            fp = file.replace("data_json","preprocessed_results_json").replace('.json', '_전처리.json')
+            if os.path.exists(fp):
+                print(fp+" exists --> continue")
+                continue
+
+            df = read_json(file)
+            df.loc[:, "content"] = df["content"].fillna(method="ffill")
+            
+            
+            df["temp"] = df['content'].apply(preprocess_content)
+            df['content'] = df['temp'].apply(lambda x: x[0])
+            df['sent_list_preprocessed'] = df['temp'].apply(lambda x: x[1])
+            df.drop(['temp'], axis=1, inplace=True)
+
+            df = df[df['content'] != ''] # 빈 텍스트 삭제(의미 없으니까)
+            df.reset_index(drop=True, inplace=True)
+
+            df['content'] = df['content'].apply(normalize_whitespace) # spacing 문제 해결 위해서 공백은 무조건 1칸으로 고정
+
+
+            try:
+                df = df[['id', 'content', 'sent_list_preprocessed', 'aidaModifyTime', 'mallId', 'mallSeq', 
+                    'matchNvMid', 'nvMid', 'qualityScore', 'starScore', 'topicCount', 'topicYn', 'topics' ,
+                    'userId', 'mallName', 'our_topics']]
+                
+            except KeyError as e:
+                df = df[['id', 'content', 'sent_list_preprocessed', 'aidaModifyTime', 'mallId', 'mallSeq', 
+                    'matchNvMid', 'nvMid', 'qualityScore', 'starScore', 'topicCount', 'topicYn', 'topics' ,
+                    'userId', 'mallName']]
+            
+            df["mallSeq"] = df["mallSeq"].astype(str)
+            df["matchNvMid"] = df["matchNvMid"].astype(str)
+            df["nvMid"] = df["nvMid"].astype(str)
+            
+            data_dict = df.to_dict(orient='records')
+
+            with open(fp, 'w', encoding='utf-8-sig') as json_file:
+                json.dump(data_dict, json_file, indent=4, ensure_ascii=False)
+
+
+        print('finish')
 
 
 
-#### 전체적으로 수정 필요
+
+
 def tag_fn(config, tokenizer, model, enc_sentiment, enc_aspect, enc_aspect2, enc_sentiment_score, enc_aspect_score, device, log):
     print("tagging_start")
     model.eval()
@@ -599,8 +643,9 @@ def tag_fn(config, tokenizer, model, enc_sentiment, enc_aspect, enc_aspect2, enc
     tagging_start_time = time.time()  # 태깅을 시작한 시간을 저장 (소요 시간 측정을 위함)
 
     for file in file_list:
-        if os.path.exists(file.replace("data_untagged_json","tagged_results_json").replace('.json', '_역변환.json')):
-            print(file.replace("data_untagged_json","tagged_results_json").replace('.json', '_역변환.json')+" exists --> continue")
+        fp = file.replace("preprocessed_results_json","tagged_results_json").replace('_전처리.json', '_역변환.json')
+        if os.path.exists(fp):
+            print(fp+" exists --> continue")
             continue
 
         # 예측값 변수 선언 --> 파일 별로 선언해줘야 할듯
@@ -613,27 +658,12 @@ def tag_fn(config, tokenizer, model, enc_sentiment, enc_aspect, enc_aspect2, enc
         ids_inputs = []
         words_list_for_file = [] # 각 리뷰에서 단어 별로 인코딩된 값 저장한 2차원 리스트 (리뷰, 단어)
         words_in_sent_for_file = [] # 하나의 파일에 대해서 각 리뷰의 문장 별 단어 개수
-
         df = read_json(file)
-        df.loc[:, "content"] = df["content"].fillna(method="ffill")
-        df["temp"] = df['content'].apply(preprocess_content)
-
-        df['content'] = df['temp'].apply(lambda x: x[0])
-        df['# of words in each sentence'] = df['temp'].apply(lambda x: x[1])
-
-        df = df[df['content'] != ''] # 빈 텍스트 삭제(의미 없으니까)
-        df = df.reset_index(drop=True)
         
-        df['content'] = df['content'].apply(normalize_whitespace) # spacing 문제 해결 위해서 공백은 무조건 1칸으로 고정
-        # df['# of words in each sentence'] = df['temp'].apply(lambda x: x[1])
+        df['# of words in each sentence'] = df['sent_list_preprocessed'].apply(words_count_per_sent)
 
-        # sentences = df.groupby("Review #")["Word"].apply(list).values
         sentences = [text.split() for text in df["content"]]
-        # blank_count = 0
-        # for i in range(len(sentences)):
-        #     for j in range(len(sentences[i])):
-        #         if(sentences[i][j].replace(' ','') == ''):
-        #             blank_count += 1
+
 
         sentences = np.array(sentences)
         words_in_each_sentence = df["# of words in each sentence"].tolist() # 한 리뷰에 대해서 각 문장이 가지는 단어의 개수를 모은 2차원 리스트
@@ -726,15 +756,6 @@ def tag_fn(config, tokenizer, model, enc_sentiment, enc_aspect, enc_aspect2, enc
             final_aspect_score_pred_names.append(final_aspect_score_pred_names_for_content)
 
 
-        # print("len(words_list_for_file):", len(words_list_for_file)) # 한 파일에 있는 content 개수 의미
-        # print("len(words_list_names):", len(words_list_names)) 
-        # print("len(ids_inputs):", len(ids_inputs))
-        # print("len(sentiment_pred_names):", len(sentiment_pred_names))
-        # print("len(aspect_pred_names):", len(aspect_pred_names))
-        # print("len(aspect2_pred_names):", len(aspect2_pred_names))
-        # print("len(sentiment_score_pred_names):", len(sentiment_score_pred_names))
-        # print("len(aspect_score_pred_names):", len(aspect_score_pred_names))
-
         new_data = []
         sentence_count_list = []
         sentence_counter = 0
@@ -781,24 +802,22 @@ def tag_fn(config, tokenizer, model, enc_sentiment, enc_aspect, enc_aspect2, enc
         }).reset_index()
 
         new_df_grouped_by_sentence = new_df_grouped_by_sentence.rename(columns={'word': 'sentence'})
-        new_df_grouped_by_sentence['sentence_num'] = new_df_grouped_by_sentence['sentence #'].apply(lambda x: int(re.findall(r'\d+', x)[0]))
+
+        num_pattern = re.compile(r'\d+')
+
+        new_df_grouped_by_sentence['sentence_num'] = new_df_grouped_by_sentence['sentence #'].apply(lambda x: int(num_pattern.findall(x)[0]))
         new_df_grouped_by_sentence = new_df_grouped_by_sentence.sort_values(by='sentence_num').reset_index(drop=True)
-        new_df_grouped_by_sentence = new_df_grouped_by_sentence.drop(['sentence_num'], axis=1)
+        new_df_grouped_by_sentence.drop(['sentence_num'], axis=1, inplace=True)
         new_df_grouped_by_sentence = new_df_grouped_by_sentence[['review #', 'sentence #', 'sentence', 'sentiment', 'aspect', 'aspect2', 'sentiment_score', 'aspect_score']]
-        
-        new_df_grouped_by_sentence['review_num'] = new_df_grouped_by_sentence['review #'].apply(lambda x: int(re.findall(r'\d+', x)[0]))
+        new_df_grouped_by_sentence['review_num'] = new_df_grouped_by_sentence['review #'].apply(lambda x: int(num_pattern.findall(x)[0]))
 
         
         # aspect에 대해서 O나 [PAD]가 아니면 our_topics에다가 집어넣어(review # 기준으로)
-        # 집어넣기만 하면
 
         new_df_grouped_by_sentence["our_topics_dict"] = new_df_grouped_by_sentence.apply(create_ourt_topics_dict, axis=1)
 
-        # 뽑힌 거 확인하려면 아래 주석 해제
-        # print(new_df_grouped_by_sentence)
-        # new_df_grouped_by_sentence.to_csv(file.replace("data_untagged_json","tagged_results_json").replace(".json", ".csv"), encoding='utf-8-sig')
-        
 
+        
         # 결과를 담을 리스트 초기화
         our_topics_list = []
         
@@ -824,10 +843,8 @@ def tag_fn(config, tokenizer, model, enc_sentiment, enc_aspect, enc_aspect2, enc
         
 
 
-        df = df.drop(['temp', '# of words in each sentence'], axis=1)
-        # print(df)
-
-        # df = df[df['content'] != ''] # 빈 텍스트 삭제
+        df.drop(['# of words in each sentence', 'sent_list_preprocessed'], axis=1, inplace=True)
+        
 
         # 처음 불러와서 전처리한 df에 our_topics 열 값 초기화
         df["our_topics"] = None
@@ -836,17 +853,20 @@ def tag_fn(config, tokenizer, model, enc_sentiment, enc_aspect, enc_aspect2, enc
         for i, lst in enumerate(our_topics_list):
             df.at[i, 'our_topics'] = lst
 
+
+        df = df[['id', 'content', 'aidaModifyTime', 'mallId', 'mallSeq', 
+                 'matchNvMid', 'nvMid', 'qualityScore', 'starScore', 'topicCount', 'topicYn', 'topics' ,
+                 'userId', 'mallName', 'our_topics']]
+
         df["mallSeq"] = df["mallSeq"].astype(str)
         df["matchNvMid"] = df["matchNvMid"].astype(str)
         df["nvMid"] = df["nvMid"].astype(str)
 
-
-
         # print(df)
-        df.to_json(file.replace("data_untagged_json","tagged_results_json").replace('.json', '_역변환.json') ,force_ascii=False, orient='records')
+        df.to_json(fp ,force_ascii=False, orient='records')
         
         # utf-8-sig로 인코딩 방식 설정하기 위한 코드(더 좋은 게 있을 듯 무조건)
-        with open(file.replace("data_untagged_json","tagged_results_json").replace('.json', '_역변환.json'), 'r', encoding='cp949') as f:
+        with open(fp, 'r', encoding='cp949') as f:
             json_data = f.read()
         
         json_data = json.loads(json_data) # json 읽은 거 list로 변환
@@ -889,18 +909,19 @@ def tag_fn(config, tokenizer, model, enc_sentiment, enc_aspect, enc_aspect2, enc
 
 
 
-        json_data = json.dumps(json_data, ensure_ascii=False) # 다시 json 형식으로 맞게끔 변환
+        json_data = json.dumps(json_data, indent='\t', ensure_ascii=False) # 다시 json 형식으로 맞게끔 변환
 
-        with open(file.replace("data_untagged_json","tagged_results_json").replace('.json', '_역변환.json'), 'w', encoding='utf-8-sig') as f:
+        with open(fp, 'w', encoding='utf-8-sig') as f:
             f.write(json_data)
 
-        print(file.replace("data_untagged_json","tagged_results_json").replace('.json', '_역변환.json')+" tagging finished")
+        print(fp + " tagging finished")
 
     tagging_end_time = time.time() - tagging_start_time  # 모든 데이터에 대한 태깅 소요 시간
     # tagging_sample_per_sec = str(datetime.timedelta(seconds=(tagging_end_time / loader_len)))  # 한 샘플에 대한 태깅 소요 시간
     tagging_times = str(datetime.timedelta(seconds=tagging_end_time))  # 시:분:초 형식으로 변환
     current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     print("현재 시간:", current_time)
+    print(f"전처리 시간: {tagging_end_time}")
 
 
 
