@@ -5,12 +5,12 @@
 #SBATCH --cpus-per-gpu=8
 #SBATCH --mem-per-gpu=16G
 #SBATCH -p batch_ugrad
-#SBATCH -t 18:0:0
-#SBATCH -w aurora-g5
+#SBATCH -t 24:0:0
+#SBATCH -w aurora-g7
 #SBATCH -o logs/slurm-%A.out
 
 # batch size down, train_fp, valid_fp change, out_model_path change
-epochs=10
+epochs=20
 train_batch_size=1
 valid_batch_size=1
 init_model_path=klue/bert-base
@@ -33,6 +33,7 @@ test_ratio=0.01
 encoding="utf-8-sig"
 cd /data/ndn825/Preview_model/ocr_tagging/resources_ocr/   
 rm -rf p_ocr_dataset.tar
+rm -rf p_ocr_dataset/
 tar -cf p_ocr_dataset.tar *
 rm -rf /local_datasets/p_ocr_dataset/
 mkdir /local_datasets/p_ocr_dataset/

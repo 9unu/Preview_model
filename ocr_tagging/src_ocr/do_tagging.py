@@ -126,9 +126,6 @@ def preprocess(config):
     log.info("[Config]")
     log.info(f'{config.__dict__}')
 
-    # Device Setting (GPU/CPU)
-    device = device_setting(log)
-
     preprocess_fn(config)
     # preprocess_fn2(config)
 
