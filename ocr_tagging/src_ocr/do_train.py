@@ -45,6 +45,11 @@ def train(config):
     num_aspect = len(list(enc_aspect.classes_))
     num_aspect2 = len(list(enc_aspect2.classes_))
 
+    # classes 확인
+    log.info('>>>>>>> Now checking classes')
+    log.info(f'enc_aspect.classes_: {enc_aspect.classes_}')
+    log.info(f'enc_aspect2.classes_: {enc_aspect2.classes_}')
+
     log.info('>>>>>>> Now setting train/valid DataLoaders')
     train_data_loader = set_loader(fp=train_fp, config=config, meta_data=meta_data, batch_size=config.train_batch_size)
     valid_data_loader = set_loader(fp=valid_fp, config=config, meta_data=meta_data, batch_size=config.valid_batch_size)
@@ -105,13 +110,14 @@ def train(config):
             valid_data_loader,
             model,
             enc_aspect,
+            enc_aspect2,
             device,
             log
         )
 
         log.info(f"Train Loss = {train_loss} Valid Loss = {test_loss}")
         # [early stopping 여부를 체크하는 부분]
-        early_stopper(test_loss, model) # 현재 과적합 상황 추적
+        early_stopper(test_loss[0], model) # 현재 과적합 상황 추적
         if early_stopper.early_stop: # 조건 만족 시 조기 종료
             log.info("EarlyStopping!!!!")
             break

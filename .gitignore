@@ -12,6 +12,7 @@
 .idea/dataSources/
 .idea/dataSources.local.xml
 .idea
+psuedo_labeling_llama3/model/
 
 *.pyc
 *.jar
@@ -22,3 +23,5 @@
 *.tar
 *.txt
 *.bin
+*.pth
+*.zip

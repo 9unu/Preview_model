@@ -12,7 +12,6 @@ import argparse
 import warnings
 warnings.filterwarnings(action='ignore')
 
-
 def train(config):
     # 생성된 모델 및 Encoder / log 등을 저장할 base 경로의 존재 유무 체킹 - 없다면 새로 생성
     if not os.path.exists(config.base_path):
@@ -39,21 +38,46 @@ def train(config):
     # enc_aspect >> 일반 속성 카테고리를 위한 Encoder
     # enc_aspect2 >> 대분류 속성 카테고리를 위한 Encoder
     # enc_sentiment >> 감성 속성을 위한 Encoder
-    enc_aspect, enc_aspect2, enc_sentiment = enc.get_encoder()
-    meta_data = {"enc_aspect": enc_aspect, "enc_aspect2": enc_aspect2, "enc_sentiment": enc_sentiment,}
-
+    # enc_sentiment_score >> 감성 스코어를 위한 Encoder
+    # enc_aspect_score >> 속성 스코어를 위한 Encoder
+    enc_aspect, enc_aspect2, enc_sentiment, enc_aspect_score, enc_sentiment_score = enc.get_encoder()
+    meta_data = {
+        "enc_aspect": enc_aspect,
+        "enc_aspect2": enc_aspect2,
+        "enc_sentiment": enc_sentiment,
+        "enc_aspect_score": enc_aspect_score,
+        "enc_sentiment_score": enc_sentiment_score,
+    }
     # Encoder에 fitting 된 class의 수를 get
     num_aspect = len(list(enc_aspect.classes_))
     num_aspect2 = len(list(enc_aspect2.classes_))
     num_sentiment = len(list(enc_sentiment.classes_))
+    num_aspect_score = len(list(enc_aspect_score.classes_))
+    num_sentiment_score = len(list(enc_sentiment_score.classes_))
+
+    # classes 확인
+    log.info('>>>>>>> Now checking classes')
+    log.info(f'enc_aspect.classes_: {enc_aspect.classes_}')
+    log.info(f'enc_aspect2.classes_: {enc_aspect2.classes_}')
+    log.info(f'enc_sentiment.classes_: {enc_sentiment.classes_}')
+    log.info(f'enc_aspect_score.classes_: {enc_aspect_score.classes_}')
+    log.info(f'enc_sentiment_score.classes_: {enc_sentiment_score.classes_}')
     
+
     log.info('>>>>>>> Now setting train/valid DataLoaders')
     train_data_loader = set_loader(fp=train_fp, config=config, meta_data=meta_data, batch_size=config.train_batch_size)
     valid_data_loader = set_loader(fp=valid_fp, config=config, meta_data=meta_data, batch_size=config.valid_batch_size)
 
     log.info('>>>>>>> Now setting Model Architecture')
-    model = ABSAModel(config=config, num_sentiment=num_sentiment, num_aspect=num_aspect, num_aspect2=num_aspect2,
-                      need_birnn=bool(config.need_birnn))
+    model = ABSAModel(
+        config=config,
+        num_sentiment=num_sentiment,
+        num_aspect=num_aspect,
+        num_aspect2=num_aspect2,
+        num_sentiment_score=num_sentiment_score,
+        num_aspect_score=num_aspect_score,
+        need_birnn=bool(config.need_birnn)
+    )
     model.to(device)
 
     # Optimzier Setting
@@ -102,47 +126,44 @@ def train(config):
             device,
             scheduler
         )
-        # Validation
         test_loss = eval_fn(
             valid_data_loader,
             model,
             enc_sentiment,
             enc_aspect,
+            enc_aspect2,
+            enc_sentiment_score,
+            enc_aspect_score,
             device,
             log
         )
 
         log.info(f"Train Loss = {train_loss} Valid Loss = {test_loss}")
         # [early stopping 여부를 체크하는 부분]
-        early_stopper(test_loss, model) # 현재 과적합 상황 추적
-        if early_stopper.early_stop: # 조건 만족 시 조기 종료
+        early_stopper(test_loss[0], model)  # 첫 번째 손실 값만 사용하여 현재 과적합 상황 추적
+        if early_stopper.early_stop:  # 조건 만족 시 조기 종료
             log.info("EarlyStopping!!!!")
             break
-
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--epochs", type=int, default=10, help="데이터셋을 학습할 횟수")
+    parser.add_argument("--epochs", type=int, default=100, help="데이터셋을 학습할 횟수")
     parser.add_argument("--train_batch_size", type=int, default=4, help="한 batch에 속할 학습 데이터 샘플의 size")
     parser.add_argument("--valid_batch_size", type=int, default=4, help="한 batch에 속할 검증 데이터 샘플의 size")
     parser.add_argument("--init_model_path", type=str, default="klue/bert-base", help="사용할 BERT의 종류")
     parser.add_argument("--max_length", type=int, default=512, help="토큰화된 문장의 최대 길이를 설정 (bert는 기본 512)")
-    parser.add_argument("--need_birnn", type=int, default=0, help="model에 Birnn Layer를 추가 여부 (True: 1/False: 0)")
+    parser.add_argument("--need_birnn", type=int, default=1, help="model에 Birnn Layer를 추가 여부 (True: 1/False: 0)")
     parser.add_argument("--sentiment_drop_ratio", type=float, default=0.3,
                         help="Sentiment 속성의 과적합 방지를 위해 dropout을 수행할 비율")
     parser.add_argument("--aspect_drop_ratio", type=float, default=0.3,
                         help="Aspect Category 속성의 과적합 방지를 위해 dropout을 수행할 비율")
-    
-    
     parser.add_argument("--sentiment_in_feature", type=int, default=768,
                         help="각 Sentiment input sample의 size")
     parser.add_argument("--aspect_in_feature", type=int, default=768,
                         help="각 Aspect Category input sample의 size")
-    
-    
     parser.add_argument("--stop_patience", type=int, default=3, help="validation loss를 기준으로 성능이 증가하지 않는 "
                                                                      "epoch을 몇 번이나 허용할 것인지 설정")
-    parser.add_argument("--train_fp", type=str, default="./review_tagging/resources_review/parsing_data/train/", help="학습 데이터들이 포함된 디렉토리 경로 or 학습 데이터 파일 경로 설정")
-    parser.add_argument("--valid_fp", type=str, default="./review_tagging/resources_review/parsing_data/valid/", help="검증 데이터들이 포함된 디렉토리 경로 or 검증 데이터 파일 경로 설정")
+    parser.add_argument("--train_fp", type=str, default="./KoElectra_review_tagging/resources_review/parsing_data/train/", help="학습 데이터들이 포함된 디렉토리 경로 or 학습 데이터 파일 경로 설정")
+    parser.add_argument("--valid_fp", type=str, default="./KoElectra_review_tagging/resources_review/parsing_data/valid/", help="검증 데이터들이 포함된 디렉토리 경로 or 검증 데이터 파일 경로 설정")
     parser.add_argument("--base_path", type=str, help="Model이나 Encoder를 저장할 경로 설정", default="./ckpt_review/model/")
     parser.add_argument("--label_info_file", type=str, help="Encoder의 저장 파일명", default="meta.bin")
     parser.add_argument("--out_model_path", type=str, help="model의 저장 파일명", default="pytorch_model.bin")

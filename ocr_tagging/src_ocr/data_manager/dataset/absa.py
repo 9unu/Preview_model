@@ -27,7 +27,7 @@ class Encoder:
         self.file_list = get_file_list(fp, extension)
         self.meta_data_fp = os.path.join(config.base_path + config.label_info_file)
 
-        # Sentiment 속성을 위한 Encoder 및 Aspect Category를 위한 Encoder
+        # Aspect Category를 위한 Encoder
         self.enc_aspect, self.enc_aspect2 = None, None
         self.aspect_labels, self.aspect2_labels = ['PAD', 'O'], ['PAD', 'O']
 
@@ -43,7 +43,9 @@ class Encoder:
             joblib.dump(meta_data, self.meta_data_fp)
 
     def get_encoder(self):
-        if self.enc_aspect is None or self.enc_aspect2 is None:
+        if (self.enc_aspect is None
+            or self.enc_aspect2 is None
+            ):
             self.check_encoder_fp()
         return self.enc_aspect, self.enc_aspect2
 
@@ -58,6 +60,7 @@ class Encoder:
 
         # Encoder 선언 및 fitting
         self.enc_aspect, self.enc_aspect2 = MyLabelEncoder(), MyLabelEncoder()
+        
         self.aspect_labels = list(OrderedDict.fromkeys(self.aspect_labels))
         self.aspect2_labels.extend([label for label in label_list])
 
@@ -90,6 +93,8 @@ class ABSADataset(IterableDataset):
         # read data
         for now_fp in self.file_list:
             df = read_csv(now_fp)
+            if 'Ocr #' not in df.columns:
+                df.rename(columns={'Review #': 'Ocr #'}, inplace=True)
             df.loc[:, "Ocr #"] = df["Ocr #"].fillna(method="ffill")
             df["Aspect2"] = df["Aspect"]
             df = df.replace({"Aspect2": label_changing_rule})
@@ -104,7 +109,7 @@ class ABSADataset(IterableDataset):
             for i in range(len(sentences)):
                 self.s_len += 1
                 yield self.parsing_data(sentences[i], aspects[i], aspects2[i])
-
+                
     def __len__(self):
         if self.data_len == 0:
             self.data_len = self.get_length()
@@ -117,6 +122,8 @@ class ABSADataset(IterableDataset):
         else:
             for now_fp in self.file_list:
                 df = read_csv(now_fp)
+                if 'Ocr #' not in df.columns:
+                    df.rename(columns={'Review #': 'Ocr #'}, inplace=True)
                 sentences = df.groupby("Ocr #")["Word"].apply(list).values
                 self.data_len += len(sentences)
             self.data_len = math.ceil(self.data_len / self.batch_size)

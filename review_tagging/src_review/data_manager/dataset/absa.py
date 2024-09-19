@@ -30,10 +30,13 @@ class Encoder:
 
         # Sentiment 속성을 위한 Encoder 및 Aspect Category를 위한 Encoder
         self.enc_sentiment, self.enc_aspect, self.enc_aspect2 = None, None, None
+        self.enc_sentiment_score, self.enc_aspect_score=None, None ##### 스코어 두개 추가
         
         self.sentiment_labels = ['PAD', 'O']
         
         self.aspect_labels, self.aspect2_labels = ['PAD', 'O'], ['PAD', 'O']
+        self.sentiment_score_labels=['PAD', 'O'] #### 스코어 레이블  두개 추가
+        self.aspect_score_labels=['PAD', 'O'] #### 스코어 레이블  두개 추가
 
     # 저장된 Encoder 유무를 확인
     # 있으면 load, 없으면 생성
@@ -43,6 +46,7 @@ class Encoder:
             meta_data = joblib.load(self.meta_data_fp)
             self.enc_sentiment = meta_data["enc_sentiment"]
             self.enc_aspect, self.enc_aspect2 = meta_data["enc_aspect"], meta_data["enc_aspect2"]  
+            self.enc_sentiment_score, self.enc_aspect_score = meta_data["enc_sentiment_score"], meta_data["enc_aspect_score"]#### 스코어 두개 추가
         else:
             meta_data = self.set_encoder()
             joblib.dump(meta_data, self.meta_data_fp)
@@ -51,9 +55,11 @@ class Encoder:
         if (self.enc_sentiment is None 
             or self.enc_aspect is None 
             or self.enc_aspect2 is None 
+            or self.enc_sentiment_score is None 
+            or self.enc_aspect_score is None
             ):
             self.check_encoder_fp()
-        return self.enc_aspect, self.enc_aspect2, self.enc_sentiment
+        return self.enc_aspect, self.enc_aspect2, self.enc_sentiment,  self.enc_aspect_score, self.enc_sentiment_score #### 스코어 두개 추가
 
     def set_encoder(self):
         if len(self.file_list) == 0:
@@ -64,28 +70,34 @@ class Encoder:
             df = read_csv(now_fp)
             self.aspect_labels.extend(list(df["Aspect"].unique()))
             self.sentiment_labels.extend(list(df["Sentiment"].unique()))
-            self.sentiment_labels.extend(list(df["Sentiment"].unique()))
     
+            self.aspect_score_labels.extend(list(df["Aspect_Score"].unique())) # 스코어 두개 레이블 리스트
+            self.sentiment_score_labels.extend(list(df["Sentiment_Score"].unique())) # 스코어 두개 레이블 리스트
     
 
         # Encoder 선언 및 fitting
         self.enc_sentiment, self.enc_aspect, self.enc_aspect2 = MyLabelEncoder(), MyLabelEncoder(), MyLabelEncoder()
+        self.enc_aspect_score, self.enc_sentiment_score = MyLabelEncoder(), MyLabelEncoder() #### 스코어 두개 추가
         
         self.aspect_labels = list(OrderedDict.fromkeys(self.aspect_labels))
         self.sentiment_labels = list(OrderedDict.fromkeys(self.sentiment_labels))
+        self.sentiment_score_labels = list(OrderedDict.fromkeys(self.sentiment_score_labels))#### 스코어 두개 추가
+        self.aspect_score_labels = list(OrderedDict.fromkeys(self.aspect_score_labels))#### 스코어 두개 추가
         self.aspect2_labels.extend([label for label in label_list])
 
         self.enc_aspect = self.enc_aspect.fit(self.aspect_labels)
         self.enc_aspect2 = self.enc_aspect2.fit(self.aspect2_labels)
         self.enc_sentiment = self.enc_sentiment.fit(self.sentiment_labels)
-
+        self.enc_sentiment_score = self.enc_sentiment_score.fit(self.sentiment_score_labels)#### 스코어 두개 추가
+        self.enc_aspect_score = self.enc_aspect_score.fit(self.aspect_score_labels)#### 스코어 두개 추가
         
-        return {"enc_aspect": self.enc_aspect, "enc_aspect2": self.enc_aspect2, "enc_sentiment": self.enc_sentiment}#### 스코어 두개 추가
+        return {"enc_aspect": self.enc_aspect, "enc_aspect2": self.enc_aspect2, "enc_sentiment": self.enc_sentiment
+                ,"enc_sentiment_score":self.enc_sentiment_score, "enc_aspect_score":self.enc_aspect_score}#### 스코어 두개 추가
 
 
 class ABSADataset(IterableDataset):
     #### 스코어 두개 추가
-    def __init__(self, config, fp, enc_aspect, enc_aspect2, enc_sentiment, batch_size, data_len=0, extension="csv"):
+    def __init__(self, config, fp, enc_aspect, enc_aspect2, enc_sentiment, enc_aspect_score, enc_sentiment_score, batch_size, data_len=0, extension="csv"):
         self.data_len = data_len
         self.file_list = get_file_list(fp, extension)
         self.batch_size = batch_size
@@ -96,6 +108,8 @@ class ABSADataset(IterableDataset):
         self.enc_aspect = enc_aspect
         self.enc_aspect2 = enc_aspect2
         self.enc_sentiment = enc_sentiment
+        self.enc_sentiment_score=enc_sentiment_score #### 스코어 두개 추가
+        self.enc_aspect_score=enc_aspect_score #### 스코어 두개 추가
         
 
         # for embedding
@@ -130,7 +144,7 @@ class ABSADataset(IterableDataset):
 
             for i in range(len(sentences)):
                 self.s_len += 1
-                yield self.parsing_data(sentences[i], aspects[i], aspects2[i], sentiments[i]) #### 스코어 두개 추가
+                yield self.parsing_data(sentences[i], aspects[i], aspects2[i], sentiments[i], sentiment_scores[i], aspect_scores[i]) #### 스코어 두개 추가
 
     def __len__(self):
         if self.data_len == 0:
@@ -149,11 +163,13 @@ class ABSADataset(IterableDataset):
             self.data_len = math.ceil(self.data_len / self.batch_size)
             return self.data_len
     
-    def parsing_data(self, text, aspect, aspect2, sentiment):
+    def parsing_data(self, text, aspect, aspect2, sentiment, sentiment_score, aspect_score):
         ids = []
         target_aspect = [] # target Aspect Category tensor ids 저장 리스트
         target_aspect2 = []  # target 대분류 Aspect Category tensor ids 저장 리스트 (대분류 기준 성능 측정을 위함)
         target_sentiment = [] # target Sentiment tensor ids 저장 리스트
+        target_sentiment_score=[] #### 스코어 두개 추가
+        target_aspect_score=[] #### 스코어 두개 추가
         
         for i, s in enumerate(text):
             inputs = self.tokenizer.encode(s, add_special_tokens=False)
@@ -162,6 +178,8 @@ class ABSADataset(IterableDataset):
             target_aspect.extend([aspect[i]] * input_len)
             target_aspect2.extend([aspect2[i]] * input_len)
             target_sentiment.extend([sentiment[i]] * input_len)
+            target_sentiment_score.extend([sentiment_score[i]] * input_len) #### 스코어 두개 추가
+            target_aspect_score.extend([aspect_score[i]] * input_len) #### 스코어 두개 추가
             
 
         # BERT가 처리할 수 있는 길이 (max_length)에 맞추어 slicing
@@ -169,6 +187,8 @@ class ABSADataset(IterableDataset):
         target_aspect = target_aspect[:self.max_len - 2]
         target_aspect2 = target_aspect2[:self.max_len - 2]
         target_sentiment = target_sentiment[:self.max_len - 2]
+        target_sentiment_score = target_sentiment_score[:self.max_len - 2] #### 스코어 두개 추가
+        target_aspect_score = target_aspect_score[:self.max_len - 2] #### 스코어 두개 추가
         
 
         # SPECIAL TOKEN 추가 및 PADDING 수행
@@ -176,6 +196,8 @@ class ABSADataset(IterableDataset):
         target_aspect = self.PADDING_TAG_IDS + target_aspect + self.PADDING_TAG_IDS  # CLS, SEP 태그 0
         target_aspect2 = self.PADDING_TAG_IDS + target_aspect2 + self.PADDING_TAG_IDS
         target_sentiment = self.PADDING_TAG_IDS + target_sentiment + self.PADDING_TAG_IDS
+        target_sentiment_score = self.PADDING_TAG_IDS + target_sentiment_score + self.PADDING_TAG_IDS#### 스코어 두개 추가
+        target_aspect_score = self.PADDING_TAG_IDS + target_aspect_score + self.PADDING_TAG_IDS#### 스코어 두개 추가
         
         
 
@@ -189,6 +211,8 @@ class ABSADataset(IterableDataset):
         target_aspect = target_aspect + (self.PADDING_TAG_IDS * padding_len)
         target_aspect2 = target_aspect2 + (self.PADDING_TAG_IDS * padding_len)
         target_sentiment = target_sentiment + (self.PADDING_TAG_IDS * padding_len)#### 스코어 두개 추가
+        target_sentiment_score = target_sentiment_score + (self.PADDING_TAG_IDS * padding_len)#### 스코어 두개 추가
+        target_aspect_score = target_aspect_score + (self.PADDING_TAG_IDS * padding_len)
         
 
         return {
@@ -197,5 +221,7 @@ class ABSADataset(IterableDataset):
             "token_type_ids": torch.tensor(token_type_ids, dtype=torch.long),
             "target_aspect": torch.tensor(target_aspect, dtype=torch.long),
             "target_aspect2": torch.tensor(target_aspect2, dtype=torch.long),
-            "target_sentiment": torch.tensor(target_sentiment, dtype=torch.long),
+            "target_sentiment": torch.tensor(target_sentiment, dtype=torch.long),#### 스코어 두개 추가
+            "target_sentiment_score": torch.tensor(target_sentiment_score, dtype=torch.long),#### 스코어 두개 추가
+            "target_aspect_score": torch.tensor(target_aspect_score, dtype=torch.long)
             }
